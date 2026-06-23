@@ -1,7 +1,7 @@
-import type { Issue, VariableDefinition } from '@envdoctor/contracts';
+import type { AnalysisInput, Issue } from '@envdoctor/contracts';
 import type { IssueAnalyzer } from './interfaces/issue-analyzer.js';
 import type { IssueAnalysisService } from './interfaces/issue-analysis-service.js';
-import { groupDefinitionsByProject } from './utils/group-by-project.js';
+import { scopeAnalysisInput } from './utils/scope-analysis-input.js';
 import { sortIssues } from './utils/sort-issues.js';
 
 export interface IssueAnalysisDependencies {
@@ -11,14 +11,22 @@ export interface IssueAnalysisDependencies {
 export class DefaultIssueAnalysisService implements IssueAnalysisService {
   constructor(private readonly deps: IssueAnalysisDependencies) {}
 
-  analyze(definitions: VariableDefinition[]): Issue[] {
+  analyze(input: AnalysisInput): Issue[] {
+    const scopedInput = scopeAnalysisInput(input);
     const issues: Issue[] = [];
-    const projectGroups = groupDefinitionsByProject(definitions);
 
-    for (const projectDefinitions of projectGroups.values()) {
-      for (const analyzer of this.deps.analyzers) {
-        issues.push(...analyzer.analyze(projectDefinitions));
-      }
+    for (const analyzer of this.deps.analyzers) {
+      issues.push(...analyzer.analyze(scopedInput));
+    }
+
+    return sortIssues(issues);
+  }
+
+  analyzeAll(inputs: AnalysisInput[]): Issue[] {
+    const issues: Issue[] = [];
+
+    for (const input of inputs) {
+      issues.push(...this.analyze(input));
     }
 
     return sortIssues(issues);

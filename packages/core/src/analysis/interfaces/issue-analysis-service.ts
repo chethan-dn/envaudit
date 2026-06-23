@@ -1,5 +1,6 @@
-import type { Issue, VariableDefinition } from '@envdoctor/contracts';
+import type { AnalysisInput, Issue } from '@envdoctor/contracts';
 
 export interface IssueAnalysisService {
-  analyze(definitions: VariableDefinition[]): Issue[];
+  analyze(input: AnalysisInput): Issue[];
+  analyzeAll(inputs: AnalysisInput[]): Issue[];
 }

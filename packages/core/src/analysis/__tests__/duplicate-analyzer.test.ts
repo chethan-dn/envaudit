@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { DuplicateAnalyzer } from '../analyzers/duplicate-analyzer.js';
 import type { VariableDefinition } from '@envdoctor/contracts';
+import { createAnalysisInput } from './test-helpers.js';
 
 describe('DuplicateAnalyzer', () => {
   const analyzer = new DuplicateAnalyzer();
@@ -25,7 +26,7 @@ describe('DuplicateAnalyzer', () => {
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toEqual([
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toEqual([
       {
         code: 'ENV_DUPLICATE',
         type: 'duplicate',
@@ -56,10 +57,10 @@ describe('DuplicateAnalyzer', () => {
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toEqual([]);
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toEqual([]);
   });
 
-  it('does not detect duplicates across different projects', () => {
+  it('scopes analysis to the project root path', () => {
     const definitions: VariableDefinition[] = [
       {
         name: 'PORT',
@@ -77,7 +78,7 @@ describe('DuplicateAnalyzer', () => {
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toEqual([]);
+    expect(analyzer.analyze(createAnalysisInput('/repo/api', definitions))).toEqual([]);
   });
 
   it('emits one issue per extra duplicate line in the same file', () => {
@@ -105,6 +106,6 @@ describe('DuplicateAnalyzer', () => {
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toHaveLength(2);
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toHaveLength(2);
   });
 });

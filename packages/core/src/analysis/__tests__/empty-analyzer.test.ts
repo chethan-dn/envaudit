@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { EmptyAnalyzer } from '../analyzers/empty-analyzer.js';
 import type { VariableDefinition } from '@envdoctor/contracts';
+import { createAnalysisInput } from './test-helpers.js';
 
 describe('EmptyAnalyzer', () => {
   const analyzer = new EmptyAnalyzer();
+  const projectRootPath = '/repo';
 
   it('detects variables with empty string values', () => {
     const definitions: VariableDefinition[] = [
@@ -11,17 +13,17 @@ describe('EmptyAnalyzer', () => {
         name: 'SECRET_KEY',
         value: '',
         sourceFile: '/repo/.env.template',
-        projectRootPath: '/repo',
+        projectRootPath,
         line: 4,
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toEqual([
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toEqual([
       {
         code: 'ENV_EMPTY',
         type: 'empty',
         variable: 'SECRET_KEY',
-        projectRootPath: '/repo',
+        projectRootPath,
         sourceFile: '/repo/.env.template',
         line: 4,
         message: 'SECRET_KEY has an empty value',
@@ -35,12 +37,12 @@ describe('EmptyAnalyzer', () => {
         name: 'PORT',
         value: '3000',
         sourceFile: '/repo/.env',
-        projectRootPath: '/repo',
+        projectRootPath,
         line: 1,
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toEqual([]);
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toEqual([]);
   });
 
   it('ignores variables with undefined values', () => {
@@ -48,11 +50,11 @@ describe('EmptyAnalyzer', () => {
       {
         name: 'PORT',
         sourceFile: '/repo/.env',
-        projectRootPath: '/repo',
+        projectRootPath,
         line: 1,
       },
     ];
 
-    expect(analyzer.analyze(definitions)).toEqual([]);
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toEqual([]);
   });
 });

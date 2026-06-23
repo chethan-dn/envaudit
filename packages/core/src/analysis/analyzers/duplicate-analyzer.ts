@@ -1,13 +1,13 @@
-import type { Issue, VariableDefinition } from '@envdoctor/contracts';
+import type { AnalysisInput } from '@envdoctor/contracts';
 import { ISSUE_CODES } from '../constants.js';
 import type { IssueAnalyzer } from '../interfaces/issue-analyzer.js';
 
 export class DuplicateAnalyzer implements IssueAnalyzer {
   readonly id = 'duplicate' as const;
 
-  analyze(definitions: VariableDefinition[]): Issue[] {
-    const issues: Issue[] = [];
-    const bySourceFile = groupBySourceFile(definitions);
+  analyze(input: AnalysisInput) {
+    const issues = [];
+    const bySourceFile = groupBySourceFile(input.definitions);
 
     for (const [sourceFile, fileDefinitions] of bySourceFile) {
       const byName = groupByName(fileDefinitions);
@@ -23,7 +23,7 @@ export class DuplicateAnalyzer implements IssueAnalyzer {
         for (const definition of sorted.slice(1)) {
           issues.push({
             code: ISSUE_CODES.ENV_DUPLICATE,
-            type: 'duplicate',
+            type: 'duplicate' as const,
             variable,
             projectRootPath: definition.projectRootPath,
             sourceFile,
@@ -39,9 +39,9 @@ export class DuplicateAnalyzer implements IssueAnalyzer {
 }
 
 function groupBySourceFile(
-  definitions: VariableDefinition[],
-): Map<string, VariableDefinition[]> {
-  const groups = new Map<string, VariableDefinition[]>();
+  definitions: AnalysisInput['definitions'],
+): Map<string, AnalysisInput['definitions']> {
+  const groups = new Map<string, AnalysisInput['definitions']>();
 
   for (const definition of definitions) {
     const existing = groups.get(definition.sourceFile) ?? [];
@@ -52,8 +52,10 @@ function groupBySourceFile(
   return groups;
 }
 
-function groupByName(definitions: VariableDefinition[]): Map<string, VariableDefinition[]> {
-  const groups = new Map<string, VariableDefinition[]>();
+function groupByName(
+  definitions: AnalysisInput['definitions'],
+): Map<string, AnalysisInput['definitions']> {
+  const groups = new Map<string, AnalysisInput['definitions']>();
 
   for (const definition of definitions) {
     const existing = groups.get(definition.name) ?? [];

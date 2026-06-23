@@ -1,3 +1,4 @@
+export type { AnalysisInput } from './analysis-input.js';
 export { DEFAULT_IGNORED_DIRECTORIES } from './default-ignored-directories.js';
 export type { ProjectLanguage } from './project-language.js';
 export type { VariableDefinition } from './variable-definition.js';

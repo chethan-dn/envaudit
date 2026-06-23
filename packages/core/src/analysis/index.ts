@@ -4,5 +4,7 @@ export type { IssueAnalysisDependencies } from './issue-analysis-service.js';
 export { DefaultIssueAnalysisService } from './issue-analysis-service.js';
 export { DuplicateAnalyzer } from './analyzers/duplicate-analyzer.js';
 export { EmptyAnalyzer } from './analyzers/empty-analyzer.js';
+export { MissingAnalyzer } from './analyzers/missing-analyzer.js';
+export { UnusedAnalyzer } from './analyzers/unused-analyzer.js';
 export type { IssueAnalyzer } from './interfaces/issue-analyzer.js';
 export type { IssueAnalysisService } from './interfaces/issue-analysis-service.js';
