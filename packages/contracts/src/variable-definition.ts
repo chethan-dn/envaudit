@@ -1,6 +1,7 @@
 export interface VariableDefinition {
   name: string;
   value?: string;
-  file: string;
+  sourceFile: string;
+  projectRootPath: string;
   line?: number;
 }
