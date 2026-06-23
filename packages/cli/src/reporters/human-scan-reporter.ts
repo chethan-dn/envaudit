@@ -14,6 +14,8 @@ export class HumanScanReporter implements ScanReporter {
     lines.push(`  Definitions: ${result.summary.definitionCount}`);
     lines.push(`  Usages:      ${result.summary.usageCount}`);
     lines.push(`  Issues:      ${result.summary.issueCount}`);
+    lines.push(`  Scanned:     ${result.summary.scannedFileCount}`);
+    lines.push(`  Skipped:     ${result.summary.skippedFileCount}`);
     lines.push('');
 
     for (const scanResult of result.results) {
@@ -33,6 +35,8 @@ export class HumanScanReporter implements ScanReporter {
     lines.push(`Definitions: ${scanResult.definitions.length}`);
     lines.push(`Usages:      ${scanResult.usages.length}`);
     lines.push(`Issues:      ${scanResult.issues.length}`);
+    lines.push(`Scanned:     ${scanResult.metrics.scannedFileCount}`);
+    lines.push(`Skipped:     ${scanResult.metrics.skippedFileCount}`);
     lines.push('');
 
     if (scanResult.issues.length === 0) {

@@ -1,12 +1,12 @@
-import type { ScannerPlugin } from '@envdoctor/contracts';
+import type { ScanExclusionPolicy, ScannerPlugin } from '@envdoctor/contracts';
 import { getBuiltinPlugins } from './builtins/index.js';
 
 export interface PluginRegistry {
-  getPlugins(): ScannerPlugin[];
+  getPlugins(exclusionPolicy: ScanExclusionPolicy): ScannerPlugin[];
 }
 
 export class BuiltinPluginRegistry implements PluginRegistry {
-  getPlugins(): ScannerPlugin[] {
-    return getBuiltinPlugins();
+  getPlugins(exclusionPolicy: ScanExclusionPolicy): ScannerPlugin[] {
+    return getBuiltinPlugins(exclusionPolicy);
   }
 }

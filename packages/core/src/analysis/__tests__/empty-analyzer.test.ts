@@ -7,14 +7,15 @@ describe('EmptyAnalyzer', () => {
   const analyzer = new EmptyAnalyzer();
   const projectRootPath = '/repo';
 
-  it('detects variables with empty string values', () => {
+  it('detects runtime variables with empty string values', () => {
     const definitions: VariableDefinition[] = [
       {
         name: 'SECRET_KEY',
         value: '',
-        sourceFile: '/repo/.env.template',
+        sourceFile: '/repo/.env',
         projectRootPath,
         line: 4,
+        sourceKind: 'runtime',
       },
     ];
 
@@ -24,11 +25,26 @@ describe('EmptyAnalyzer', () => {
         type: 'empty',
         variable: 'SECRET_KEY',
         projectRootPath,
-        sourceFile: '/repo/.env.template',
+        sourceFile: '/repo/.env',
         line: 4,
         message: 'SECRET_KEY has an empty value',
       },
     ]);
+  });
+
+  it('ignores documentation env definitions with empty values', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'SECRET_KEY',
+        value: '',
+        sourceFile: '/repo/.env.template',
+        projectRootPath,
+        line: 4,
+        sourceKind: 'documentation',
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions))).toEqual([]);
   });
 
   it('ignores variables with non-empty values', () => {

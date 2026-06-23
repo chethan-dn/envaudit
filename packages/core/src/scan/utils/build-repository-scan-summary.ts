@@ -6,5 +6,7 @@ export function buildRepositoryScanSummary(results: ScanResult[]): RepositorySca
     definitionCount: results.reduce((count, result) => count + result.definitions.length, 0),
     usageCount: results.reduce((count, result) => count + result.usages.length, 0),
     issueCount: results.reduce((count, result) => count + result.issues.length, 0),
+    scannedFileCount: results.reduce((count, result) => count + result.metrics.scannedFileCount, 0),
+    skippedFileCount: results.reduce((count, result) => count + result.metrics.skippedFileCount, 0),
   };
 }

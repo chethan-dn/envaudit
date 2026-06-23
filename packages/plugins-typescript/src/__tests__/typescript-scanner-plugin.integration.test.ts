@@ -1,6 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { createScanExclusionPolicy } from '@envdoctor/contracts';
 import { createTypeScriptScannerPlugin } from '../create-typescript-scanner-plugin.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
@@ -10,7 +11,9 @@ function fixturePath(name: string): string {
 }
 
 describe('TypeScriptScannerPlugin integration', () => {
-  const plugin = createTypeScriptScannerPlugin();
+  const plugin = createTypeScriptScannerPlugin({
+    exclusionPolicy: createScanExclusionPolicy(),
+  });
 
   it('detects supported source files in typescript-usage fixture', async () => {
     const rootPath = fixturePath('typescript-usage');

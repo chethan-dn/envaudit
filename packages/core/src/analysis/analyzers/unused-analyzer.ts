@@ -1,6 +1,7 @@
 import type { AnalysisInput } from '@envdoctor/contracts';
 import { ISSUE_CODES } from '../constants.js';
 import type { IssueAnalyzer } from '../interfaces/issue-analyzer.js';
+import { getRuntimeDefinitions } from '../utils/runtime-definitions.js';
 
 export class UnusedAnalyzer implements IssueAnalyzer {
   readonly id = 'unused' as const;
@@ -9,7 +10,7 @@ export class UnusedAnalyzer implements IssueAnalyzer {
     const usageNames = new Set(input.usages.map((usage) => usage.name));
     const issues = [];
 
-    for (const definition of input.definitions) {
+    for (const definition of getRuntimeDefinitions(input.definitions)) {
       if (definition.value === '') {
         continue;
       }

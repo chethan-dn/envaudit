@@ -13,16 +13,19 @@ function fixturePath(name: string): string {
 describe('scan orchestrator pipeline integration', () => {
   it('scans full-stack-app with builtin plugins', async () => {
     const repositoryPath = fixturePath('full-stack-app');
-    const plugins = new BuiltinPluginRegistry().getPlugins();
-    const result = await createScanOrchestrator(plugins).scan(repositoryPath);
+    const result = await createScanOrchestrator((policy) =>
+      new BuiltinPluginRegistry().getPlugins(policy),
+    ).scan(repositoryPath);
     const scanResult = result.results[0];
 
-    expect(result.summary).toEqual({
+    expect(result.summary).toMatchObject({
       projectCount: 1,
       definitionCount: 6,
       usageCount: 3,
       issueCount: 6,
     });
+    expect(result.summary.scannedFileCount).toBeGreaterThan(0);
+    expect(result.summary.skippedFileCount).toBeGreaterThanOrEqual(0);
 
     expect(scanResult?.usages.map((usage) => usage.name).sort()).toEqual([
       'DATABASE_URL',
@@ -43,8 +46,9 @@ describe('scan orchestrator pipeline integration', () => {
 
   it('scans pnpm-monorepo as isolated projects', async () => {
     const repositoryPath = fixturePath('pnpm-monorepo');
-    const plugins = new BuiltinPluginRegistry().getPlugins();
-    const result = await createScanOrchestrator(plugins).scan(repositoryPath);
+    const result = await createScanOrchestrator((policy) =>
+      new BuiltinPluginRegistry().getPlugins(policy),
+    ).scan(repositoryPath);
 
     expect(result.summary.projectCount).toBe(2);
     expect(result.results).toHaveLength(2);

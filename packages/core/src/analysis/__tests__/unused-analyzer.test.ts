@@ -69,6 +69,21 @@ describe('UnusedAnalyzer', () => {
     expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, []))).toEqual([]);
   });
 
+  it('does not flag documentation definitions as unused', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'API_KEY',
+        value: 'replace-me',
+        sourceFile: '/repo/app/.env.example',
+        projectRootPath,
+        line: 1,
+        sourceKind: 'documentation',
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, []))).toEqual([]);
+  });
+
   it('emits one issue per unused definition occurrence', () => {
     const definitions: VariableDefinition[] = [
       {

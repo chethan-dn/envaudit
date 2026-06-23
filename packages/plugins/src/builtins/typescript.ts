@@ -1,6 +1,6 @@
-import type { ScannerPlugin } from '@envdoctor/contracts';
+import type { ScanExclusionPolicy } from '@envdoctor/contracts';
 import { createTypeScriptScannerPlugin } from '@envdoctor/plugins-typescript';
 
-export function getBuiltinPlugins(): ScannerPlugin[] {
-  return [createTypeScriptScannerPlugin()];
+export function getBuiltinPlugins(exclusionPolicy: ScanExclusionPolicy) {
+  return [createTypeScriptScannerPlugin({ exclusionPolicy })];
 }

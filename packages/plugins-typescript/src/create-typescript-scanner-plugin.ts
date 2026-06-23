@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import type { ScannerPlugin, VariableUsage } from '@envdoctor/contracts';
+import type { ScanExclusionPolicy, ScanMetrics, ScannerPlugin, VariableUsage } from '@envdoctor/contracts';
 import {
   FastGlobSourceFileDiscoverer,
   type SourceFileDiscoverer,
@@ -19,23 +19,32 @@ export class TypeScriptScannerPlugin implements ScannerPlugin {
   readonly id = 'typescript';
   readonly name = 'TypeScript / JavaScript';
 
+  private sourceScanMetrics: ScanMetrics = {
+    scannedFileCount: 0,
+    skippedFileCount: 0,
+  };
+
   constructor(private readonly deps: TypeScriptScannerDependencies) {}
 
   async detect(rootPath: string): Promise<boolean> {
-    const sourceFiles = await this.deps.sourceFileDiscoverer.discover(rootPath);
-    return sourceFiles.length > 0;
+    const outcome = await this.deps.sourceFileDiscoverer.discover(rootPath);
+    return outcome.scannedFiles.length > 0;
   }
 
   async scan(rootPath: string): Promise<VariableUsage[]> {
     const normalizedRoot = resolve(rootPath);
-    const sourceFilePaths = await this.deps.sourceFileDiscoverer.discover(normalizedRoot);
+    const outcome = await this.deps.sourceFileDiscoverer.discover(normalizedRoot);
+    this.sourceScanMetrics = {
+      scannedFileCount: outcome.scannedFiles.length,
+      skippedFileCount: outcome.skippedFiles.length,
+    };
 
-    if (sourceFilePaths.length === 0) {
+    if (outcome.scannedFiles.length === 0) {
       return [];
     }
 
     const project = createTsMorphProject();
-    const sourceFiles = addSourceFiles(project, sourceFilePaths);
+    const sourceFiles = addSourceFiles(project, outcome.scannedFiles);
     const usages: VariableUsage[] = [];
 
     for (const sourceFile of sourceFiles) {
@@ -44,22 +53,34 @@ export class TypeScriptScannerPlugin implements ScannerPlugin {
 
     return sortUsages(usages);
   }
+
+  getSourceScanMetrics(): ScanMetrics {
+    return this.sourceScanMetrics;
+  }
 }
 
-export function createDefaultTypeScriptScannerDependencies(): TypeScriptScannerDependencies {
+export interface CreateTypeScriptScannerPluginOptions {
+  exclusionPolicy: ScanExclusionPolicy;
+  sourceFileDiscoverer?: SourceFileDiscoverer;
+  usageExtractor?: UsageExtractor;
+}
+
+export function createDefaultTypeScriptScannerDependencies(
+  exclusionPolicy: ScanExclusionPolicy,
+): TypeScriptScannerDependencies {
   return {
-    sourceFileDiscoverer: new FastGlobSourceFileDiscoverer(),
+    sourceFileDiscoverer: new FastGlobSourceFileDiscoverer(exclusionPolicy),
     usageExtractor: new ProcessEnvUsageExtractor(),
   };
 }
 
 export function createTypeScriptScannerPlugin(
-  deps?: Partial<TypeScriptScannerDependencies>,
-): ScannerPlugin {
-  const defaults = createDefaultTypeScriptScannerDependencies();
+  options: CreateTypeScriptScannerPluginOptions,
+): TypeScriptScannerPlugin {
+  const defaults = createDefaultTypeScriptScannerDependencies(options.exclusionPolicy);
 
   return new TypeScriptScannerPlugin({
-    sourceFileDiscoverer: deps?.sourceFileDiscoverer ?? defaults.sourceFileDiscoverer,
-    usageExtractor: deps?.usageExtractor ?? defaults.usageExtractor,
+    sourceFileDiscoverer: options.sourceFileDiscoverer ?? defaults.sourceFileDiscoverer,
+    usageExtractor: options.usageExtractor ?? defaults.usageExtractor,
   });
 }

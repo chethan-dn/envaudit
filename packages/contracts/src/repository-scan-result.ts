@@ -5,6 +5,8 @@ export interface RepositoryScanSummary {
   definitionCount: number;
   usageCount: number;
   issueCount: number;
+  scannedFileCount: number;
+  skippedFileCount: number;
 }
 
 export interface RepositoryScanResult {

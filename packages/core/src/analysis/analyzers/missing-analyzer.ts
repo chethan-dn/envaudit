@@ -1,12 +1,15 @@
 import type { AnalysisInput } from '@envdoctor/contracts';
 import { ISSUE_CODES } from '../constants.js';
 import type { IssueAnalyzer } from '../interfaces/issue-analyzer.js';
+import { getRuntimeDefinitions } from '../utils/runtime-definitions.js';
 
 export class MissingAnalyzer implements IssueAnalyzer {
   readonly id = 'missing' as const;
 
   analyze(input: AnalysisInput) {
-    const definitionNames = new Set(input.definitions.map((definition) => definition.name));
+    const definitionNames = new Set(
+      getRuntimeDefinitions(input.definitions).map((definition) => definition.name),
+    );
     const issues = [];
 
     for (const usage of input.usages) {

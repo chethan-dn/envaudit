@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { Command } from 'commander';
 import { describe, expect, it, vi } from 'vitest';
 import { createScanOrchestrator } from '@envdoctor/core';
-import { BuiltinPluginRegistry } from '@envdoctor/plugins';
+import { getBuiltinPlugins } from '@envdoctor/plugins';
 import { registerScanCommand } from '../commands/scan.js';
 import { ScanCommandHandler } from '../handlers/scan-command-handler.js';
 import { createScanReporter } from '../reporters/create-scan-reporter.js';
@@ -16,7 +16,7 @@ function fixturePath(name: string): string {
 
 function createHandler(stdout: NodeJS.WritableStream): ScanCommandHandler {
   return new ScanCommandHandler({
-    orchestrator: createScanOrchestrator(new BuiltinPluginRegistry().getPlugins()),
+    orchestrator: createScanOrchestrator((policy) => getBuiltinPlugins(policy)),
     createReporter: (options) => createScanReporter(options),
     stdout,
   });
@@ -46,6 +46,8 @@ describe('scan command integration', () => {
     expect(output).toContain('Definitions:');
     expect(output).toContain('Usages:');
     expect(output).toContain('Issues:');
+    expect(output).toContain('Scanned:');
+    expect(output).toContain('Skipped:');
   });
 
   it('outputs RepositoryScanResult JSON with --json', async () => {
@@ -71,6 +73,8 @@ describe('scan command integration', () => {
       definitionCount: 6,
       usageCount: 3,
       issueCount: 6,
+      scannedFileCount: expect.any(Number),
+      skippedFileCount: expect.any(Number),
     });
   });
 

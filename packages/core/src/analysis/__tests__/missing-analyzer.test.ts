@@ -80,6 +80,41 @@ describe('MissingAnalyzer', () => {
     expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, usages))).toEqual([]);
   });
 
+  it('does not treat documentation definitions as satisfying missing usages', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'DATABASE_URL',
+        value: 'replace-me',
+        sourceFile: '/repo/app/.env.example',
+        projectRootPath,
+        line: 1,
+        sourceKind: 'documentation',
+      },
+    ];
+    const usages: VariableUsage[] = [
+      {
+        name: 'DATABASE_URL',
+        sourceFile: '/repo/app/src/app.ts',
+        projectRootPath,
+        line: 1,
+        confidence: 'high',
+        usageType: 'env',
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, usages))).toEqual([
+      {
+        code: 'ENV_MISSING',
+        type: 'missing',
+        variable: 'DATABASE_URL',
+        projectRootPath,
+        sourceFile: '/repo/app/src/app.ts',
+        line: 1,
+        message: 'DATABASE_URL is used but not defined in environment files',
+      },
+    ]);
+  });
+
   it('emits one issue per missing usage occurrence', () => {
     const usages: VariableUsage[] = [
       {

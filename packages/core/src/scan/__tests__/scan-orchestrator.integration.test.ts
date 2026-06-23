@@ -45,7 +45,7 @@ describe('scan orchestrator integration', () => {
       ]),
     };
 
-    const result = await createScanOrchestrator([plugin]).scan(projectRootPath);
+    const result = await createScanOrchestrator(() => [plugin]).scan(projectRootPath);
     const scanResult = result.results[0];
 
     expect(result.summary.projectCount).toBe(1);

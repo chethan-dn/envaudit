@@ -1,0 +1,3 @@
+const testOnly = process.env.TEST_ONLY_VAR;
+
+export { testOnly };

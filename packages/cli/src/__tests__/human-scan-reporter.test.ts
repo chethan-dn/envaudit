@@ -18,10 +18,14 @@ describe('HumanScanReporter', () => {
     expect(output).toContain('  Definitions: 2');
     expect(output).toContain('  Usages:      1');
     expect(output).toContain('  Issues:      2');
+    expect(output).toContain('  Scanned:     3');
+    expect(output).toContain('  Skipped:     1');
     expect(output).toContain('── api (/repo/apps/api) ──');
     expect(output).toContain('Definitions: 2');
     expect(output).toContain('Usages:      1');
     expect(output).toContain('Issues:      2');
+    expect(output).toContain('Scanned:     3');
+    expect(output).toContain('Skipped:     1');
     expect(output).toContain('  ENV_MISSING (1)');
     expect(output).toContain('    MISSING_KEY');
     expect(output).toContain('      src/index.ts:4');

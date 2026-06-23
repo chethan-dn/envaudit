@@ -14,7 +14,7 @@ describe('definition / usage analysis integration', () => {
   const envDiscovery = createEnvDiscoveryService();
   const issueAnalysis = createIssueAnalysisService();
 
-  it('detects empty variables in env-heavy fixture', async () => {
+  it('does not emit ENV_EMPTY for documentation env files in env-heavy fixture', async () => {
     const projectRootPath = fixturePath('env-heavy');
     const definitions = await envDiscovery.discoverForProject({
       name: 'env-heavy',
@@ -26,17 +26,9 @@ describe('definition / usage analysis integration', () => {
       definitions,
       usages: [],
     });
-    const emptyIssues = issues.filter((issue) => issue.code === 'ENV_EMPTY');
 
-    expect(emptyIssues).toContainEqual({
-      code: 'ENV_EMPTY',
-      type: 'empty',
-      variable: 'SECRET_KEY',
-      projectRootPath,
-      sourceFile: resolve(projectRootPath, '.env.template'),
-      line: 4,
-      message: 'SECRET_KEY has an empty value',
-    });
+    expect(issues.filter((issue) => issue.code === 'ENV_EMPTY')).toEqual([]);
+    expect(definitions.some((definition) => definition.sourceKind === 'documentation')).toBe(true);
   });
 
   it('detects unused definitions in env-heavy when no usages are provided', async () => {

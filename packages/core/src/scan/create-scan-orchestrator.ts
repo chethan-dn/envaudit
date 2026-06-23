@@ -1,33 +1,40 @@
 import { createEnvDiscoveryService } from '../env/create-env-discovery-service.js';
 import { createIssueAnalysisService } from '../analysis/create-issue-analysis-service.js';
 import { createProjectDiscoveryService } from '../workspace/create-project-discovery-service.js';
+import { DefaultEnvDoctorConfigLoader } from '../config/envdoctor-config-loader.js';
 import { DefaultPluginScanService } from './plugin-scan-service.js';
-import { DefaultScanOrchestrator, type ScanOrchestratorDependencies } from './scan-orchestrator.js';
+import {
+  DefaultScanOrchestrator,
+  type PluginFactory,
+  type ScanOrchestratorDependencies,
+} from './scan-orchestrator.js';
 import type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
 
 export function createDefaultScanOrchestratorDependencies(
-  plugins: ScanOrchestratorDependencies['plugins'],
+  createPlugins: PluginFactory,
 ): ScanOrchestratorDependencies {
   return {
+    configLoader: new DefaultEnvDoctorConfigLoader(),
     projectDiscovery: createProjectDiscoveryService(),
     envDiscovery: createEnvDiscoveryService(),
     issueAnalysis: createIssueAnalysisService(),
     pluginScan: new DefaultPluginScanService(),
-    plugins,
+    createPlugins,
   };
 }
 
 export function createScanOrchestrator(
-  plugins: ScanOrchestratorDependencies['plugins'],
-  deps?: Partial<Omit<ScanOrchestratorDependencies, 'plugins'>>,
+  createPlugins: PluginFactory,
+  deps?: Partial<Omit<ScanOrchestratorDependencies, 'createPlugins'>>,
 ): ScanOrchestrator {
-  const defaults = createDefaultScanOrchestratorDependencies(plugins);
+  const defaults = createDefaultScanOrchestratorDependencies(createPlugins);
 
   return new DefaultScanOrchestrator({
+    configLoader: deps?.configLoader ?? defaults.configLoader,
     projectDiscovery: deps?.projectDiscovery ?? defaults.projectDiscovery,
     envDiscovery: deps?.envDiscovery ?? defaults.envDiscovery,
     issueAnalysis: deps?.issueAnalysis ?? defaults.issueAnalysis,
     pluginScan: deps?.pluginScan ?? defaults.pluginScan,
-    plugins,
+    createPlugins,
   });
 }

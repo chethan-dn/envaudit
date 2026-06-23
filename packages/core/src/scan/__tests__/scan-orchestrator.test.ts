@@ -1,11 +1,12 @@
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import type { ScannerPlugin } from '@envdoctor/contracts';
-import { DefaultScanOrchestrator } from '../scan-orchestrator.js';
-import { DefaultPluginScanService } from '../plugin-scan-service.js';
+import { DefaultEnvDoctorConfigLoader } from '../../config/envdoctor-config-loader.js';
 import { createEnvDiscoveryService } from '../../env/create-env-discovery-service.js';
 import { createIssueAnalysisService } from '../../analysis/create-issue-analysis-service.js';
 import { createProjectDiscoveryService } from '../../workspace/create-project-discovery-service.js';
+import { DefaultScanOrchestrator } from '../scan-orchestrator.js';
+import { DefaultPluginScanService } from '../plugin-scan-service.js';
 
 describe('DefaultScanOrchestrator', () => {
   it('produces scan results for each discovered project', async () => {
@@ -17,11 +18,12 @@ describe('DefaultScanOrchestrator', () => {
     };
 
     const orchestrator = new DefaultScanOrchestrator({
+      configLoader: new DefaultEnvDoctorConfigLoader(),
       projectDiscovery: createProjectDiscoveryService(),
       envDiscovery: createEnvDiscoveryService(),
       issueAnalysis: createIssueAnalysisService(),
       pluginScan: new DefaultPluginScanService(),
-      plugins: [plugin],
+      createPlugins: () => [plugin],
     });
 
     const repositoryPath = resolve(
@@ -37,6 +39,12 @@ describe('DefaultScanOrchestrator', () => {
       definitionCount: 0,
       usageCount: 0,
       issueCount: 0,
+      scannedFileCount: 0,
+      skippedFileCount: 0,
+    });
+    expect(result.results[0]?.metrics).toEqual({
+      scannedFileCount: 0,
+      skippedFileCount: 0,
     });
   });
 });

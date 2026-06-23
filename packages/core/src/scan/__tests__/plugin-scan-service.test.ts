@@ -30,6 +30,10 @@ describe('DefaultPluginScanService', () => {
 
     expect(outcome.usages).toHaveLength(1);
     expect(outcome.failures).toEqual([]);
+    expect(outcome.sourceMetrics).toEqual({
+      scannedFileCount: 0,
+      skippedFileCount: 0,
+    });
   });
 
   it('skips plugins that do not detect the project', async () => {

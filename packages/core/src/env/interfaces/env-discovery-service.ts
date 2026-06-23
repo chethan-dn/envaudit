@@ -1,6 +1,6 @@
-import type { VariableDefinition, WorkspaceProject } from '@envdoctor/contracts';
+import type { EnvDoctorConfig, VariableDefinition, WorkspaceProject } from '@envdoctor/contracts';
 
 export interface EnvDiscoveryService {
-  discoverForProject(project: WorkspaceProject): Promise<VariableDefinition[]>;
-  discoverForProjects(projects: WorkspaceProject[]): Promise<VariableDefinition[]>;
+  discoverForProject(project: WorkspaceProject, config?: EnvDoctorConfig): Promise<VariableDefinition[]>;
+  discoverForProjects(projects: WorkspaceProject[], config?: EnvDoctorConfig): Promise<VariableDefinition[]>;
 }

@@ -41,6 +41,7 @@ describe('DefaultEnvDiscoveryService', () => {
         sourceFile: resolve(projectRoot, '.env'),
         projectRootPath: projectRoot,
         line: 1,
+        sourceKind: 'runtime',
       },
     ]);
   });

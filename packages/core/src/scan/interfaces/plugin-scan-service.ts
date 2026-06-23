@@ -1,4 +1,4 @@
-import type { VariableUsage, WorkspaceProject } from '@envdoctor/contracts';
+import type { ScanMetrics, VariableUsage, WorkspaceProject } from '@envdoctor/contracts';
 import type { ScannerPlugin } from '@envdoctor/contracts';
 
 export interface PluginScanFailure {
@@ -10,6 +10,7 @@ export interface PluginScanFailure {
 export interface PluginScanOutcome {
   usages: VariableUsage[];
   failures: PluginScanFailure[];
+  sourceMetrics: ScanMetrics;
 }
 
 export interface PluginScanService {

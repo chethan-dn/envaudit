@@ -1,5 +1,10 @@
 import type { RepositoryScanResult } from '@envdoctor/core';
 
+const defaultMetrics = {
+  scannedFileCount: 3,
+  skippedFileCount: 1,
+};
+
 export const sampleRepositoryScanResult: RepositoryScanResult = {
   rootPath: '/repo',
   summary: {
@@ -7,6 +12,8 @@ export const sampleRepositoryScanResult: RepositoryScanResult = {
     definitionCount: 2,
     usageCount: 1,
     issueCount: 2,
+    scannedFileCount: 3,
+    skippedFileCount: 1,
   },
   results: [
     {
@@ -60,6 +67,7 @@ export const sampleRepositoryScanResult: RepositoryScanResult = {
           message: 'UNUSED_KEY is defined but never used',
         },
       ],
+      metrics: defaultMetrics,
     },
   ],
 };
@@ -71,6 +79,8 @@ export const cleanRepositoryScanResult: RepositoryScanResult = {
     definitionCount: 1,
     usageCount: 1,
     issueCount: 0,
+    scannedFileCount: 2,
+    skippedFileCount: 0,
   },
   results: [
     {
@@ -98,6 +108,10 @@ export const cleanRepositoryScanResult: RepositoryScanResult = {
         },
       ],
       issues: [],
+      metrics: {
+        scannedFileCount: 2,
+        skippedFileCount: 0,
+      },
     },
   ],
 };
@@ -109,6 +123,8 @@ export const monorepoRepositoryScanResult: RepositoryScanResult = {
     definitionCount: 2,
     usageCount: 0,
     issueCount: 2,
+    scannedFileCount: 4,
+    skippedFileCount: 0,
   },
   results: [
     {
@@ -137,6 +153,10 @@ export const monorepoRepositoryScanResult: RepositoryScanResult = {
           message: 'WEB_PORT is defined but never used',
         },
       ],
+      metrics: {
+        scannedFileCount: 2,
+        skippedFileCount: 0,
+      },
     },
     {
       project: {
@@ -164,6 +184,10 @@ export const monorepoRepositoryScanResult: RepositoryScanResult = {
           message: 'API_PORT is defined but never used',
         },
       ],
+      metrics: {
+        scannedFileCount: 2,
+        skippedFileCount: 0,
+      },
     },
   ],
 };
