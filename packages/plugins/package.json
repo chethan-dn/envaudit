@@ -1,8 +1,12 @@
 {
   "name": "@envdoctor/plugins",
   "version": "0.0.0",
-  "private": true,
+  "description": "Builtin plugin registry for EnvDoctor",
+  "license": "MIT",
+  "private": false,
   "type": "module",
+  "sideEffects": false,
+  "files": ["dist"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,15 +17,25 @@
       "import": "./dist/builtins/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chethan-dnc/envdoctor.git",
+    "directory": "packages/plugins"
+  },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf dist *.tsbuildinfo",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@envdoctor/contracts": "workspace:*",
-    "@envdoctor/plugins-javascript": "workspace:*",
-    "@envdoctor/plugins-nestjs": "workspace:*",
     "@envdoctor/plugins-typescript": "workspace:*"
   },
   "devDependencies": {

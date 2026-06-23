@@ -8,8 +8,6 @@
   "exclude": ["src/**/__tests__/**", "src/**/*.test.ts"],
   "references": [
     { "path": "../contracts" },
-    { "path": "../plugins-typescript" },
-    { "path": "../plugins-javascript" },
-    { "path": "../plugins-nestjs" }
+    { "path": "../plugins-typescript" }
   ]
 }

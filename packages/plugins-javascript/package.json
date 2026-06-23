@@ -2,6 +2,8 @@
   "name": "@envdoctor/plugins-javascript",
   "version": "0.0.0",
   "private": true,
+  "description": "Future JavaScript scanner plugin (workspace stub)",
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {

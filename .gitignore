@@ -31,4 +31,6 @@ Thumbs.db
 .tmp/
 temp/
 
+.release-artifacts/
+
 !.changeset/

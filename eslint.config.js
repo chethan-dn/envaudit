@@ -7,4 +7,15 @@ export default tseslint.config(
   {
     ignores: ['**/dist/**', '**/node_modules/**', '**/coverage/**'],
   },
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
 );

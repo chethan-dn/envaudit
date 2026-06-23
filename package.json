@@ -8,14 +8,16 @@
   },
   "scripts": {
     "build": "pnpm -r run build",
+    "build:release": "pnpm --filter @envdoctor/cli... run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "validate:pack": "pnpm build:release && node scripts/validate-pack.mjs",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "changeset publish"
+    "release": "pnpm build:release && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
