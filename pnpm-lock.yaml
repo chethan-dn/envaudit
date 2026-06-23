@@ -67,6 +67,10 @@ importers:
       '@envdoctor/plugins-typescript':
         specifier: workspace:*
         version: link:../plugins-typescript
+    devDependencies:
+      '@envdoctor/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/plugins-javascript:
     dependencies:

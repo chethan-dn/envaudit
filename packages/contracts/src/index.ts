@@ -6,4 +6,5 @@ export type { ConfidenceLevel, UsageType, VariableUsage } from './variable-usage
 export type { WorkspaceProject, ProjectDiscoveryResult } from './workspace-project.js';
 export type { IssueType, Issue } from './issue.js';
 export type { ScanResult } from './scan-result.js';
+export type { RepositoryScanResult, RepositoryScanSummary } from './repository-scan-result.js';
 export type { ScannerPlugin } from './scanner-plugin.js';

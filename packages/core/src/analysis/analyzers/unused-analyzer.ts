@@ -10,6 +10,10 @@ export class UnusedAnalyzer implements IssueAnalyzer {
     const issues = [];
 
     for (const definition of input.definitions) {
+      if (definition.value === '') {
+        continue;
+      }
+
       if (usageNames.has(definition.name)) {
         continue;
       }

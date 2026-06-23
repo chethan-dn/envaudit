@@ -1,1 +1,1 @@
-export {};
+export { getBuiltinPlugins } from './typescript.js';

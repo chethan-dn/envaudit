@@ -19,6 +19,7 @@ These are **not** unit-test mocks. They are minimal on-disk sample projects reus
 | `pnpm-monorepo/` | pnpm workspace with two apps and env files | M2 discovery, M3 env, M4 issues, M6 generate, E2E |
 | `mixed-python-node/` | Polyglot python + node layout without a workspace manager | M3 env, M4 issues, future discovery |
 | `env-heavy/` | Many env file variants in one project | **M3 env discovery** (primary) |
+| `full-stack-app/` | Full pipeline: definitions, usages, all issue types | **M7 scan orchestrator** |
 | `empty/` | Minimal repo with no project markers | M2 fallback discovery, E2E edge cases |
 
 ## Known limitations

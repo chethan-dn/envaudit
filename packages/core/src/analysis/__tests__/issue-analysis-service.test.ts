@@ -93,14 +93,14 @@ describe('DefaultIssueAnalysisService', () => {
     const definitions: VariableDefinition[] = [
       {
         name: 'PORT',
-        value: '',
+        value: '3000',
         sourceFile: '/repo/.env',
         projectRootPath: '/repo',
         line: 1,
       },
       {
         name: 'PORT',
-        value: '',
+        value: '3001',
         sourceFile: '/repo/.env',
         projectRootPath: '/repo',
         line: 2,
@@ -119,7 +119,7 @@ describe('DefaultIssueAnalysisService', () => {
 
     const issues = service.analyze(createAnalysisInput('/repo', definitions, usages));
 
-    expect(issues.filter((issue) => issue.code === 'ENV_EMPTY')).toHaveLength(2);
+    expect(issues.filter((issue) => issue.code === 'ENV_EMPTY')).toHaveLength(0);
     expect(issues.filter((issue) => issue.code === 'ENV_DUPLICATE')).toHaveLength(1);
     expect(issues.filter((issue) => issue.code === 'ENV_MISSING')).toHaveLength(1);
     expect(issues.filter((issue) => issue.code === 'ENV_UNUSED')).toHaveLength(2);

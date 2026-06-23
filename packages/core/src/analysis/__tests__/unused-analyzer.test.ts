@@ -55,6 +55,20 @@ describe('UnusedAnalyzer', () => {
     expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, usages))).toEqual([]);
   });
 
+  it('does not flag empty definitions as unused', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'LOG_LEVEL',
+        value: '',
+        sourceFile: '/repo/app/.env',
+        projectRootPath,
+        line: 1,
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, []))).toEqual([]);
+  });
+
   it('emits one issue per unused definition occurrence', () => {
     const definitions: VariableDefinition[] = [
       {

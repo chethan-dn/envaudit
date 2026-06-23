@@ -15,12 +15,16 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "clean": "rm -rf dist *.tsbuildinfo"
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "test": "vitest run"
   },
   "dependencies": {
     "@envdoctor/contracts": "workspace:*",
     "@envdoctor/plugins-javascript": "workspace:*",
     "@envdoctor/plugins-nestjs": "workspace:*",
     "@envdoctor/plugins-typescript": "workspace:*"
+  },
+  "devDependencies": {
+    "@envdoctor/core": "workspace:*"
   }
 }
