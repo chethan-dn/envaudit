@@ -1,3 +1,4 @@
+export type { ProjectLanguage } from './project-language.js';
 export type { VariableDefinition } from './variable-definition.js';
 export type { ConfidenceLevel, VariableUsage } from './variable-usage.js';
 export type { WorkspaceProject, ProjectDiscoveryResult } from './workspace-project.js';

@@ -1,1 +1,12 @@
-export {};
+export { IGNORED_DIRECTORIES } from './constants.js';
+export { createDefaultProjectDiscoveryDependencies, createProjectDiscoveryService } from './create-project-discovery-service.js';
+export { DefaultProjectDiscoveryService } from './project-discovery-service.js';
+export type { ProjectDiscoveryDependencies } from './project-discovery-service.js';
+export type { FileSystemReader } from './interfaces/file-system-reader.js';
+export type { ProjectDiscoveryService } from './interfaces/project-discovery-service.js';
+export type { ProjectMarkerDetector } from './interfaces/project-marker-detector.js';
+export type { WorkspaceManagerDetector } from './interfaces/workspace-manager-detector.js';
+export { NodeFileSystemReader } from './filesystem/node-file-system-reader.js';
+export { createDefaultProjectMarkerDetectors } from './project-markers/index.js';
+export { createDefaultWorkspaceDetectors } from './workspace-detectors/index.js';
+export { expandWorkspaceGlobs } from './utils/glob-expand.js';

@@ -1,8 +1,10 @@
+import type { ProjectLanguage } from './project-language.js';
+
 export interface WorkspaceProject {
   name: string;
   rootPath: string;
   type?: string;
-  language?: string;
+  language?: ProjectLanguage;
 }
 
 export interface ProjectDiscoveryResult {

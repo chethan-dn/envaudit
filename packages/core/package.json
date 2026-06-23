@@ -11,9 +11,11 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "clean": "rm -rf dist *.tsbuildinfo"
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@envdoctor/contracts": "workspace:*"
+    "@envdoctor/contracts": "workspace:*",
+    "fast-glob": "^3.3.3"
   }
 }
