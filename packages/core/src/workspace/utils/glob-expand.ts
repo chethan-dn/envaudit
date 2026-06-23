@@ -1,9 +1,9 @@
+import { DEFAULT_IGNORED_DIRECTORIES } from '@envdoctor/contracts';
 import { resolve } from 'node:path';
 import fg from 'fast-glob';
-import { IGNORED_DIRECTORIES } from '../constants.js';
 
 export function getGlobIgnorePatterns(): string[] {
-  return IGNORED_DIRECTORIES.map((dir) => `**/${dir}/**`);
+  return DEFAULT_IGNORED_DIRECTORIES.map((dir) => `**/${dir}/**`);
 }
 
 export async function expandWorkspaceGlobs(

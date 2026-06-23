@@ -15,7 +15,7 @@ These are **not** unit-test mocks. They are minimal on-disk sample projects reus
 | Fixture | Purpose | Milestones |
 |---------|---------|------------|
 | `single-js/` | Single JavaScript project (no `tsconfig.json`) | M2 discovery, M4 issues, M5 JS scanner |
-| `single-ts/` | Single TypeScript project | M2 discovery, M5 TS scanner |
+| `typescript-usage/` | TypeScript `process.env` usage patterns | M5 TS scanner |
 | `pnpm-monorepo/` | pnpm workspace with two apps and env files | M2 discovery, M3 env, M4 issues, M6 generate, E2E |
 | `mixed-python-node/` | Polyglot python + node layout without a workspace manager | M3 env, M4 issues, future discovery |
 | `env-heavy/` | Many env file variants in one project | **M3 env discovery** (primary) |

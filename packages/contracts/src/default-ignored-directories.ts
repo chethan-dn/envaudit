@@ -1,4 +1,4 @@
-export const IGNORED_DIRECTORIES = [
+export const DEFAULT_IGNORED_DIRECTORIES = [
   'node_modules',
   'dist',
   'coverage',
