@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/contracts" },
+    { "path": "packages/core" },
+    { "path": "packages/plugins-typescript" },
+    { "path": "packages/plugins-javascript" },
+    { "path": "packages/plugins-nestjs" },
+    { "path": "packages/plugins" },
+    { "path": "packages/cli" }
+  ]
+}

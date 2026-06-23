@@ -1,0 +1,26 @@
+Project: EnvDoctor
+
+Requirements:
+
+- TypeScript only
+- Node.js 22+
+- pnpm workspace
+- Plugin architecture
+- SOLID principles
+- Clean architecture
+- No business logic inside CLI commands
+- Core package must not depend on plugins
+- Use interfaces and dependency injection
+- Use ts-morph for future AST scanning
+- Use Commander.js for CLI
+- Use Vitest for tests
+
+Important:
+
+Do not implement scanning logic unless explicitly requested.
+
+Build incrementally.
+
+Do not create placeholder complexity that is not required.
+
+Prefer maintainability over cleverness.

@@ -1,0 +1,26 @@
+{
+  "name": "@envdoctor/plugins",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./builtins": {
+      "types": "./dist/builtins/index.d.ts",
+      "import": "./dist/builtins/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@envdoctor/contracts": "workspace:*",
+    "@envdoctor/plugins-javascript": "workspace:*",
+    "@envdoctor/plugins-nestjs": "workspace:*",
+    "@envdoctor/plugins-typescript": "workspace:*"
+  }
+}
