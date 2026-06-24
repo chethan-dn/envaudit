@@ -9,4 +9,6 @@ export interface VariableUsage {
   line?: number;
   confidence: ConfidenceLevel;
   usageType: UsageType;
+  optional?: boolean;
+  defaultValue?: string;
 }

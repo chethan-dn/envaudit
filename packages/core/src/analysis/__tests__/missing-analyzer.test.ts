@@ -137,4 +137,85 @@ describe('MissingAnalyzer', () => {
 
     expect(analyzer.analyze(createAnalysisInput(projectRootPath, [], usages))).toHaveLength(2);
   });
+
+  it('reports ENV_OPTIONAL for optional usages without matching definitions', () => {
+    const usages: VariableUsage[] = [
+      {
+        name: 'THROTTLE_TTL',
+        sourceFile: '/repo/app/src/config.ts',
+        projectRootPath,
+        line: 70,
+        confidence: 'high',
+        usageType: 'env',
+        optional: true,
+        defaultValue: '60',
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, [], usages))).toEqual([
+      {
+        code: 'ENV_OPTIONAL',
+        type: 'optional',
+        variable: 'THROTTLE_TTL',
+        projectRootPath,
+        sourceFile: '/repo/app/src/config.ts',
+        line: 70,
+        defaultValue: '60',
+        message:
+          'THROTTLE_TTL is used but not defined in environment files. A default value of 60 is provided in code.',
+      },
+    ]);
+  });
+
+  it('reports ENV_OPTIONAL without defaultValue when fallback is non-literal', () => {
+    const usages: VariableUsage[] = [
+      {
+        name: 'FOO',
+        sourceFile: '/repo/app/src/config.ts',
+        projectRootPath,
+        line: 10,
+        confidence: 'high',
+        usageType: 'env',
+        optional: true,
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, [], usages))).toEqual([
+      {
+        code: 'ENV_OPTIONAL',
+        type: 'optional',
+        variable: 'FOO',
+        projectRootPath,
+        sourceFile: '/repo/app/src/config.ts',
+        line: 10,
+        message: 'FOO is used but not defined in environment files. A fallback value is provided in code.',
+      },
+    ]);
+  });
+
+  it('does not report ENV_OPTIONAL when optional usage has a runtime definition', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'THROTTLE_TTL',
+        value: '120',
+        sourceFile: '/repo/app/.env',
+        projectRootPath,
+        line: 1,
+      },
+    ];
+    const usages: VariableUsage[] = [
+      {
+        name: 'THROTTLE_TTL',
+        sourceFile: '/repo/app/src/config.ts',
+        projectRootPath,
+        line: 70,
+        confidence: 'high',
+        usageType: 'env',
+        optional: true,
+        defaultValue: '60',
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, usages))).toEqual([]);
+  });
 });

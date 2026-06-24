@@ -1,4 +1,4 @@
-export type IssueType = 'missing' | 'empty' | 'duplicate' | 'unused' | 'drift';
+export type IssueType = 'missing' | 'empty' | 'duplicate' | 'unused' | 'drift' | 'optional';
 
 export interface Issue {
   code: string;
@@ -8,4 +8,5 @@ export interface Issue {
   sourceFile?: string;
   line?: number;
   message?: string;
+  defaultValue?: string;
 }

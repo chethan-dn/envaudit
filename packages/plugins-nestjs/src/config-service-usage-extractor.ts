@@ -1,5 +1,6 @@
 import { Node, type CallExpression, type SourceFile } from 'ts-morph';
 import type { VariableUsage } from '@envdoctor/contracts';
+import { serializeLiteralDefaultValue } from './utils/serialize-literal-default.js';
 
 const CONFIG_METHODS = new Set(['get', 'getOrThrow']);
 const CONFIG_OBJECT_NAMES = new Set(['configService', 'config']);
@@ -13,9 +14,9 @@ export class ConfigServiceUsageExtractor {
         return;
       }
 
-      const variableName = getConfigServiceCallVariableName(node);
-      if (variableName) {
-        usages.push(createUsage(variableName, sourceFile, projectRootPath, node));
+      const callInfo = getConfigServiceCallInfo(node);
+      if (callInfo) {
+        usages.push(createUsage(callInfo, sourceFile, projectRootPath, node));
       }
     });
 
@@ -23,7 +24,13 @@ export class ConfigServiceUsageExtractor {
   }
 }
 
-function getConfigServiceCallVariableName(node: CallExpression): string | null {
+interface ConfigServiceCallInfo {
+  name: string;
+  optional: boolean;
+  defaultValue?: string;
+}
+
+function getConfigServiceCallInfo(node: CallExpression): ConfigServiceCallInfo | null {
   const expression = node.getExpression();
   if (!Node.isPropertyAccessExpression(expression)) {
     return null;
@@ -42,11 +49,21 @@ function getConfigServiceCallVariableName(node: CallExpression): string | null {
     return null;
   }
 
-  if (Node.isStringLiteral(firstArgument) || Node.isNoSubstitutionTemplateLiteral(firstArgument)) {
-    return firstArgument.getLiteralText();
+  if (!Node.isStringLiteral(firstArgument) && !Node.isNoSubstitutionTemplateLiteral(firstArgument)) {
+    return null;
   }
 
-  return null;
+  const name = firstArgument.getLiteralText();
+  const secondArgument = node.getArguments()[1];
+  if (!secondArgument) {
+    return { name, optional: false };
+  }
+
+  const defaultValue = serializeLiteralDefaultValue(secondArgument);
+
+  return defaultValue === undefined
+    ? { name, optional: true }
+    : { name, optional: true, defaultValue };
 }
 
 function isConfigServiceReceiver(node: import('ts-morph').Node): boolean {
@@ -62,17 +79,19 @@ function isConfigServiceReceiver(node: import('ts-morph').Node): boolean {
 }
 
 function createUsage(
-  name: string,
+  callInfo: ConfigServiceCallInfo,
   sourceFile: SourceFile,
   projectRootPath: string,
   node: CallExpression,
 ): VariableUsage {
   return {
-    name,
+    name: callInfo.name,
     sourceFile: sourceFile.getFilePath(),
     projectRootPath,
     line: node.getStartLineNumber(),
     confidence: 'high',
     usageType: 'env',
+    optional: callInfo.optional,
+    ...(callInfo.defaultValue !== undefined ? { defaultValue: callInfo.defaultValue } : {}),
   };
 }

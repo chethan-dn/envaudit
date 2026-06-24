@@ -12,7 +12,12 @@ describe('ConfigServiceUsageExtractor', () => {
     return extractor.extract(sourceFile, projectRootPath);
   }
 
-  function expectUsage(name: string, line: number, filePath = '/repo/app/src/service.ts') {
+  function expectUsage(
+    name: string,
+    line: number,
+    options: { optional?: boolean; defaultValue?: string } = {},
+    filePath = '/repo/app/src/service.ts',
+  ) {
     return {
       name,
       sourceFile: filePath,
@@ -20,6 +25,8 @@ describe('ConfigServiceUsageExtractor', () => {
       line,
       confidence: 'high' as const,
       usageType: 'env' as const,
+      optional: options.optional ?? false,
+      ...(options.defaultValue !== undefined ? { defaultValue: options.defaultValue } : {}),
     };
   }
 
@@ -56,6 +63,36 @@ describe('ConfigServiceUsageExtractor', () => {
   it('extracts this.configService.getOrThrow usages', () => {
     expect(extract('const secret = this.configService.getOrThrow("KEYCLOAK_CLIENT_SECRET");\n')).toEqual([
       expectUsage('KEYCLOAK_CLIENT_SECRET', 1),
+    ]);
+  });
+
+  it('marks config.get with a literal default as optional', () => {
+    expect(extract('const ttl = config.get("THROTTLE_TTL", 60);\n')).toEqual([
+      expectUsage('THROTTLE_TTL', 1, { optional: true, defaultValue: '60' }),
+    ]);
+  });
+
+  it('marks configService.get with a literal default as optional', () => {
+    expect(extract('const limit = configService.get("THROTTLE_LIMIT", 100);\n')).toEqual([
+      expectUsage('THROTTLE_LIMIT', 1, { optional: true, defaultValue: '100' }),
+    ]);
+  });
+
+  it('marks this.config.get with a literal default as optional', () => {
+    expect(extract('const port = this.config.get("PORT", 3000);\n')).toEqual([
+      expectUsage('PORT', 1, { optional: true, defaultValue: '3000' }),
+    ]);
+  });
+
+  it('marks this.configService.get with a boolean default as optional', () => {
+    expect(extract('const debug = this.configService.get("DEBUG", true);\n')).toEqual([
+      expectUsage('DEBUG', 1, { optional: true, defaultValue: 'true' }),
+    ]);
+  });
+
+  it('marks config.get with a non-literal default as optional without defaultValue', () => {
+    expect(extract('const value = config.get("FOO", SOME_CONSTANT);\n')).toEqual([
+      expectUsage('FOO', 1, { optional: true }),
     ]);
   });
 

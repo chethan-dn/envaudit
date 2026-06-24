@@ -1,5 +1,11 @@
-import { Node, type ElementAccessExpression, type PropertyAccessExpression, type SourceFile } from 'ts-morph';
+import {
+  Node,
+  type ElementAccessExpression,
+  type PropertyAccessExpression,
+  type SourceFile,
+} from 'ts-morph';
 import type { VariableUsage } from '@envdoctor/contracts';
+import { getProcessEnvOptionalDefault } from './process-env-optional-default.js';
 
 export interface UsageExtractor {
   extract(sourceFile: SourceFile, projectRootPath: string): VariableUsage[];
@@ -74,6 +80,8 @@ function createUsage(
   projectRootPath: string,
   node: PropertyAccessExpression | ElementAccessExpression,
 ): VariableUsage {
+  const optionalInfo = getProcessEnvOptionalDefault(node);
+
   return {
     name,
     sourceFile: sourceFile.getFilePath(),
@@ -81,5 +89,7 @@ function createUsage(
     line: node.getStartLineNumber(),
     confidence: 'high',
     usageType: 'env',
+    optional: optionalInfo.optional,
+    ...(optionalInfo.defaultValue !== undefined ? { defaultValue: optionalInfo.defaultValue } : {}),
   };
 }

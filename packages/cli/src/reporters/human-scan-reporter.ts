@@ -2,7 +2,7 @@ import { relative } from 'node:path';
 import type { EnvironmentFileSummary, Issue, RepositoryScanResult, ScanResult } from '@envdoctor/core';
 import type { ScanReporter } from './interfaces/scan-reporter.js';
 
-const ISSUE_CODE_ORDER = ['ENV_DUPLICATE', 'ENV_EMPTY', 'ENV_MISSING', 'ENV_UNUSED'] as const;
+const ISSUE_CODE_ORDER = ['ENV_DUPLICATE', 'ENV_EMPTY', 'ENV_MISSING', 'ENV_OPTIONAL', 'ENV_UNUSED'] as const;
 
 export class HumanScanReporter implements ScanReporter {
   render(result: RepositoryScanResult): string {
@@ -66,7 +66,9 @@ export class HumanScanReporter implements ScanReporter {
         if (location) {
           lines.push(`      ${location}`);
         }
-        if (issue.message) {
+        if (issue.code === 'ENV_OPTIONAL' && issue.defaultValue !== undefined) {
+          lines.push(`      Default value: ${issue.defaultValue}`);
+        } else if (issue.message) {
           lines.push(`      ${issue.message}`);
         }
       }

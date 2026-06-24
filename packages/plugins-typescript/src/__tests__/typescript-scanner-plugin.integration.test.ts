@@ -33,6 +33,7 @@ describe('TypeScriptScannerPlugin integration', () => {
         line: 1,
         confidence: 'high',
         usageType: 'env',
+        optional: false,
       },
       {
         name: 'JWT_SECRET',
@@ -41,6 +42,7 @@ describe('TypeScriptScannerPlugin integration', () => {
         line: 2,
         confidence: 'high',
         usageType: 'env',
+        optional: false,
       },
       {
         name: 'REDIS_URL',
@@ -49,6 +51,7 @@ describe('TypeScriptScannerPlugin integration', () => {
         line: 1,
         confidence: 'high',
         usageType: 'env',
+        optional: false,
       },
     ]);
   });
