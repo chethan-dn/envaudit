@@ -8,6 +8,7 @@
       "@envdoctor/contracts",
       "@envdoctor/core",
       "@envdoctor/plugins-typescript",
+      "@envdoctor/plugins-nestjs",
       "@envdoctor/plugins"
     ]
   ],
@@ -15,5 +16,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@envdoctor/plugins-javascript", "@envdoctor/plugins-nestjs"]
+  "ignore": ["@envdoctor/plugins-javascript"]
 }
