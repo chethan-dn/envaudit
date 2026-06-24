@@ -1,4 +1,4 @@
-import type { VariableDefinition } from 'envaudit-contracts';
+import type { VariableDefinition } from 'envanalyser-contracts';
 
 export function getValidationSchemaDefinitions(
   definitions: VariableDefinition[],

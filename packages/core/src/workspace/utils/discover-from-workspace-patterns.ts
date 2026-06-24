@@ -1,5 +1,5 @@
 import { basename, resolve } from 'node:path';
-import type { WorkspaceProject } from 'envaudit-contracts';
+import type { WorkspaceProject } from 'envanalyser-contracts';
 import type { FileSystemReader } from '../interfaces/file-system-reader.js';
 import { expandWorkspaceGlobs } from '../utils/glob-expand.js';
 

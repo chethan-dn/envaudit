@@ -1,4 +1,4 @@
-import type { WorkspaceProject } from 'envaudit-contracts';
+import type { WorkspaceProject } from 'envanalyser-contracts';
 
 export interface ProjectMarkerDetector {
   readonly id: string;

@@ -1,5 +1,5 @@
 import { relative } from 'node:path';
-import type { EnvironmentFileSummary, Issue, IssueLocation, RepositoryScanResult, ScanResult } from 'envaudit-core';
+import type { EnvironmentFileSummary, Issue, IssueLocation, RepositoryScanResult, ScanResult } from 'envanalyser-core';
 import type { ScanReporter } from './interfaces/scan-reporter.js';
 
 const ISSUE_CODE_ORDER = [

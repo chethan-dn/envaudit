@@ -1,13 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import type { EnvAuditConfig } from 'envaudit-contracts';
-import { DEFAULT_ENV_AUDIT_CONFIG } from './default-envaudit-config.js';
-import type { EnvAuditConfigLoader } from './interfaces/envaudit-config-loader.js';
+import type { EnvAnalyserConfig } from 'envanalyser-contracts';
+import { DEFAULT_ENV_ANALYSER_CONFIG } from './default-envanalyser-config.js';
+import type { EnvAnalyserConfigLoader } from './interfaces/envanalyser-config-loader.js';
 
-const CONFIG_FILE_NAME = '.envaudit.json';
+const CONFIG_FILE_NAME = '.envanalyser.json';
 
-export class DefaultEnvAuditConfigLoader implements EnvAuditConfigLoader {
-  async load(repositoryRootPath: string): Promise<EnvAuditConfig> {
+export class DefaultEnvAnalyserConfigLoader implements EnvAnalyserConfigLoader {
+  async load(repositoryRootPath: string): Promise<EnvAnalyserConfig> {
     const configPath = resolve(repositoryRootPath, CONFIG_FILE_NAME);
 
     let raw: string;
@@ -15,7 +15,7 @@ export class DefaultEnvAuditConfigLoader implements EnvAuditConfigLoader {
       raw = await readFile(configPath, 'utf8');
     } catch (error) {
       if (isNotFoundError(error)) {
-        return DEFAULT_ENV_AUDIT_CONFIG;
+        return DEFAULT_ENV_ANALYSER_CONFIG;
       }
 
       throw error;
@@ -28,7 +28,7 @@ export class DefaultEnvAuditConfigLoader implements EnvAuditConfigLoader {
       throw new Error(`Invalid ${CONFIG_FILE_NAME}: malformed JSON`);
     }
 
-    return validateEnvAuditConfig(parsed);
+    return validateEnvAnalyserConfig(parsed);
   }
 }
 
@@ -41,13 +41,13 @@ function isNotFoundError(error: unknown): boolean {
   );
 }
 
-function validateEnvAuditConfig(value: unknown): EnvAuditConfig {
+function validateEnvAnalyserConfig(value: unknown): EnvAnalyserConfig {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {
-    throw new Error('Invalid .envaudit.json: root value must be an object');
+    throw new Error('Invalid .envanalyser.json: root value must be an object');
   }
 
   const record = value as Record<string, unknown>;
-  const config: EnvAuditConfig = {};
+  const config: EnvAnalyserConfig = {};
 
   if ('exclude' in record) {
     config.exclude = validateStringArray(record.exclude, 'exclude');
@@ -62,7 +62,7 @@ function validateEnvAuditConfig(value: unknown): EnvAuditConfig {
 
 function validateStringArray(value: unknown, fieldName: string): string[] {
   if (!Array.isArray(value) || value.some((entry) => typeof entry !== 'string')) {
-    throw new Error(`Invalid .envaudit.json: "${fieldName}" must be an array of strings`);
+    throw new Error(`Invalid .envanalyser.json: "${fieldName}" must be an array of strings`);
   }
 
   return value;

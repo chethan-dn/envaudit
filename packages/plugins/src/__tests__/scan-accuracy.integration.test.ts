@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { createScanOrchestrator } from 'envaudit-core';
+import { createScanOrchestrator } from 'envanalyser-core';
 import { getBuiltinPlugins } from '../builtins/index.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
@@ -44,9 +44,9 @@ describe('scan accuracy integration', () => {
     ).toBe(false);
   });
 
-  it('honors custom excludes from .envaudit.json', async () => {
+  it('honors custom excludes from .envanalyser.json', async () => {
     const result = await createScanOrchestrator((policy) => getBuiltinPlugins(policy)).scan(
-      fixturePath('envaudit-config'),
+      fixturePath('envanalyser-config'),
     );
     const scanResult = result.results[0];
 

@@ -7,7 +7,7 @@ export {
   ProjectDirectoryNotFoundError,
   ProjectEnvFileDiscoverer,
 } from './discovery/project-env-file-discoverer.js';
-export type { EnvironmentFileSummary } from 'envaudit-contracts';
+export type { EnvironmentFileSummary } from 'envanalyser-contracts';
 export type { EnvDiscoveryService, EnvDiscoveryProjectOptions } from './interfaces/env-discovery-service.js';
 export type { EnvDiscoveryResult } from './interfaces/env-discovery-result.js';
 export { RuntimeEnvFileNotFoundError } from './env-discovery-service.js';

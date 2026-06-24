@@ -1,4 +1,4 @@
-export interface EnvAuditConfig {
+export interface EnvAnalyserConfig {
   /** Additional glob patterns to exclude from source scanning. */
   exclude?: string[];
 

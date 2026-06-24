@@ -13,7 +13,7 @@ describe('DefaultProjectDiscoveryService', () => {
   const fs = new NodeFileSystemReader();
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-discovery-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envanalyser-discovery-'));
   });
 
   afterEach(async () => {

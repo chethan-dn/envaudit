@@ -1,4 +1,4 @@
-# EnvAudit
+# EnvAnalyser
 
 ## Vision
 
@@ -17,10 +17,10 @@ Detect:
 
 ## Commands
 
-envaudit scan
-envaudit compare
-envaudit explain <variable>
-envaudit generate
+envanalyser scan
+envanalyser compare
+envanalyser explain <variable>
+envanalyser generate
 
 ## Architecture
 

@@ -1,7 +1,7 @@
 {
-  "name": "envaudit-core",
+  "name": "envanalyser-core",
   "version": "0.2.0",
-  "description": "Core orchestration and analysis engine for EnvAudit",
+  "description": "Core orchestration and analysis engine for EnvAnalyser",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chethan-dnc/envaudit.git",
+    "url": "https://github.com/chethan-dnc/envanalyser.git",
     "directory": "packages/core"
   },
   "engines": {
@@ -33,7 +33,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "envaudit-contracts": "workspace:*",
+    "envanalyser-contracts": "workspace:*",
     "fast-glob": "^3.3.3"
   }
 }

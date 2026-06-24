@@ -1,4 +1,4 @@
-import type { Issue } from 'envaudit-contracts';
+import type { Issue } from 'envanalyser-contracts';
 
 export function sortIssues(issues: Issue[]): Issue[] {
   return [...issues].sort((a, b) => {

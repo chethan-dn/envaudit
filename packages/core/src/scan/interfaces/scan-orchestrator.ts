@@ -1,4 +1,4 @@
-import type { RepositoryScanResult } from 'envaudit-contracts';
+import type { RepositoryScanResult } from 'envanalyser-contracts';
 import type { ScanOptions } from './scan-options.js';
 
 export interface ScanOrchestrator {

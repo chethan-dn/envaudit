@@ -1,8 +1,8 @@
-import type { EnvAuditConfig, WorkspaceProject } from 'envaudit-contracts';
+import type { EnvAnalyserConfig, WorkspaceProject } from 'envanalyser-contracts';
 import type { EnvDiscoveryResult } from './env-discovery-result.js';
 
 export interface EnvDiscoveryProjectOptions {
-  config?: EnvAuditConfig;
+  config?: EnvAnalyserConfig;
   workspaceRootPath?: string;
   runtimeEnvOverridePath?: string;
 }

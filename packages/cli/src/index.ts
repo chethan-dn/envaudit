@@ -12,7 +12,7 @@ const { version } = require('../package.json') as { version: string };
 
 const program = new Command();
 
-program.name('envaudit').description('Environment Intelligence CLI').version(version);
+program.name('envanalyser').description('Environment Intelligence CLI').version(version);
 
 registerScanCommand(program);
 registerCompareCommand(program);

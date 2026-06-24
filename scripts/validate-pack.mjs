@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync } from 'node:child_process';
-import { cp, mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { access, cp, mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -67,12 +67,19 @@ async function validatePackagePack(relativePackagePath, options = {}) {
 
   await assertDistExists(packageDir, packageJson.name);
 
-  const tempDir = await mkdtemp(join(tmpdir(), 'envaudit-pack-'));
+  if (packageJson.name === 'envanalyser') {
+    await assertCliBinEntry(packageDir);
+  }
+
+  const tempDir = await mkdtemp(join(tmpdir(), 'envanalyser-pack-'));
   const packDir = join(tempDir, 'package');
 
   try {
     const releasePackageJson = replaceWorkspaceDependencies(packageJson);
     await cp(join(packageDir, 'dist'), join(packDir, 'dist'), { recursive: true });
+    if (packageJson.name === 'envanalyser') {
+      await cp(join(packageDir, 'bin'), join(packDir, 'bin'), { recursive: true });
+    }
     await writeFile(join(packDir, 'package.json'), `${JSON.stringify(releasePackageJson, null, 2)}\n`);
 
     const tarballName = execSync(
@@ -100,6 +107,9 @@ async function validatePackagePack(relativePackagePath, options = {}) {
 
     assertNoWorkspaceDependencies(packedPackageJson, packageJson.name);
     assertContainsDist(packageJson.name, tarballPath);
+    if (packageJson.name === 'envanalyser') {
+      assertCliBinPreserved(packedPackageJson, tarballPath);
+    }
 
     console.log(`OK ${packageJson.name} -> ${tarballPath}`);
 
@@ -111,13 +121,13 @@ async function validatePackagePack(relativePackagePath, options = {}) {
 
 async function runInstallSmokeTest(artifactPaths) {
   const cliTarball = artifactPaths.find(
-    (path) => /\/envaudit-\d+\.\d+\.\d+\.tgz$/.test(path) && !/\/envaudit-[^/]+-\d/.test(path),
+    (path) => /\/envanalyser-\d+\.\d+\.\d+\.tgz$/.test(path) && !/\/envanalyser-[^/]+-\d/.test(path),
   );
   if (!cliTarball) {
     throw new Error('CLI tarball was not produced in .release-artifacts/.');
   }
 
-  const smokeDir = await mkdtemp(join(tmpdir(), 'envaudit-smoke-'));
+  const smokeDir = await mkdtemp(join(tmpdir(), 'envanalyser-smoke-'));
   const fixturePath = join(repoRoot, 'fixtures', 'full-stack-app');
 
   try {
@@ -127,10 +137,10 @@ async function runInstallSmokeTest(artifactPaths) {
     const installArgs = artifactPaths.map((path) => JSON.stringify(path)).join(' ');
     execSync(`npm install ${installArgs}`, { cwd: smokeDir, stdio: 'pipe' });
 
-    execSync('npx envaudit --help', { cwd: smokeDir, stdio: 'pipe' });
-    runCommandAllowingExitCodes(`npx envaudit scan ${JSON.stringify(fixturePath)}`, smokeDir, [0, 1]);
+    execSync('npx envanalyser --help', { cwd: smokeDir, stdio: 'pipe' });
+    runCommandAllowingExitCodes(`npx envanalyser scan ${JSON.stringify(fixturePath)}`, smokeDir, [0, 1]);
 
-    console.log(`Smoke test passed: installed ${cliTarball} and ran envaudit scan.`);
+    console.log(`Smoke test passed: installed ${cliTarball} and ran envanalyser scan.`);
   } finally {
     await rm(smokeDir, { recursive: true, force: true });
   }
@@ -195,6 +205,52 @@ function assertNoWorkspaceDependencies(packageJson, packageName) {
         );
       }
     }
+  }
+}
+
+async function assertCliBinEntry(packageDir) {
+  const binPath = join(packageDir, 'bin', 'envanalyser.js');
+  const distEntryPath = join(packageDir, 'dist', 'index.js');
+
+  let binContents;
+  try {
+    binContents = await readFile(binPath, 'utf8');
+  } catch (error) {
+    throw new Error('envanalyser is missing bin/envanalyser.js.', { cause: error });
+  }
+
+  if (!binContents.startsWith('#!/usr/bin/env node\n')) {
+    throw new Error('envanalyser bin/envanalyser.js must start with #!/usr/bin/env node');
+  }
+
+  try {
+    await access(distEntryPath);
+  } catch (error) {
+    throw new Error('envanalyser is missing dist/index.js. Run pnpm build:release first.', {
+      cause: error,
+    });
+  }
+}
+
+function assertCliBinPreserved(packedPackageJson, tarballPath) {
+  const binEntry = packedPackageJson.bin?.envanalyser;
+  if (binEntry !== 'bin/envanalyser.js' && binEntry !== './bin/envanalyser.js') {
+    throw new Error(
+      `envanalyser tarball package.json is missing bin.envanalyser mapping (received ${JSON.stringify(packedPackageJson.bin)}).`,
+    );
+  }
+
+  const listing = execSync(`tar -tzf ${JSON.stringify(tarballPath)}`, { encoding: 'utf8' });
+  if (!listing.includes('package/bin/envanalyser.js')) {
+    throw new Error('envanalyser tarball is missing package/bin/envanalyser.js.');
+  }
+
+  const packedBinContents = execSync(
+    `tar -xOzf ${JSON.stringify(tarballPath)} package/bin/envanalyser.js`,
+    { encoding: 'utf8' },
+  );
+  if (!packedBinContents.startsWith('#!/usr/bin/env node\n')) {
+    throw new Error('envanalyser tarball bin/envanalyser.js is missing a Node shebang.');
   }
 }
 

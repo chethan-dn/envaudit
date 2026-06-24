@@ -2,14 +2,14 @@ import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { createScanExclusionPolicy } from 'envaudit-contracts';
+import { createScanExclusionPolicy } from 'envanalyser-contracts';
 import { FastGlobSourceFileDiscoverer } from '../discovery/source-file-discoverer.js';
 
 describe('FastGlobSourceFileDiscoverer', () => {
   let tempDir: string;
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-ts-plugin-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envanalyser-ts-plugin-'));
   });
 
   afterEach(async () => {

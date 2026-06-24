@@ -1,4 +1,4 @@
-import type { VariableDefinition } from 'envaudit-contracts';
+import type { VariableDefinition } from 'envanalyser-contracts';
 import type { EnvFileParser } from '../interfaces/env-file-parser.js';
 
 export class DotenvParser implements EnvFileParser {

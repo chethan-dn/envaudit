@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { DuplicateAnalyzer } from '../analyzers/duplicate-analyzer.js';
-import type { VariableDefinition } from 'envaudit-contracts';
+import type { VariableDefinition } from 'envanalyser-contracts';
 import { createAnalysisInput } from './test-helpers.js';
 
 describe('DuplicateAnalyzer', () => {

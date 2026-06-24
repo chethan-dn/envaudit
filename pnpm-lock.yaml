@@ -35,10 +35,10 @@ importers:
 
   packages/cli:
     dependencies:
-      'envaudit-core':
+      'envanalyser-core':
         specifier: workspace:*
         version: link:../core
-      'envaudit-plugins':
+      'envanalyser-plugins':
         specifier: workspace:*
         version: link:../plugins
       commander:
@@ -49,7 +49,7 @@ importers:
 
   packages/core:
     dependencies:
-      'envaudit-contracts':
+      'envanalyser-contracts':
         specifier: workspace:*
         version: link:../contracts
       fast-glob:
@@ -58,26 +58,26 @@ importers:
 
   packages/plugins:
     dependencies:
-      'envaudit-contracts':
+      'envanalyser-contracts':
         specifier: workspace:*
         version: link:../contracts
-      'envaudit-plugins-typescript':
+      'envanalyser-plugins-typescript':
         specifier: workspace:*
         version: link:../plugins-typescript
     devDependencies:
-      'envaudit-core':
+      'envanalyser-core':
         specifier: workspace:*
         version: link:../core
 
   packages/plugins-javascript:
     dependencies:
-      'envaudit-contracts':
+      'envanalyser-contracts':
         specifier: workspace:*
         version: link:../contracts
 
   packages/plugins-nestjs:
     dependencies:
-      'envaudit-contracts':
+      'envanalyser-contracts':
         specifier: workspace:*
         version: link:../contracts
       fast-glob:
@@ -89,10 +89,10 @@ importers:
 
   packages/plugins-typescript:
     dependencies:
-      'envaudit-contracts':
+      'envanalyser-contracts':
         specifier: workspace:*
         version: link:../contracts
-      'envaudit-plugins-nestjs':
+      'envanalyser-plugins-nestjs':
         specifier: workspace:*
         version: link:../plugins-nestjs
       fast-glob:

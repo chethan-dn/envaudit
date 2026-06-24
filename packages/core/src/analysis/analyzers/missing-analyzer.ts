@@ -1,5 +1,5 @@
-import type { AnalysisInput, VariableDefinition, VariableUsage } from 'envaudit-contracts';
-import type { Issue } from 'envaudit-contracts';
+import type { AnalysisInput, VariableDefinition, VariableUsage } from 'envanalyser-contracts';
+import type { Issue } from 'envanalyser-contracts';
 import { ISSUE_CODES } from '../constants.js';
 import type { IssueAnalyzer } from '../interfaces/issue-analyzer.js';
 import { getRuntimeDefinitions } from '../utils/runtime-definitions.js';

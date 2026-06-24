@@ -1,13 +1,13 @@
 import { resolve } from 'node:path';
 import type {
-  EnvAuditConfig,
+  EnvAnalyserConfig,
   RepositoryScanResult,
   ScanMetrics,
   ScanResult,
   ScanExclusionPolicy,
   WorkspaceProject,
-} from 'envaudit-contracts';
-import type { ScannerPlugin } from 'envaudit-contracts';
+} from 'envanalyser-contracts';
+import type { ScannerPlugin } from 'envanalyser-contracts';
 import type { PluginScanService } from './interfaces/plugin-scan-service.js';
 import type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
 import type { ScanOptions } from './interfaces/scan-options.js';
@@ -15,15 +15,15 @@ import type { EnvDiscoveryService } from '../env/interfaces/env-discovery-servic
 import type { IssueAnalysisService } from '../analysis/interfaces/issue-analysis-service.js';
 import type { ProjectDiscoveryService } from '../workspace/interfaces/project-discovery-service.js';
 import type { WorkspaceRootResolver } from '../workspace/workspace-root-resolver.js';
-import type { EnvAuditConfigLoader } from '../config/interfaces/envaudit-config-loader.js';
-import { createScanExclusionPolicy } from 'envaudit-contracts';
+import type { EnvAnalyserConfigLoader } from '../config/interfaces/envanalyser-config-loader.js';
+import { createScanExclusionPolicy } from 'envanalyser-contracts';
 import { groupIssues } from '../analysis/utils/group-issues.js';
 import { buildRepositoryScanSummary } from './utils/build-repository-scan-summary.js';
 
 export type PluginFactory = (exclusionPolicy: ScanExclusionPolicy) => ScannerPlugin[];
 
 export interface ScanOrchestratorDependencies {
-  configLoader: EnvAuditConfigLoader;
+  configLoader: EnvAnalyserConfigLoader;
   projectDiscovery: ProjectDiscoveryService;
   workspaceRootResolver: WorkspaceRootResolver;
   envDiscovery: EnvDiscoveryService;
@@ -34,7 +34,7 @@ export interface ScanOrchestratorDependencies {
 
 export interface ScanContext {
   rootPath: string;
-  config: EnvAuditConfig;
+  config: EnvAnalyserConfig;
   exclusionPolicy: ScanExclusionPolicy;
   workspaceRootPath: string;
 }

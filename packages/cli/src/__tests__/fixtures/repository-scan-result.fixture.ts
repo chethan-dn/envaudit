@@ -1,4 +1,4 @@
-import type { RepositoryScanResult } from 'envaudit-core';
+import type { RepositoryScanResult } from 'envanalyser-core';
 
 const defaultMetrics = {
   scannedFileCount: 3,

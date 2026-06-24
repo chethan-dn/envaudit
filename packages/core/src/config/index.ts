@@ -1,5 +1,5 @@
-export { DefaultEnvAuditConfigLoader } from './envaudit-config-loader.js';
-export { DEFAULT_ENV_AUDIT_CONFIG } from './default-envaudit-config.js';
-export { createScanExclusionPolicy } from 'envaudit-contracts';
-export { createDefaultScanExclusionPolicy } from 'envaudit-contracts';
-export type { EnvAuditConfigLoader } from './interfaces/envaudit-config-loader.js';
+export { DefaultEnvAnalyserConfigLoader } from './envanalyser-config-loader.js';
+export { DEFAULT_ENV_ANALYSER_CONFIG } from './default-envanalyser-config.js';
+export { createScanExclusionPolicy } from 'envanalyser-contracts';
+export { createDefaultScanExclusionPolicy } from 'envanalyser-contracts';
+export type { EnvAnalyserConfigLoader } from './interfaces/envanalyser-config-loader.js';

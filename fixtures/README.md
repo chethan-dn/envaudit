@@ -1,6 +1,6 @@
 # Product Fixtures
 
-Long-lived reference repositories for EnvAudit development and future E2E tests.
+Long-lived reference repositories for EnvAnalyser development and future E2E tests.
 
 These are **not** unit-test mocks. They are minimal on-disk sample projects reused across milestones.
 

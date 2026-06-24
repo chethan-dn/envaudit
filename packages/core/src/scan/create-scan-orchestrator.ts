@@ -5,7 +5,7 @@ import {
   createProjectDiscoveryService,
 } from '../workspace/create-project-discovery-service.js';
 import { WorkspaceRootResolver } from '../workspace/workspace-root-resolver.js';
-import { DefaultEnvAuditConfigLoader } from '../config/envaudit-config-loader.js';
+import { DefaultEnvAnalyserConfigLoader } from '../config/envanalyser-config-loader.js';
 import { DefaultPluginScanService } from './plugin-scan-service.js';
 import {
   DefaultScanOrchestrator,
@@ -20,7 +20,7 @@ export function createDefaultScanOrchestratorDependencies(
   const projectDiscoveryDeps = createDefaultProjectDiscoveryDependencies();
 
   return {
-    configLoader: new DefaultEnvAuditConfigLoader(),
+    configLoader: new DefaultEnvAnalyserConfigLoader(),
     projectDiscovery: createProjectDiscoveryService(),
     workspaceRootResolver: new WorkspaceRootResolver({
       fileSystem: projectDiscoveryDeps.fileSystem,

@@ -1,25 +1,25 @@
-# EnvAudit
+# EnvAnalyser
 
 Environment Intelligence CLI for discovering environment variable definitions, scanning code usage, and reporting configuration issues.
 
 ## Quick Start
 
 ```bash
-npm install -g envaudit
+npm install -g envanalyser
 cd my-app
-envaudit scan
+envanalyser scan
 ```
 
-EnvAudit scans runtime env files (`.env`, etc.) and your TypeScript/JavaScript source, then reports mismatches such as missing, unused, or duplicate variables.
+EnvAnalyser scans runtime env files (`.env`, etc.) and your TypeScript/JavaScript source, then reports mismatches such as missing, unused, or duplicate variables.
 
 ## Installation
 
 ```bash
 # Global CLI (recommended)
-npm install -g envaudit
+npm install -g envanalyser
 
 # Or run without installing
-npx envaudit scan .
+npx envanalyser scan .
 ```
 
 Requirements:
@@ -30,16 +30,16 @@ Requirements:
 
 ```bash
 # Scan current directory (human-readable output)
-envaudit scan
+envanalyser scan
 
 # Scan a repository path
-envaudit scan ./my-app
+envanalyser scan ./my-app
 
 # Machine-readable JSON (RepositoryScanResult)
-envaudit scan --json
+envanalyser scan --json
 
 # Use a specific runtime env file
-envaudit scan --env .env.production
+envanalyser scan --env .env.production
 ```
 
 ### Example scan
@@ -47,7 +47,7 @@ envaudit scan --env .env.production
 Given a project with `.env` and source files:
 
 ```bash
-envaudit scan ./my-app
+envanalyser scan ./my-app
 ```
 
 Example output:
@@ -93,7 +93,7 @@ When the same variable appears in multiple files, locations are grouped:
 ### Example JSON output
 
 ```bash
-envaudit scan --json
+envanalyser scan --json
 ```
 
 ```json
@@ -132,7 +132,7 @@ envaudit scan --json
 
 ### Supported patterns
 
-EnvAudit detects static usage patterns such as:
+EnvAnalyser detects static usage patterns such as:
 
 ```typescript
 // process.env
@@ -181,19 +181,19 @@ Not detected today:
 
 ### Monorepo usage
 
-EnvAudit discovers workspace projects (pnpm, npm, yarn) and scans each project independently.
+EnvAnalyser discovers workspace projects (pnpm, npm, yarn) and scans each project independently.
 
 ```bash
 # Scan entire monorepo
-envaudit scan .
+envanalyser scan .
 
 # Scan a single package
-envaudit scan ./apps/api
+envanalyser scan ./apps/api
 ```
 
 In monorepos, runtime env files at the workspace root are included when scanning nested packages. Use `--env` to override which runtime file is used.
 
-Optional repository config at `.envaudit.json`:
+Optional repository config at `.envanalyser.json`:
 
 ```json
 {
@@ -238,17 +238,17 @@ pnpm validate:pack
 
 | Package | Published | Role |
 |---------|-----------|------|
-| `envaudit` | Yes | CLI entry (`envaudit` binary) |
-| `envaudit-core` | Yes | Orchestration, discovery, analysis |
-| `envaudit-plugins` | Yes | Builtin plugin registry |
-| `envaudit-plugins-typescript` | Yes | TypeScript/JavaScript scanner (includes NestJS schema support) |
-| `envaudit-contracts` | Yes | Shared types and policy utilities |
+| `envanalyser` | Yes | CLI entry (`envanalyser` binary) |
+| `envanalyser-core` | Yes | Orchestration, discovery, analysis |
+| `envanalyser-plugins` | Yes | Builtin plugin registry |
+| `envanalyser-plugins-typescript` | Yes | TypeScript/JavaScript scanner (includes NestJS schema support) |
+| `envanalyser-contracts` | Yes | Shared types and policy utilities |
 | `@envaudit/plugins-javascript` | No | Private workspace stub (future) |
-| `envaudit-plugins-nestjs` | No | Private workspace package (bundled via TypeScript plugin) |
+| `envanalyser-plugins-nestjs` | No | Private workspace package (bundled via TypeScript plugin) |
 
 ### Why are library packages public?
 
-`npm install -g envaudit` must resolve `envaudit-core`, `envaudit-plugins`, and their transitive dependencies from the npm registry. Publishing the dependency graph keeps installs reliable and leaves room for programmatic use of `envaudit-core` later.
+`npm install -g envanalyser` must resolve `envanalyser-core`, `envanalyser-plugins`, and their transitive dependencies from the npm registry. Publishing the dependency graph keeps installs reliable and leaves room for programmatic use of `envanalyser-core` later.
 
 ## License
 

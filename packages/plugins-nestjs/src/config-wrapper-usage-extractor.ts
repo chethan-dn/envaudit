@@ -1,5 +1,5 @@
 import { Node, type PropertyAccessExpression, type SourceFile } from 'ts-morph';
-import type { VariableUsage } from 'envaudit-contracts';
+import type { VariableUsage } from 'envanalyser-contracts';
 import { isPartOfConfigServiceCall } from './config-service-call-detection.js';
 import type { ConfigWrapperMapping } from './config-wrapper-mapping-extractor.js';
 

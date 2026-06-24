@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { UnusedAnalyzer } from '../analyzers/unused-analyzer.js';
-import type { VariableDefinition, VariableUsage } from 'envaudit-contracts';
+import type { VariableDefinition, VariableUsage } from 'envanalyser-contracts';
 import { createAnalysisInput } from './test-helpers.js';
 
 describe('UnusedAnalyzer', () => {

@@ -1,5 +1,5 @@
-import { createScanOrchestrator } from 'envaudit-core';
-import { getBuiltinPlugins } from 'envaudit-plugins';
+import { createScanOrchestrator } from 'envanalyser-core';
+import { getBuiltinPlugins } from 'envanalyser-plugins';
 import { ScanCommandHandler } from './handlers/scan-command-handler.js';
 import { createScanReporter } from './reporters/create-scan-reporter.js';
 

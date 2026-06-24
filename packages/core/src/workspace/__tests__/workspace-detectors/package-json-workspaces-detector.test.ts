@@ -10,7 +10,7 @@ describe('PackageJsonWorkspacesDetector', () => {
   const fs = new NodeFileSystemReader();
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-npm-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envanalyser-npm-'));
   });
 
   afterEach(async () => {

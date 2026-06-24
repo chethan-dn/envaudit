@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import type { WorkspaceProject } from 'envaudit-contracts';
+import type { WorkspaceProject } from 'envanalyser-contracts';
 import type { FileSystemReader } from '../../workspace/interfaces/file-system-reader.js';
 import type { EnvFileDiscoverer } from '../interfaces/env-file-discoverer.js';
 import { compareEnvFiles, isEnvFile } from './env-file-matcher.js';

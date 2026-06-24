@@ -1,5 +1,5 @@
 {
-  "name": "envaudit-plugins-nestjs",
+  "name": "envanalyser-plugins-nestjs",
   "version": "0.2.0",
   
     "private": false,
@@ -24,7 +24,7 @@
     "dist"
   ],
   "dependencies": {
-    "envaudit-contracts": "workspace:*",
+    "envanalyser-contracts": "workspace:*",
     "fast-glob": "^3.3.3",
     "ts-morph": "^25.0.1"
   }

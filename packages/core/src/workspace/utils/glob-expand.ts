@@ -1,4 +1,4 @@
-import { DEFAULT_IGNORED_DIRECTORIES } from 'envaudit-contracts';
+import { DEFAULT_IGNORED_DIRECTORIES } from 'envanalyser-contracts';
 import { resolve } from 'node:path';
 import fg from 'fast-glob';
 

@@ -8,7 +8,7 @@ export {
 export { DEFAULT_DOCUMENTATION_ENV_FILES } from './default-documentation-env-files.js';
 export type { EnvironmentFileSummary } from './environment-file-summary.js';
 export type { DefinitionSource } from './definition-source.js';
-export type { EnvAuditConfig } from './envaudit-config.js';
+export type { EnvAnalyserConfig } from './envanalyser-config.js';
 export type { EnvFileKind } from './env-file-kind.js';
 export type { ProjectLanguage } from './project-language.js';
 export type { ScanExclusionPolicy } from './scan-exclusion-policy.js';

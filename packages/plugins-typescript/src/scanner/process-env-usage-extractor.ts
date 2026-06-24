@@ -4,7 +4,7 @@ import {
   type PropertyAccessExpression,
   type SourceFile,
 } from 'ts-morph';
-import type { VariableUsage } from 'envaudit-contracts';
+import type { VariableUsage } from 'envanalyser-contracts';
 import { getProcessEnvOptionalDefault } from './process-env-optional-default.js';
 
 export interface UsageExtractor {

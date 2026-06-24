@@ -1,5 +1,5 @@
-import type { ScanMetrics, VariableDefinition, VariableUsage, WorkspaceProject } from 'envaudit-contracts';
-import type { ScannerPlugin } from 'envaudit-contracts';
+import type { ScanMetrics, VariableDefinition, VariableUsage, WorkspaceProject } from 'envanalyser-contracts';
+import type { ScannerPlugin } from 'envanalyser-contracts';
 
 export interface PluginScanFailure {
   pluginId: string;

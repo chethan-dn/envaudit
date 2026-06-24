@@ -10,7 +10,7 @@ describe('NxWorkspaceDetector', () => {
   const fs = new NodeFileSystemReader();
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-nx-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envanalyser-nx-'));
   });
 
   afterEach(async () => {
