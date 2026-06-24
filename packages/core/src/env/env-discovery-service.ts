@@ -1,10 +1,10 @@
 import { resolve } from 'node:path';
 import type {
-  EnvDoctorConfig,
+  EnvAuditConfig,
   EnvironmentFileSummary,
   VariableDefinition,
   WorkspaceProject,
-} from '@envdoctor/contracts';
+} from '@envaudit/contracts';
 import type { FileSystemReader } from '../workspace/interfaces/file-system-reader.js';
 import type { EnvDiscoveryProjectOptions, EnvDiscoveryService } from './interfaces/env-discovery-service.js';
 import type { EnvDiscoveryResult } from './interfaces/env-discovery-result.js';
@@ -92,7 +92,7 @@ export class DefaultEnvDiscoveryService implements EnvDiscoveryService {
   private async parseEnvFiles(
     sourceFiles: string[],
     projectRootPath: string,
-    config: EnvDoctorConfig,
+    config: EnvAuditConfig,
   ): Promise<VariableDefinition[]> {
     const definitions: VariableDefinition[] = [];
 
@@ -120,7 +120,7 @@ export class DefaultEnvDiscoveryService implements EnvDiscoveryService {
 
 function classifyEnvFiles(
   discoveredPaths: string[],
-  config: EnvDoctorConfig,
+  config: EnvAuditConfig,
 ): EnvironmentFileSummary {
   const environmentFiles: EnvironmentFileSummary = {
     runtime: [],

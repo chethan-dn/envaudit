@@ -1,4 +1,4 @@
-import type { AnalysisInput, VariableDefinition } from '@envdoctor/contracts';
+import type { AnalysisInput, VariableDefinition } from '@envaudit/contracts';
 
 export function createAnalysisInput(
   projectRootPath: string,

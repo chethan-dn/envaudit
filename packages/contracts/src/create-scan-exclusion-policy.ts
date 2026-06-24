@@ -1,8 +1,8 @@
-import type { EnvDoctorConfig } from './envdoctor-config.js';
+import type { EnvAuditConfig } from './envaudit-config.js';
 import type { ScanExclusionPolicy } from './scan-exclusion-policy.js';
 import { DEFAULT_SCAN_EXCLUDES } from './default-scan-excludes.js';
 
-export function createScanExclusionPolicy(config: EnvDoctorConfig = {}): ScanExclusionPolicy {
+export function createScanExclusionPolicy(config: EnvAuditConfig = {}): ScanExclusionPolicy {
   const patterns = dedupePatterns([...DEFAULT_SCAN_EXCLUDES, ...(config.exclude ?? [])]);
   return createDefaultScanExclusionPolicy(patterns);
 }

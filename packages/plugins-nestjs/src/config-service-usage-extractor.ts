@@ -1,5 +1,5 @@
 import { Node, type CallExpression, type SourceFile } from 'ts-morph';
-import type { VariableUsage } from '@envdoctor/contracts';
+import type { VariableUsage } from '@envaudit/contracts';
 import { getConfigServiceCallInfo } from './config-service-call-detection.js';
 import { serializeLiteralDefaultValue } from './utils/serialize-literal-default.js';
 

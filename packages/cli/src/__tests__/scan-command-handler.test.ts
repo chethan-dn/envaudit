@@ -1,6 +1,6 @@
 import { Writable } from 'node:stream';
 import { describe, expect, it, vi } from 'vitest';
-import type { ScanOrchestrator } from '@envdoctor/core';
+import type { ScanOrchestrator } from '@envaudit/core';
 import { ScanCommandHandler } from '../handlers/scan-command-handler.js';
 import type { ScanReporter } from '../reporters/interfaces/scan-reporter.js';
 import { cleanRepositoryScanResult, sampleRepositoryScanResult } from './fixtures/repository-scan-result.fixture.js';
@@ -102,10 +102,10 @@ describe('ScanCommandHandler', () => {
 
     await expect(
       handler.execute({
-        path: '/definitely-missing-envdoctor-path',
+        path: '/definitely-missing-envaudit-path',
         json: false,
       }),
-    ).rejects.toThrow('Path not found: /definitely-missing-envdoctor-path');
+    ).rejects.toThrow('Path not found: /definitely-missing-envaudit-path');
 
     expect(orchestrator.scan).not.toHaveBeenCalled();
   });

@@ -1,4 +1,4 @@
-import type { AnalysisInput } from '@envdoctor/contracts';
+import type { AnalysisInput } from '@envaudit/contracts';
 
 export function scopeAnalysisInput(input: AnalysisInput): AnalysisInput {
   return {

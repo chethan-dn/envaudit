@@ -1,6 +1,6 @@
 # Supported Detection Patterns
 
-This document describes what EnvDoctor detects today. It reflects the current implementation, not a roadmap.
+This document describes what EnvAudit detects today. It reflects the current implementation, not a roadmap.
 
 ## Supported
 
@@ -9,7 +9,7 @@ This document describes what EnvDoctor detects today. It reflects the current im
 - `.env` and other runtime env files discovered per project
 - Workspace-root env files for nested monorepo projects
 - `.env.example` and other documentation env files (definitions only; not used for runtime matching)
-- Explicit runtime override via `envdoctor scan --env <path>`
+- Explicit runtime override via `envaudit scan --env <path>`
 
 ### Usage extraction (TypeScript / JavaScript)
 

@@ -1,4 +1,4 @@
-import type { AnalysisInput, Issue } from '@envdoctor/contracts';
+import type { AnalysisInput, Issue } from '@envaudit/contracts';
 import type { IssueAnalyzer } from './interfaces/issue-analyzer.js';
 import type { IssueAnalysisService } from './interfaces/issue-analysis-service.js';
 import { scopeAnalysisInput } from './utils/scope-analysis-input.js';

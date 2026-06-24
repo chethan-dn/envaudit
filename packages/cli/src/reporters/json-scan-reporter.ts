@@ -1,4 +1,4 @@
-import type { RepositoryScanResult } from '@envdoctor/core';
+import type { RepositoryScanResult } from '@envaudit/core';
 import type { ScanReporter } from './interfaces/scan-reporter.js';
 
 export class JsonScanReporter implements ScanReporter {

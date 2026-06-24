@@ -1,4 +1,4 @@
-# EnvDoctor
+# EnvAudit
 
 ## Vision
 
@@ -17,10 +17,10 @@ Detect:
 
 ## Commands
 
-envdoctor scan
-envdoctor compare
-envdoctor explain <variable>
-envdoctor generate
+envaudit scan
+envaudit compare
+envaudit explain <variable>
+envaudit generate
 
 ## Architecture
 

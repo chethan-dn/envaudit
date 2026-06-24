@@ -1,5 +1,5 @@
 import type { SourceFile } from 'ts-morph';
-import type { VariableDefinition } from '@envdoctor/contracts';
+import type { VariableDefinition } from '@envaudit/contracts';
 import { ENV_SCHEMA_VARIABLE_NAME_PATTERN } from './constants.js';
 import { serializeLiteralDefaultValue } from './utils/serialize-literal-default.js';
 

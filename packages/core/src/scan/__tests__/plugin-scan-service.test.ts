@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { ScannerPlugin } from '@envdoctor/contracts';
+import type { ScannerPlugin } from '@envaudit/contracts';
 import { DefaultPluginScanService } from '../plugin-scan-service.js';
 
 describe('DefaultPluginScanService', () => {

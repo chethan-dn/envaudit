@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import type { WorkspaceProject } from '@envdoctor/contracts';
+import type { WorkspaceProject } from '@envaudit/contracts';
 import type { FileSystemReader } from '../interfaces/file-system-reader.js';
 import type { WorkspaceManagerDetector } from '../interfaces/workspace-manager-detector.js';
 import { discoverFromWorkspacePatterns } from '../utils/discover-from-workspace-patterns.js';

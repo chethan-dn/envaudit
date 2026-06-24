@@ -1,4 +1,4 @@
-import type { VariableDefinition } from '@envdoctor/contracts';
+import type { VariableDefinition } from '@envaudit/contracts';
 
 export function getValidationSchemaDefinitions(
   definitions: VariableDefinition[],

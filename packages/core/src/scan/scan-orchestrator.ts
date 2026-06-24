@@ -1,13 +1,13 @@
 import { resolve } from 'node:path';
 import type {
-  EnvDoctorConfig,
+  EnvAuditConfig,
   RepositoryScanResult,
   ScanMetrics,
   ScanResult,
   ScanExclusionPolicy,
   WorkspaceProject,
-} from '@envdoctor/contracts';
-import type { ScannerPlugin } from '@envdoctor/contracts';
+} from '@envaudit/contracts';
+import type { ScannerPlugin } from '@envaudit/contracts';
 import type { PluginScanService } from './interfaces/plugin-scan-service.js';
 import type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
 import type { ScanOptions } from './interfaces/scan-options.js';
@@ -15,15 +15,15 @@ import type { EnvDiscoveryService } from '../env/interfaces/env-discovery-servic
 import type { IssueAnalysisService } from '../analysis/interfaces/issue-analysis-service.js';
 import type { ProjectDiscoveryService } from '../workspace/interfaces/project-discovery-service.js';
 import type { WorkspaceRootResolver } from '../workspace/workspace-root-resolver.js';
-import type { EnvDoctorConfigLoader } from '../config/interfaces/envdoctor-config-loader.js';
-import { createScanExclusionPolicy } from '@envdoctor/contracts';
+import type { EnvAuditConfigLoader } from '../config/interfaces/envaudit-config-loader.js';
+import { createScanExclusionPolicy } from '@envaudit/contracts';
 import { groupIssues } from '../analysis/utils/group-issues.js';
 import { buildRepositoryScanSummary } from './utils/build-repository-scan-summary.js';
 
 export type PluginFactory = (exclusionPolicy: ScanExclusionPolicy) => ScannerPlugin[];
 
 export interface ScanOrchestratorDependencies {
-  configLoader: EnvDoctorConfigLoader;
+  configLoader: EnvAuditConfigLoader;
   projectDiscovery: ProjectDiscoveryService;
   workspaceRootResolver: WorkspaceRootResolver;
   envDiscovery: EnvDiscoveryService;
@@ -34,7 +34,7 @@ export interface ScanOrchestratorDependencies {
 
 export interface ScanContext {
   rootPath: string;
-  config: EnvDoctorConfig;
+  config: EnvAuditConfig;
   exclusionPolicy: ScanExclusionPolicy;
   workspaceRootPath: string;
 }

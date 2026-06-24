@@ -67,7 +67,7 @@ async function validatePackagePack(relativePackagePath, options = {}) {
 
   await assertDistExists(packageDir, packageJson.name);
 
-  const tempDir = await mkdtemp(join(tmpdir(), 'envdoctor-pack-'));
+  const tempDir = await mkdtemp(join(tmpdir(), 'envaudit-pack-'));
   const packDir = join(tempDir, 'package');
 
   try {
@@ -110,25 +110,25 @@ async function validatePackagePack(relativePackagePath, options = {}) {
 }
 
 async function runInstallSmokeTest(artifactPaths) {
-  const cliTarball = artifactPaths.find((path) => path.includes('envdoctor-cli-'));
+  const cliTarball = artifactPaths.find((path) => path.includes('envaudit-cli-'));
   if (!cliTarball) {
     throw new Error('CLI tarball was not produced in .release-artifacts/.');
   }
 
-  const smokeDir = await mkdtemp(join(tmpdir(), 'envdoctor-smoke-'));
+  const smokeDir = await mkdtemp(join(tmpdir(), 'envaudit-smoke-'));
   const fixturePath = join(repoRoot, 'fixtures', 'full-stack-app');
 
   try {
     execSync('npm init -y', { cwd: smokeDir, stdio: 'pipe' });
 
-    // Install all publishable tarballs so @envdoctor/* workspace deps resolve locally.
+    // Install all publishable tarballs so @envaudit/* workspace deps resolve locally.
     const installArgs = artifactPaths.map((path) => JSON.stringify(path)).join(' ');
     execSync(`npm install ${installArgs}`, { cwd: smokeDir, stdio: 'pipe' });
 
-    execSync('npx envdoctor --help', { cwd: smokeDir, stdio: 'pipe' });
-    runCommandAllowingExitCodes(`npx envdoctor scan ${JSON.stringify(fixturePath)}`, smokeDir, [0, 1]);
+    execSync('npx envaudit --help', { cwd: smokeDir, stdio: 'pipe' });
+    runCommandAllowingExitCodes(`npx envaudit scan ${JSON.stringify(fixturePath)}`, smokeDir, [0, 1]);
 
-    console.log(`Smoke test passed: installed ${cliTarball} and ran envdoctor scan.`);
+    console.log(`Smoke test passed: installed ${cliTarball} and ran envaudit scan.`);
   } finally {
     await rm(smokeDir, { recursive: true, force: true });
   }

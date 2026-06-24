@@ -1,7 +1,7 @@
 {
-  "name": "@envdoctor/plugins",
+  "name": "@envaudit/plugins",
   "version": "0.2.0",
-  "description": "Builtin plugin registry for EnvDoctor",
+  "description": "Builtin plugin registry for EnvAudit",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chethan-dnc/envdoctor.git",
+    "url": "https://github.com/chethan-dnc/envaudit.git",
     "directory": "packages/plugins"
   },
   "engines": {
@@ -37,10 +37,10 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@envdoctor/contracts": "workspace:*",
-    "@envdoctor/plugins-typescript": "workspace:*"
+    "@envaudit/contracts": "workspace:*",
+    "@envaudit/plugins-typescript": "workspace:*"
   },
   "devDependencies": {
-    "@envdoctor/core": "workspace:*"
+    "@envaudit/core": "workspace:*"
   }
 }

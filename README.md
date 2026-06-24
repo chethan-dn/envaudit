@@ -1,25 +1,25 @@
-# EnvDoctor
+# EnvAudit
 
 Environment Intelligence CLI for discovering environment variable definitions, scanning code usage, and reporting configuration issues.
 
 ## Quick Start
 
 ```bash
-npm install -g @envdoctor/cli
+npm install -g @envaudit/cli
 cd my-app
-envdoctor scan
+envaudit scan
 ```
 
-EnvDoctor scans runtime env files (`.env`, etc.) and your TypeScript/JavaScript source, then reports mismatches such as missing, unused, or duplicate variables.
+EnvAudit scans runtime env files (`.env`, etc.) and your TypeScript/JavaScript source, then reports mismatches such as missing, unused, or duplicate variables.
 
 ## Installation
 
 ```bash
 # Global CLI (recommended)
-npm install -g @envdoctor/cli
+npm install -g @envaudit/cli
 
 # Or run without installing
-npx @envdoctor/cli scan .
+npx @envaudit/cli scan .
 ```
 
 Requirements:
@@ -30,16 +30,16 @@ Requirements:
 
 ```bash
 # Scan current directory (human-readable output)
-envdoctor scan
+envaudit scan
 
 # Scan a repository path
-envdoctor scan ./my-app
+envaudit scan ./my-app
 
 # Machine-readable JSON (RepositoryScanResult)
-envdoctor scan --json
+envaudit scan --json
 
 # Use a specific runtime env file
-envdoctor scan --env .env.production
+envaudit scan --env .env.production
 ```
 
 ### Example scan
@@ -47,7 +47,7 @@ envdoctor scan --env .env.production
 Given a project with `.env` and source files:
 
 ```bash
-envdoctor scan ./my-app
+envaudit scan ./my-app
 ```
 
 Example output:
@@ -93,7 +93,7 @@ When the same variable appears in multiple files, locations are grouped:
 ### Example JSON output
 
 ```bash
-envdoctor scan --json
+envaudit scan --json
 ```
 
 ```json
@@ -132,7 +132,7 @@ envdoctor scan --json
 
 ### Supported patterns
 
-EnvDoctor detects static usage patterns such as:
+EnvAudit detects static usage patterns such as:
 
 ```typescript
 // process.env
@@ -181,19 +181,19 @@ Not detected today:
 
 ### Monorepo usage
 
-EnvDoctor discovers workspace projects (pnpm, npm, yarn) and scans each project independently.
+EnvAudit discovers workspace projects (pnpm, npm, yarn) and scans each project independently.
 
 ```bash
 # Scan entire monorepo
-envdoctor scan .
+envaudit scan .
 
 # Scan a single package
-envdoctor scan ./apps/api
+envaudit scan ./apps/api
 ```
 
 In monorepos, runtime env files at the workspace root are included when scanning nested packages. Use `--env` to override which runtime file is used.
 
-Optional repository config at `.envdoctor.json`:
+Optional repository config at `.envaudit.json`:
 
 ```json
 {
@@ -238,17 +238,17 @@ pnpm validate:pack
 
 | Package | Published | Role |
 |---------|-----------|------|
-| `@envdoctor/cli` | Yes | CLI entry (`envdoctor` binary) |
-| `@envdoctor/core` | Yes | Orchestration, discovery, analysis |
-| `@envdoctor/plugins` | Yes | Builtin plugin registry |
-| `@envdoctor/plugins-typescript` | Yes | TypeScript/JavaScript scanner (includes NestJS schema support) |
-| `@envdoctor/contracts` | Yes | Shared types and policy utilities |
-| `@envdoctor/plugins-javascript` | No | Private workspace stub (future) |
-| `@envdoctor/plugins-nestjs` | No | Private workspace package (bundled via TypeScript plugin) |
+| `@envaudit/cli` | Yes | CLI entry (`envaudit` binary) |
+| `@envaudit/core` | Yes | Orchestration, discovery, analysis |
+| `@envaudit/plugins` | Yes | Builtin plugin registry |
+| `@envaudit/plugins-typescript` | Yes | TypeScript/JavaScript scanner (includes NestJS schema support) |
+| `@envaudit/contracts` | Yes | Shared types and policy utilities |
+| `@envaudit/plugins-javascript` | No | Private workspace stub (future) |
+| `@envaudit/plugins-nestjs` | No | Private workspace package (bundled via TypeScript plugin) |
 
 ### Why are library packages public?
 
-`npm install -g @envdoctor/cli` must resolve `@envdoctor/core`, `@envdoctor/plugins`, and their transitive dependencies from the npm registry. Publishing the dependency graph keeps installs reliable and leaves room for programmatic use of `@envdoctor/core` later.
+`npm install -g @envaudit/cli` must resolve `@envaudit/core`, `@envaudit/plugins`, and their transitive dependencies from the npm registry. Publishing the dependency graph keeps installs reliable and leaves room for programmatic use of `@envaudit/core` later.
 
 ## License
 

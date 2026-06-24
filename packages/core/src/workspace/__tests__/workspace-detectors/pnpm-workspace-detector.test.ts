@@ -10,7 +10,7 @@ describe('PnpmWorkspaceDetector', () => {
   const fs = new NodeFileSystemReader();
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envdoctor-pnpm-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-pnpm-'));
   });
 
   afterEach(async () => {

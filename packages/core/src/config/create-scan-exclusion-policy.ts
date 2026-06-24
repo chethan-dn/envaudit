@@ -1,1 +1,1 @@
-export { createScanExclusionPolicy } from '@envdoctor/contracts';
+export { createScanExclusionPolicy } from '@envaudit/contracts';

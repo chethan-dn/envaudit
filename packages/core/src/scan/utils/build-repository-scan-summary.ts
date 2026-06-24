@@ -1,4 +1,4 @@
-import type { RepositoryScanResult, ScanResult } from '@envdoctor/contracts';
+import type { RepositoryScanResult, ScanResult } from '@envaudit/contracts';
 
 export function buildRepositoryScanSummary(results: ScanResult[]): RepositoryScanResult['summary'] {
   return {

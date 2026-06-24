@@ -10,7 +10,7 @@ describe('TurboWorkspaceDetector', () => {
   const fs = new NodeFileSystemReader();
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envdoctor-turbo-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-turbo-'));
   });
 
   afterEach(async () => {

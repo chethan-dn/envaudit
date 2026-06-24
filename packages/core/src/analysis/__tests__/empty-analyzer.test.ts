@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { EmptyAnalyzer } from '../analyzers/empty-analyzer.js';
-import type { VariableDefinition } from '@envdoctor/contracts';
+import type { VariableDefinition } from '@envaudit/contracts';
 import { createAnalysisInput } from './test-helpers.js';
 
 describe('EmptyAnalyzer', () => {

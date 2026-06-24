@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import type { ScannerPlugin } from '@envdoctor/contracts';
-import { DefaultEnvDoctorConfigLoader } from '../../config/envdoctor-config-loader.js';
+import type { ScannerPlugin } from '@envaudit/contracts';
+import { DefaultEnvAuditConfigLoader } from '../../config/envaudit-config-loader.js';
 import { createEnvDiscoveryService } from '../../env/create-env-discovery-service.js';
 import { createIssueAnalysisService } from '../../analysis/create-issue-analysis-service.js';
 import { createProjectDiscoveryService, createDefaultProjectDiscoveryDependencies } from '../../workspace/create-project-discovery-service.js';
@@ -20,7 +20,7 @@ describe('DefaultScanOrchestrator', () => {
 
     const projectDiscoveryDeps = createDefaultProjectDiscoveryDependencies();
     const orchestrator = new DefaultScanOrchestrator({
-      configLoader: new DefaultEnvDoctorConfigLoader(),
+      configLoader: new DefaultEnvAuditConfigLoader(),
       projectDiscovery: createProjectDiscoveryService(),
       workspaceRootResolver: new WorkspaceRootResolver({
         fileSystem: projectDiscoveryDeps.fileSystem,

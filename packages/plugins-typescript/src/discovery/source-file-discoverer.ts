@@ -1,6 +1,6 @@
 import { relative, resolve } from 'node:path';
 import fg from 'fast-glob';
-import type { ScanExclusionPolicy } from '@envdoctor/contracts';
+import type { ScanExclusionPolicy } from '@envaudit/contracts';
 import { SUPPORTED_SOURCE_GLOB } from '../constants.js';
 
 const MINIMAL_IGNORE_PATTERNS = ['**/node_modules/**', '**/.git/**'] as const;

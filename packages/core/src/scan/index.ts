@@ -8,4 +8,4 @@ export { isSourceScanMetricsProvider } from './interfaces/source-scan-metrics-pr
 export type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
 export type { ScanOptions } from './interfaces/scan-options.js';
 export { buildRepositoryScanSummary } from './utils/build-repository-scan-summary.js';
-export type { Issue, IssueLocation, RepositoryScanResult, ScanResult } from '@envdoctor/contracts';
+export type { Issue, IssueLocation, RepositoryScanResult, ScanResult } from '@envaudit/contracts';

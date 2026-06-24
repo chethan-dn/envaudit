@@ -1,8 +1,8 @@
-import type { EnvDoctorConfig, WorkspaceProject } from '@envdoctor/contracts';
+import type { EnvAuditConfig, WorkspaceProject } from '@envaudit/contracts';
 import type { EnvDiscoveryResult } from './env-discovery-result.js';
 
 export interface EnvDiscoveryProjectOptions {
-  config?: EnvDoctorConfig;
+  config?: EnvAuditConfig;
   workspaceRootPath?: string;
   runtimeEnvOverridePath?: string;
 }

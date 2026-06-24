@@ -1,7 +1,7 @@
 {
-  "name": "@envdoctor/core",
+  "name": "@envaudit/core",
   "version": "0.2.0",
-  "description": "Core orchestration and analysis engine for EnvDoctor",
+  "description": "Core orchestration and analysis engine for EnvAudit",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chethan-dnc/envdoctor.git",
+    "url": "https://github.com/chethan-dnc/envaudit.git",
     "directory": "packages/core"
   },
   "engines": {
@@ -33,7 +33,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@envdoctor/contracts": "workspace:*",
+    "@envaudit/contracts": "workspace:*",
     "fast-glob": "^3.3.3"
   }
 }

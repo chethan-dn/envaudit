@@ -35,10 +35,10 @@ importers:
 
   packages/cli:
     dependencies:
-      '@envdoctor/core':
+      '@envaudit/core':
         specifier: workspace:*
         version: link:../core
-      '@envdoctor/plugins':
+      '@envaudit/plugins':
         specifier: workspace:*
         version: link:../plugins
       commander:
@@ -49,7 +49,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@envdoctor/contracts':
+      '@envaudit/contracts':
         specifier: workspace:*
         version: link:../contracts
       fast-glob:
@@ -58,26 +58,26 @@ importers:
 
   packages/plugins:
     dependencies:
-      '@envdoctor/contracts':
+      '@envaudit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@envdoctor/plugins-typescript':
+      '@envaudit/plugins-typescript':
         specifier: workspace:*
         version: link:../plugins-typescript
     devDependencies:
-      '@envdoctor/core':
+      '@envaudit/core':
         specifier: workspace:*
         version: link:../core
 
   packages/plugins-javascript:
     dependencies:
-      '@envdoctor/contracts':
+      '@envaudit/contracts':
         specifier: workspace:*
         version: link:../contracts
 
   packages/plugins-nestjs:
     dependencies:
-      '@envdoctor/contracts':
+      '@envaudit/contracts':
         specifier: workspace:*
         version: link:../contracts
       fast-glob:
@@ -89,10 +89,10 @@ importers:
 
   packages/plugins-typescript:
     dependencies:
-      '@envdoctor/contracts':
+      '@envaudit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@envdoctor/plugins-nestjs':
+      '@envaudit/plugins-nestjs':
         specifier: workspace:*
         version: link:../plugins-nestjs
       fast-glob:

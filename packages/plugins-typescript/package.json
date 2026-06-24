@@ -1,7 +1,7 @@
 {
-  "name": "@envdoctor/plugins-typescript",
+  "name": "@envaudit/plugins-typescript",
   "version": "0.2.0",
-  "description": "TypeScript and JavaScript scanner plugin for EnvDoctor",
+  "description": "TypeScript and JavaScript scanner plugin for EnvAudit",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chethan-dnc/envdoctor.git",
+    "url": "https://github.com/chethan-dnc/envaudit.git",
     "directory": "packages/plugins-typescript"
   },
   "engines": {
@@ -33,8 +33,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@envdoctor/contracts": "workspace:*",
-    "@envdoctor/plugins-nestjs": "workspace:*",
+    "@envaudit/contracts": "workspace:*",
+    "@envaudit/plugins-nestjs": "workspace:*",
     "fast-glob": "^3.3.3",
     "ts-morph": "^25.0.1"
   }

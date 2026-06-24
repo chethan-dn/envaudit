@@ -2,8 +2,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Command } from 'commander';
 import { describe, expect, it, vi } from 'vitest';
-import { createScanOrchestrator } from '@envdoctor/core';
-import { getBuiltinPlugins } from '@envdoctor/plugins';
+import { createScanOrchestrator } from '@envaudit/core';
+import { getBuiltinPlugins } from '@envaudit/plugins';
 import { registerScanCommand } from '../commands/scan.js';
 import { ScanCommandHandler } from '../handlers/scan-command-handler.js';
 import { createScanReporter } from '../reporters/create-scan-reporter.js';
@@ -86,7 +86,7 @@ describe('scan command integration', () => {
     const program = new Command();
     registerScanCommand(program, handler);
 
-    await program.parseAsync(['node', 'envdoctor', 'scan', fixturePath('full-stack-app'), '--json']);
+    await program.parseAsync(['node', 'envaudit', 'scan', fixturePath('full-stack-app'), '--json']);
 
     expect(handler.execute).toHaveBeenCalledWith({
       path: fixturePath('full-stack-app'),
@@ -173,7 +173,7 @@ describe('scan command integration', () => {
 
     await program.parseAsync([
       'node',
-      'envdoctor',
+      'envaudit',
       'scan',
       fixturePath('explicit-env-override'),
       '--env',

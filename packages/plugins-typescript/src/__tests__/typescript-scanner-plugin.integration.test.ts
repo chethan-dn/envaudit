@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { createScanExclusionPolicy } from '@envdoctor/contracts';
+import { createScanExclusionPolicy } from '@envaudit/contracts';
 import { createTypeScriptScannerPlugin } from '../create-typescript-scanner-plugin.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');

@@ -8,7 +8,7 @@ describe('expandWorkspaceGlobs', () => {
   let tempDir: string;
 
   beforeEach(async () => {
-    tempDir = await mkdtemp(join(tmpdir(), 'envdoctor-glob-'));
+    tempDir = await mkdtemp(join(tmpdir(), 'envaudit-glob-'));
   });
 
   afterEach(async () => {

@@ -4,17 +4,17 @@
   "commit": false,
   "fixed": [
     [
-      "@envdoctor/cli",
-      "@envdoctor/contracts",
-      "@envdoctor/core",
-      "@envdoctor/plugins-typescript",
-      "@envdoctor/plugins-nestjs",
-      "@envdoctor/plugins"
+      "@envaudit/cli",
+      "@envaudit/contracts",
+      "@envaudit/core",
+      "@envaudit/plugins-typescript",
+      "@envaudit/plugins-nestjs",
+      "@envaudit/plugins"
     ]
   ],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@envdoctor/plugins-javascript"]
+  "ignore": ["@envaudit/plugins-javascript"]
 }

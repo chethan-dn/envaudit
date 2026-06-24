@@ -1,4 +1,4 @@
-import { access, readdir } from 'node:fs/promises';
+import { access, readdir, readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -11,6 +11,12 @@ const PUBLISHABLE_PACKAGES = [
   'packages/plugins-typescript',
   'packages/plugins',
   'packages/cli',
+] as const;
+
+const WORKSPACE_PACKAGES = [
+  ...PUBLISHABLE_PACKAGES,
+  'packages/plugins-nestjs',
+  'packages/plugins-javascript',
 ] as const;
 
 async function readPackageJson(relativePackagePath: string) {
@@ -61,8 +67,29 @@ describe('package verification', () => {
 
   it('cli bin entry resolves to built executable', async () => {
     const packageJson = await readPackageJson('packages/cli');
-    const binEntry = packageJson.bin?.envdoctor;
+    const binEntry = packageJson.bin?.envaudit;
     expect(binEntry).toBe('./dist/index.js');
     await assertPathExists(join(repoRoot, 'packages/cli', 'dist/index.js'));
+  });
+});
+
+describe('package rename validation', () => {
+  it('uses @envaudit package names across workspace packages', async () => {
+    for (const relativePackagePath of WORKSPACE_PACKAGES) {
+      const packageJson = await readPackageJson(relativePackagePath);
+      expect(packageJson.name.startsWith('@envaudit/')).toBe(true);
+    }
+  });
+
+  it('does not reference @envdoctor in any workspace package.json', async () => {
+    for (const relativePackagePath of WORKSPACE_PACKAGES) {
+      const raw = await readFile(join(repoRoot, relativePackagePath, 'package.json'), 'utf8');
+      expect(raw).not.toContain('@envdoctor');
+    }
+  });
+
+  it('names the CLI binary envaudit', async () => {
+    const packageJson = await readPackageJson('packages/cli');
+    expect(Object.keys(packageJson.bin ?? {})).toEqual(['envaudit']);
   });
 });

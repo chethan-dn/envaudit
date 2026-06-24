@@ -1,5 +1,5 @@
-export { DefaultEnvDoctorConfigLoader } from './envdoctor-config-loader.js';
-export { DEFAULT_ENV_DOCTOR_CONFIG } from './default-envdoctor-config.js';
-export { createScanExclusionPolicy } from '@envdoctor/contracts';
-export { createDefaultScanExclusionPolicy } from '@envdoctor/contracts';
-export type { EnvDoctorConfigLoader } from './interfaces/envdoctor-config-loader.js';
+export { DefaultEnvAuditConfigLoader } from './envaudit-config-loader.js';
+export { DEFAULT_ENV_AUDIT_CONFIG } from './default-envaudit-config.js';
+export { createScanExclusionPolicy } from '@envaudit/contracts';
+export { createDefaultScanExclusionPolicy } from '@envaudit/contracts';
+export type { EnvAuditConfigLoader } from './interfaces/envaudit-config-loader.js';

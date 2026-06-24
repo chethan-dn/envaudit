@@ -1,4 +1,4 @@
-import type { EnvironmentFileSummary, VariableDefinition } from '@envdoctor/contracts';
+import type { EnvironmentFileSummary, VariableDefinition } from '@envaudit/contracts';
 
 export interface EnvDiscoveryResult {
   definitions: VariableDefinition[];

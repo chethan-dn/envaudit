@@ -1,5 +1,5 @@
 import { basename, resolve } from 'node:path';
-import type { ProjectLanguage, WorkspaceProject } from '@envdoctor/contracts';
+import type { ProjectLanguage, WorkspaceProject } from '@envaudit/contracts';
 import type { FileSystemReader } from '../interfaces/file-system-reader.js';
 import type { ProjectMarkerDetector } from '../interfaces/project-marker-detector.js';
 

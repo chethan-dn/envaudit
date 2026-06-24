@@ -1,4 +1,4 @@
-import { DEFAULT_IGNORED_DIRECTORIES } from '@envdoctor/contracts';
+import { DEFAULT_IGNORED_DIRECTORIES } from '@envaudit/contracts';
 import { resolve } from 'node:path';
 import fg from 'fast-glob';
 

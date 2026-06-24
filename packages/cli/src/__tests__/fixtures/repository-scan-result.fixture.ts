@@ -1,4 +1,4 @@
-import type { RepositoryScanResult } from '@envdoctor/core';
+import type { RepositoryScanResult } from '@envaudit/core';
 
 const defaultMetrics = {
   scannedFileCount: 3,

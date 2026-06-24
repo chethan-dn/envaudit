@@ -3,8 +3,8 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
-import { DEFAULT_ENV_DOCTOR_CONFIG } from '../default-envdoctor-config.js';
-import { DefaultEnvDoctorConfigLoader } from '../envdoctor-config-loader.js';
+import { DEFAULT_ENV_AUDIT_CONFIG } from '../default-envaudit-config.js';
+import { DefaultEnvAuditConfigLoader } from '../envaudit-config-loader.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../../../..');
 
@@ -12,8 +12,8 @@ function resolveFixturePath(name: string): string {
   return resolve(repoRoot, 'fixtures', name);
 }
 
-describe('DefaultEnvDoctorConfigLoader', () => {
-  const loader = new DefaultEnvDoctorConfigLoader();
+describe('DefaultEnvAuditConfigLoader', () => {
+  const loader = new DefaultEnvAuditConfigLoader();
   const tempDirs: string[] = [];
 
   afterEach(async () => {
@@ -21,11 +21,11 @@ describe('DefaultEnvDoctorConfigLoader', () => {
   });
 
   it('returns defaults when config file is missing', async () => {
-    await expect(loader.load(import.meta.dirname)).resolves.toEqual(DEFAULT_ENV_DOCTOR_CONFIG);
+    await expect(loader.load(import.meta.dirname)).resolves.toEqual(DEFAULT_ENV_AUDIT_CONFIG);
   });
 
   it('loads valid config from fixture', async () => {
-    await expect(loader.load(resolveFixturePath('envdoctor-config'))).resolves.toEqual({
+    await expect(loader.load(resolveFixturePath('envaudit-config'))).resolves.toEqual({
       exclude: ['src/legacy/**'],
     });
   });
@@ -34,7 +34,7 @@ describe('DefaultEnvDoctorConfigLoader', () => {
     const tempDir = await createTempConfigDir('{ invalid');
     tempDirs.push(tempDir);
 
-    await expect(loader.load(tempDir)).rejects.toThrow('Invalid .envdoctor.json: malformed JSON');
+    await expect(loader.load(tempDir)).rejects.toThrow('Invalid .envaudit.json: malformed JSON');
   });
 
   it('throws when exclude is not a string array', async () => {
@@ -42,13 +42,13 @@ describe('DefaultEnvDoctorConfigLoader', () => {
     tempDirs.push(tempDir);
 
     await expect(loader.load(tempDir)).rejects.toThrow(
-      'Invalid .envdoctor.json: "exclude" must be an array of strings',
+      'Invalid .envaudit.json: "exclude" must be an array of strings',
     );
   });
 });
 
 async function createTempConfigDir(configContents: string): Promise<string> {
-  const tempDir = await mkdtemp(join(tmpdir(), 'envdoctor-config-'));
-  await writeFile(join(tempDir, '.envdoctor.json'), configContents, 'utf8');
+  const tempDir = await mkdtemp(join(tmpdir(), 'envaudit-config-'));
+  await writeFile(join(tempDir, '.envaudit.json'), configContents, 'utf8');
   return tempDir;
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Issue } from '@envdoctor/contracts';
+import type { Issue } from '@envaudit/contracts';
 import { groupIssues } from '../utils/group-issues.js';
 
 function createIssue(overrides: Partial<Issue> & Pick<Issue, 'code' | 'variable'>): Issue {
