@@ -1,5 +1,16 @@
 # @envdoctor/core
 
+## 0.2.0
+
+### Minor Changes
+
+- Initial public release with NestJS ConfigService support,
+
+### Patch Changes
+
+- Updated dependencies
+  - @envdoctor/contracts@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes

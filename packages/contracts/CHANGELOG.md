@@ -1,5 +1,11 @@
 # @envdoctor/contracts
 
+## 0.2.0
+
+### Minor Changes
+
+- Initial public release with NestJS ConfigService support,
+
 ## 0.1.4
 
 ### Patch Changes

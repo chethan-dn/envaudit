@@ -1,5 +1,17 @@
 # @envdoctor/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- Initial public release with NestJS ConfigService support,
+
+### Patch Changes
+
+- Updated dependencies
+  - @envdoctor/plugins@0.2.0
+  - @envdoctor/core@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes

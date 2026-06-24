@@ -1,6 +1,6 @@
 {
   "name": "@envdoctor/plugins-nestjs",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "private": true,
   "description": "Future NestJS scanner plugin (workspace stub)",
   "license": "MIT",

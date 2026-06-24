@@ -1,6 +1,6 @@
 {
   "name": "@envdoctor/contracts",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Shared contracts and utilities for EnvDoctor",
   "license": "MIT",
   "private": false,
