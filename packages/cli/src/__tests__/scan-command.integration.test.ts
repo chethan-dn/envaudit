@@ -72,7 +72,7 @@ describe('scan command integration', () => {
       projectCount: 1,
       definitionCount: 6,
       usageCount: 3,
-      issueCount: 6,
+      issueCount: 5,
       scannedFileCount: expect.any(Number),
       skippedFileCount: expect.any(Number),
     });
@@ -186,5 +186,48 @@ describe('scan command integration', () => {
       json: true,
       env: '.env.prod',
     });
+  });
+
+  it('scans release-readiness fixture with all issue types and grouped locations', async () => {
+    const chunks: string[] = [];
+    const stdout = {
+      write(chunk: string) {
+        chunks.push(chunk);
+      },
+    } as NodeJS.WritableStream;
+
+    const handler = createHandler(stdout);
+    const projectPath = fixturePath('release-readiness');
+
+    const exitCode = await handler.execute({
+      path: projectPath,
+      json: true,
+    });
+
+    const parsed = JSON.parse(chunks.join(''));
+    const scanResult = parsed.results[0];
+
+    expect(exitCode).toBe(1);
+    expect(parsed.summary.issueCount).toBe(6);
+    expect(scanResult.issues.map((issue: { code: string }) => issue.code).sort()).toEqual([
+      'ENV_DUPLICATE',
+      'ENV_EMPTY',
+      'ENV_MISSING',
+      'ENV_OPTIONAL',
+      'ENV_UNCONFIGURED',
+      'ENV_UNUSED',
+    ]);
+
+    const missingIssue = scanResult.issues.find(
+      (issue: { code: string; variable: string }) =>
+        issue.code === 'ENV_MISSING' && issue.variable === 'MISSING_VAR',
+    );
+    expect(missingIssue.locations).toHaveLength(2);
+    expect(missingIssue.locations.map((location: { sourceFile: string }) => location.sourceFile)).toEqual(
+      expect.arrayContaining([
+        resolve(projectPath, 'src/app.ts'),
+        resolve(projectPath, 'src/consumer.ts'),
+      ]),
+    );
   });
 });

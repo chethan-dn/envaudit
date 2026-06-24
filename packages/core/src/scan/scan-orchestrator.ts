@@ -17,6 +17,7 @@ import type { ProjectDiscoveryService } from '../workspace/interfaces/project-di
 import type { WorkspaceRootResolver } from '../workspace/workspace-root-resolver.js';
 import type { EnvDoctorConfigLoader } from '../config/interfaces/envdoctor-config-loader.js';
 import { createScanExclusionPolicy } from '@envdoctor/contracts';
+import { groupIssues } from '../analysis/utils/group-issues.js';
 import { buildRepositoryScanSummary } from './utils/build-repository-scan-summary.js';
 
 export type PluginFactory = (exclusionPolicy: ScanExclusionPolicy) => ScannerPlugin[];
@@ -87,12 +88,14 @@ export class DefaultScanOrchestrator implements ScanOrchestrator {
     const envFileCount = new Set(
       envDiscovery.definitions.map((definition) => definition.sourceFile),
     ).size;
-    const issues = this.deps.issueAnalysis.analyze({
-      projectRootPath: project.rootPath,
-      definitions,
-      usages: pluginOutcome.usages,
-      runtimeEnvFiles: envDiscovery.environmentFiles.runtime,
-    });
+    const issues = groupIssues(
+      this.deps.issueAnalysis.analyze({
+        projectRootPath: project.rootPath,
+        definitions,
+        usages: pluginOutcome.usages,
+        runtimeEnvFiles: envDiscovery.environmentFiles.runtime,
+      }),
+    );
 
     const metrics: ScanMetrics = {
       scannedFileCount: envFileCount + pluginOutcome.sourceMetrics.scannedFileCount,

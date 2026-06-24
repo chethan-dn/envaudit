@@ -1,3 +1,5 @@
+import type { IssueLocation } from './issue-location.js';
+
 export type IssueType =
   | 'missing'
   | 'empty'
@@ -14,6 +16,7 @@ export interface Issue {
   projectRootPath: string;
   sourceFile?: string;
   line?: number;
+  locations?: IssueLocation[];
   message?: string;
   defaultValue?: string;
   schemaFile?: string;

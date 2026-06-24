@@ -1,5 +1,5 @@
 import { relative } from 'node:path';
-import type { EnvironmentFileSummary, Issue, RepositoryScanResult, ScanResult } from '@envdoctor/core';
+import type { EnvironmentFileSummary, Issue, IssueLocation, RepositoryScanResult, ScanResult } from '@envdoctor/core';
 import type { ScanReporter } from './interfaces/scan-reporter.js';
 
 const ISSUE_CODE_ORDER = [
@@ -69,10 +69,7 @@ export class HumanScanReporter implements ScanReporter {
 
       for (const issue of issues) {
         lines.push(`    ${issue.variable}`);
-        const location = formatSourceLocation(issue, project.rootPath);
-        if (location) {
-          lines.push(`      ${location}`);
-        }
+        lines.push(...formatIssueLocations(issue, project.rootPath));
         if (issue.code === 'ENV_OPTIONAL' && issue.defaultValue !== undefined) {
           lines.push(`      Default value: ${issue.defaultValue}`);
         } else if (issue.code === 'ENV_UNCONFIGURED') {
@@ -145,14 +142,46 @@ function groupIssuesByCode(issues: Issue[]): Map<string, Issue[]> {
   return grouped;
 }
 
-function formatSourceLocation(issue: Issue, projectRootPath: string): string {
-  if (!issue.sourceFile) {
+function formatIssueLocations(issue: Issue, projectRootPath: string): string[] {
+  const locations = getIssueLocations(issue);
+  if (locations.length === 0) {
+    return [];
+  }
+
+  if (locations.length === 1) {
+    const location = formatLocation(locations[0], projectRootPath);
+    return location ? [`      ${location}`] : [];
+  }
+
+  return [
+    '      Used in:',
+    ...locations
+      .map((location) => formatLocation(location, projectRootPath))
+      .filter((location) => location.length > 0)
+      .map((location) => `        ${location}`),
+  ];
+}
+
+function getIssueLocations(issue: Issue): IssueLocation[] {
+  if (issue.locations && issue.locations.length > 0) {
+    return issue.locations;
+  }
+
+  if (issue.sourceFile) {
+    return [{ sourceFile: issue.sourceFile, line: issue.line }];
+  }
+
+  return [];
+}
+
+function formatLocation(location: IssueLocation, projectRootPath: string): string {
+  if (!location.sourceFile) {
     return '';
   }
 
-  const relativePath = toProjectRelativePath(issue.sourceFile, projectRootPath);
-  if (issue.line !== undefined) {
-    return `${relativePath}:${issue.line}`;
+  const relativePath = toProjectRelativePath(location.sourceFile, projectRootPath);
+  if (location.line !== undefined) {
+    return `${relativePath}:${location.line}`;
   }
 
   return relativePath;

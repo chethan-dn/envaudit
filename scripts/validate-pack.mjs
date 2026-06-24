@@ -17,6 +17,8 @@ const PUBLISHABLE_PACKAGES = [
   'packages/cli',
 ];
 
+const SMOKE_TEST_EXTRA_PACKAGES = ['packages/plugins-nestjs'];
+
 const WORKSPACE_PROTOCOL_PATTERN = /^workspace:/;
 
 async function main() {
@@ -27,6 +29,10 @@ async function main() {
 
   for (const packagePath of PUBLISHABLE_PACKAGES) {
     artifactPaths.push(await validatePackagePack(packagePath));
+  }
+
+  for (const packagePath of SMOKE_TEST_EXTRA_PACKAGES) {
+    artifactPaths.push(await validatePackagePack(packagePath, { allowPrivate: true }));
   }
 
   console.log(`Validated ${PUBLISHABLE_PACKAGES.length} publishable package tarballs.`);
@@ -49,12 +55,13 @@ async function prepareReleaseArtifactsDir() {
   await mkdir(releaseArtifactsDir, { recursive: true });
 }
 
-async function validatePackagePack(relativePackagePath) {
+async function validatePackagePack(relativePackagePath, options = {}) {
+  const { allowPrivate = false } = options;
   const packageDir = join(repoRoot, relativePackagePath);
   const packageJsonPath = join(packageDir, 'package.json');
   const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'));
 
-  if (packageJson.private) {
+  if (packageJson.private && !allowPrivate) {
     throw new Error(`${packageJson.name} is private and should not be packed for release.`);
   }
 

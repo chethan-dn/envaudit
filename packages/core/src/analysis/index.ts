@@ -8,3 +8,4 @@ export { MissingAnalyzer } from './analyzers/missing-analyzer.js';
 export { UnusedAnalyzer } from './analyzers/unused-analyzer.js';
 export type { IssueAnalyzer } from './interfaces/issue-analyzer.js';
 export type { IssueAnalysisService } from './interfaces/issue-analysis-service.js';
+export { groupIssues } from './utils/group-issues.js';

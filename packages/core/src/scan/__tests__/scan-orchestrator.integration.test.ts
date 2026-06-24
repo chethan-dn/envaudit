@@ -59,7 +59,6 @@ describe('scan orchestrator integration', () => {
       'ENV_MISSING',
       'ENV_UNUSED',
       'ENV_UNUSED',
-      'ENV_UNUSED',
     ]);
 
     expect(scanResult?.issues.some((issue) => issue.code === 'ENV_MISSING' && issue.variable === 'MISSING_FEATURE_FLAG')).toBe(true);

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { HumanScanReporter } from '../reporters/human-scan-reporter.js';
 import {
   cleanRepositoryScanResult,
+  groupedRepositoryScanResult,
   monorepoRepositoryScanResult,
   sampleRepositoryScanResult,
 } from './fixtures/repository-scan-result.fixture.js';
@@ -50,5 +51,15 @@ describe('HumanScanReporter', () => {
     expect(output).toContain('── web (/repo/monorepo/apps/web) ──');
     expect(output).toContain('── api (/repo/monorepo/apps/api) ──');
     expect(output).toContain('  Projects:    2');
+  });
+
+  it('renders grouped locations for duplicate variable issues', () => {
+    const output = reporter.render(groupedRepositoryScanResult);
+
+    expect(output).toContain('  ENV_MISSING (1)');
+    expect(output).toContain('    MISSING_KEY');
+    expect(output).toContain('      Used in:');
+    expect(output).toContain('        src/fileA.ts:35');
+    expect(output).toContain('        src/fileB.ts:171');
   });
 });

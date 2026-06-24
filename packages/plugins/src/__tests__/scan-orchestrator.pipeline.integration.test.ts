@@ -22,7 +22,7 @@ describe('scan orchestrator pipeline integration', () => {
       projectCount: 1,
       definitionCount: 6,
       usageCount: 3,
-      issueCount: 6,
+      issueCount: 5,
     });
     expect(result.summary.scannedFileCount).toBeGreaterThan(0);
     expect(result.summary.skippedFileCount).toBeGreaterThanOrEqual(0);
@@ -38,7 +38,6 @@ describe('scan orchestrator pipeline integration', () => {
       'ENV_DUPLICATE',
       'ENV_EMPTY',
       'ENV_MISSING',
-      'ENV_UNUSED',
       'ENV_UNUSED',
       'ENV_UNUSED',
     ]);

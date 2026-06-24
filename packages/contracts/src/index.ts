@@ -17,6 +17,7 @@ export type { ScanMetrics } from './scan-metrics.js';
 export type { VariableDefinition } from './variable-definition.js';
 export type { ConfidenceLevel, UsageType, VariableUsage } from './variable-usage.js';
 export type { WorkspaceProject, ProjectDiscoveryResult } from './workspace-project.js';
+export type { IssueLocation } from './issue-location.js';
 export type { IssueType, Issue } from './issue.js';
 export type { ScanResult } from './scan-result.js';
 export type { RepositoryScanResult, RepositoryScanSummary } from './repository-scan-result.js';

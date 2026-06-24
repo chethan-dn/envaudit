@@ -76,6 +76,47 @@ export const sampleRepositoryScanResult: RepositoryScanResult = {
   ],
 };
 
+export const groupedRepositoryScanResult: RepositoryScanResult = {
+  rootPath: '/repo',
+  summary: {
+    projectCount: 1,
+    definitionCount: 0,
+    usageCount: 2,
+    issueCount: 1,
+    scannedFileCount: 2,
+    skippedFileCount: 0,
+  },
+  results: [
+    {
+      project: {
+        name: 'api',
+        rootPath: '/repo/apps/api',
+      },
+      definitions: [],
+      usages: [],
+      issues: [
+        {
+          code: 'ENV_MISSING',
+          type: 'missing',
+          variable: 'MISSING_KEY',
+          projectRootPath: '/repo/apps/api',
+          sourceFile: '/repo/apps/api/src/fileA.ts',
+          line: 35,
+          locations: [
+            { sourceFile: '/repo/apps/api/src/fileA.ts', line: 35 },
+            { sourceFile: '/repo/apps/api/src/fileB.ts', line: 171 },
+          ],
+          message: 'MISSING_KEY is used but not defined in environment files',
+        },
+      ],
+      metrics: {
+        scannedFileCount: 2,
+        skippedFileCount: 0,
+      },
+    },
+  ],
+};
+
 export const cleanRepositoryScanResult: RepositoryScanResult = {
   rootPath: '/repo/clean',
   summary: {

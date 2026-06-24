@@ -15,6 +15,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "validate:pack": "pnpm build:release && node scripts/validate-pack.mjs",
+    "release:check": "pnpm build && pnpm test && pnpm validate:pack",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "pnpm build:release && changeset publish"
