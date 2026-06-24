@@ -1,5 +1,14 @@
 # @envdoctor/plugins
 
+## 0.1.3
+
+### Patch Changes
+
+- Optional environment variables are detected AST-only in two places:
+- Updated dependencies
+  - @envdoctor/plugins-typescript@0.1.3
+  - @envdoctor/contracts@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
