@@ -1,5 +1,5 @@
-import type { ScanMetrics } from '@envaudit/contracts';
-import type { ScannerPlugin } from '@envaudit/contracts';
+import type { ScanMetrics } from 'envaudit-contracts';
+import type { ScannerPlugin } from 'envaudit-contracts';
 
 export interface SourceScanMetricsProvider {
   getSourceScanMetrics(): ScanMetrics;

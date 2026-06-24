@@ -1,4 +1,4 @@
-export { DEFAULT_IGNORED_DIRECTORIES } from '@envaudit/contracts';
+export { DEFAULT_IGNORED_DIRECTORIES } from 'envaudit-contracts';
 export { createDefaultProjectDiscoveryDependencies, createProjectDiscoveryService } from './create-project-discovery-service.js';
 export { DefaultProjectDiscoveryService } from './project-discovery-service.js';
 export type { ProjectDiscoveryDependencies } from './project-discovery-service.js';

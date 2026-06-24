@@ -1,6 +1,6 @@
 import { access } from 'node:fs/promises';
 import { isAbsolute, resolve } from 'node:path';
-import type { ScanOrchestrator } from '@envaudit/core';
+import type { ScanOrchestrator } from 'envaudit-core';
 import type { ScanReporter } from '../reporters/interfaces/scan-reporter.js';
 import type { ScanCommandOptions } from './scan-command-options.js';
 

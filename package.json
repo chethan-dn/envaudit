@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "pnpm -r run build",
-    "build:release": "pnpm --filter @envaudit/cli... run build",
+    "build:release": "pnpm --filter envaudit... run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",

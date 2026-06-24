@@ -1,4 +1,4 @@
-import type { Issue, IssueLocation } from '@envaudit/contracts';
+import type { Issue, IssueLocation } from 'envaudit-contracts';
 import { sortIssues } from './sort-issues.js';
 
 function issueGroupKey(issue: Issue): string {

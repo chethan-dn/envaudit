@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { createScanOrchestrator } from '@envaudit/core';
+import { createScanOrchestrator } from 'envaudit-core';
 import { BuiltinPluginRegistry } from '../plugin-registry.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');

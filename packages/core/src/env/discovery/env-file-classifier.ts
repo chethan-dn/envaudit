@@ -1,6 +1,6 @@
 import { basename } from 'node:path';
-import type { EnvAuditConfig, EnvFileKind } from '@envaudit/contracts';
-import { DEFAULT_DOCUMENTATION_ENV_FILES } from '@envaudit/contracts';
+import type { EnvAuditConfig, EnvFileKind } from 'envaudit-contracts';
+import { DEFAULT_DOCUMENTATION_ENV_FILES } from 'envaudit-contracts';
 import { ENV_FILE_WILDCARD_PATTERN } from '../constants.js';
 import { isEnvFile } from './env-file-matcher.js';
 

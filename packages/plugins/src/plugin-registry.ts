@@ -1,4 +1,4 @@
-import type { ScanExclusionPolicy, ScannerPlugin } from '@envaudit/contracts';
+import type { ScanExclusionPolicy, ScannerPlugin } from 'envaudit-contracts';
 import { getBuiltinPlugins } from './builtins/index.js';
 
 export interface PluginRegistry {

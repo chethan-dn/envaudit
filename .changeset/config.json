@@ -4,12 +4,12 @@
   "commit": false,
   "fixed": [
     [
-      "@envaudit/cli",
-      "@envaudit/contracts",
-      "@envaudit/core",
-      "@envaudit/plugins-typescript",
-      "@envaudit/plugins-nestjs",
-      "@envaudit/plugins"
+      "envaudit",
+      "envaudit-contracts",
+      "envaudit-core",
+      "envaudit-plugins-typescript",
+      "envaudit-plugins-nestjs",
+      "envaudit-plugins"
     ]
   ],
   "linked": [],

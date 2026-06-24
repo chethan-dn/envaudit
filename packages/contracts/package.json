@@ -1,5 +1,5 @@
 {
-  "name": "@envaudit/contracts",
+  "name": "envaudit-contracts",
   "version": "0.2.0",
   "description": "Shared contracts and utilities for EnvAudit",
   "license": "MIT",

@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import type { ScanExclusionPolicy, ScanMetrics, ScannerPlugin, VariableDefinition, VariableUsage } from '@envaudit/contracts';
+import type { ScanExclusionPolicy, ScanMetrics, ScannerPlugin, VariableDefinition, VariableUsage } from 'envaudit-contracts';
 import {
   ConfigServiceUsageExtractor,
   ConfigWrapperMappingExtractor,
@@ -7,7 +7,7 @@ import {
   collectConfigWrapperMappings,
   ValidationSchemaDefinitionExtractor,
   ValidationSchemaFileDiscoverer,
-} from '@envaudit/plugins-nestjs';
+} from 'envaudit-plugins-nestjs';
 import {
   FastGlobSourceFileDiscoverer,
   type SourceFileDiscoverer,

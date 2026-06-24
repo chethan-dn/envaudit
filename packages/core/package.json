@@ -1,5 +1,5 @@
 {
-  "name": "@envaudit/core",
+  "name": "envaudit-core",
   "version": "0.2.0",
   "description": "Core orchestration and analysis engine for EnvAudit",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@envaudit/contracts": "workspace:*",
+    "envaudit-contracts": "workspace:*",
     "fast-glob": "^3.3.3"
   }
 }

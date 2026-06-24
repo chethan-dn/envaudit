@@ -4,7 +4,7 @@ import { DuplicateAnalyzer } from '../analyzers/duplicate-analyzer.js';
 import { EmptyAnalyzer } from '../analyzers/empty-analyzer.js';
 import { MissingAnalyzer } from '../analyzers/missing-analyzer.js';
 import { UnusedAnalyzer } from '../analyzers/unused-analyzer.js';
-import type { VariableDefinition, VariableUsage } from '@envaudit/contracts';
+import type { VariableDefinition, VariableUsage } from 'envaudit-contracts';
 import { createAnalysisInput } from './test-helpers.js';
 
 describe('DefaultIssueAnalysisService', () => {

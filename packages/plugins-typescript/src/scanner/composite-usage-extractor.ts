@@ -1,5 +1,5 @@
 import type { SourceFile } from 'ts-morph';
-import type { VariableUsage } from '@envaudit/contracts';
+import type { VariableUsage } from 'envaudit-contracts';
 import type { UsageExtractor } from './process-env-usage-extractor.js';
 
 export class CompositeUsageExtractor implements UsageExtractor {

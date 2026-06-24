@@ -6,8 +6,8 @@ import type {
   ScanResult,
   ScanExclusionPolicy,
   WorkspaceProject,
-} from '@envaudit/contracts';
-import type { ScannerPlugin } from '@envaudit/contracts';
+} from 'envaudit-contracts';
+import type { ScannerPlugin } from 'envaudit-contracts';
 import type { PluginScanService } from './interfaces/plugin-scan-service.js';
 import type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
 import type { ScanOptions } from './interfaces/scan-options.js';
@@ -16,7 +16,7 @@ import type { IssueAnalysisService } from '../analysis/interfaces/issue-analysis
 import type { ProjectDiscoveryService } from '../workspace/interfaces/project-discovery-service.js';
 import type { WorkspaceRootResolver } from '../workspace/workspace-root-resolver.js';
 import type { EnvAuditConfigLoader } from '../config/interfaces/envaudit-config-loader.js';
-import { createScanExclusionPolicy } from '@envaudit/contracts';
+import { createScanExclusionPolicy } from 'envaudit-contracts';
 import { groupIssues } from '../analysis/utils/group-issues.js';
 import { buildRepositoryScanSummary } from './utils/build-repository-scan-summary.js';
 

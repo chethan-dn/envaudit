@@ -19,6 +19,16 @@ const WORKSPACE_PACKAGES = [
   'packages/plugins-javascript',
 ] as const;
 
+const EXPECTED_PACKAGE_NAMES: Record<(typeof WORKSPACE_PACKAGES)[number], string> = {
+  'packages/cli': 'envaudit',
+  'packages/contracts': 'envaudit-contracts',
+  'packages/core': 'envaudit-core',
+  'packages/plugins': 'envaudit-plugins',
+  'packages/plugins-typescript': 'envaudit-plugins-typescript',
+  'packages/plugins-nestjs': 'envaudit-plugins-nestjs',
+  'packages/plugins-javascript': '@envaudit/plugins-javascript',
+};
+
 async function readPackageJson(relativePackagePath: string) {
   const packageJsonPath = join(repoRoot, relativePackagePath, 'package.json');
   const packageJson = await import(packageJsonPath, { with: { type: 'json' } });
@@ -28,11 +38,24 @@ async function readPackageJson(relativePackagePath: string) {
     bin?: Record<string, string>;
     exports?: Record<string, { import?: string; types?: string } | string>;
     main?: string;
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+    optionalDependencies?: Record<string, string>;
   };
 }
 
 async function assertPathExists(path: string): Promise<void> {
   await access(path);
+}
+
+function collectDependencyNames(packageJson: Awaited<ReturnType<typeof readPackageJson>>): string[] {
+  return [
+    ...Object.keys(packageJson.dependencies ?? {}),
+    ...Object.keys(packageJson.devDependencies ?? {}),
+    ...Object.keys(packageJson.peerDependencies ?? {}),
+    ...Object.keys(packageJson.optionalDependencies ?? {}),
+  ];
 }
 
 describe('package verification', () => {
@@ -74,10 +97,17 @@ describe('package verification', () => {
 });
 
 describe('package rename validation', () => {
-  it('uses @envaudit package names across workspace packages', async () => {
+  it('uses expected unscoped package names across workspace packages', async () => {
     for (const relativePackagePath of WORKSPACE_PACKAGES) {
       const packageJson = await readPackageJson(relativePackagePath);
-      expect(packageJson.name.startsWith('@envaudit/')).toBe(true);
+      expect(packageJson.name).toBe(EXPECTED_PACKAGE_NAMES[relativePackagePath]);
+    }
+  });
+
+  it('does not reference @envaudit in publishable package.json files', async () => {
+    for (const relativePackagePath of PUBLISHABLE_PACKAGES) {
+      const raw = await readFile(join(repoRoot, relativePackagePath, 'package.json'), 'utf8');
+      expect(raw).not.toContain('@envaudit');
     }
   });
 
@@ -85,6 +115,15 @@ describe('package rename validation', () => {
     for (const relativePackagePath of WORKSPACE_PACKAGES) {
       const raw = await readFile(join(repoRoot, relativePackagePath, 'package.json'), 'utf8');
       expect(raw).not.toContain('@envdoctor');
+    }
+  });
+
+  it('does not use @envaudit scoped dependencies in publishable packages', async () => {
+    for (const relativePackagePath of PUBLISHABLE_PACKAGES) {
+      const packageJson = await readPackageJson(relativePackagePath);
+      for (const dependencyName of collectDependencyNames(packageJson)) {
+        expect(dependencyName.startsWith('@envaudit/')).toBe(false);
+      }
     }
   });
 

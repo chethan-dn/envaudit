@@ -1,5 +1,5 @@
 {
-  "name": "@envaudit/plugins",
+  "name": "envaudit-plugins",
   "version": "0.2.0",
   "description": "Builtin plugin registry for EnvAudit",
   "license": "MIT",
@@ -37,10 +37,10 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@envaudit/contracts": "workspace:*",
-    "@envaudit/plugins-typescript": "workspace:*"
+    "envaudit-contracts": "workspace:*",
+    "envaudit-plugins-typescript": "workspace:*"
   },
   "devDependencies": {
-    "@envaudit/core": "workspace:*"
+    "envaudit-core": "workspace:*"
   }
 }

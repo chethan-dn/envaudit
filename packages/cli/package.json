@@ -1,5 +1,5 @@
 {
-  "name": "@envaudit/cli",
+  "name": "envaudit",
   "version": "0.2.0",
   "description": "Environment Intelligence CLI",
   "license": "MIT",
@@ -36,8 +36,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@envaudit/core": "workspace:*",
-    "@envaudit/plugins": "workspace:*",
+    "envaudit-core": "workspace:*",
+    "envaudit-plugins": "workspace:*",
     "commander": "^14.0.0"
   }
 }

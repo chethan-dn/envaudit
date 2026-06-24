@@ -1,4 +1,4 @@
-import type { EnvAuditConfig, WorkspaceProject } from '@envaudit/contracts';
+import type { EnvAuditConfig, WorkspaceProject } from 'envaudit-contracts';
 import type { EnvDiscoveryResult } from './env-discovery-result.js';
 
 export interface EnvDiscoveryProjectOptions {

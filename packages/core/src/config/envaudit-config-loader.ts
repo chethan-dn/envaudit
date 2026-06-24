@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import type { EnvAuditConfig } from '@envaudit/contracts';
+import type { EnvAuditConfig } from 'envaudit-contracts';
 import { DEFAULT_ENV_AUDIT_CONFIG } from './default-envaudit-config.js';
 import type { EnvAuditConfigLoader } from './interfaces/envaudit-config-loader.js';
 

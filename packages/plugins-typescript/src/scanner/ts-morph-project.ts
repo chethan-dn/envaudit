@@ -1,4 +1,4 @@
-import type { VariableUsage } from '@envaudit/contracts';
+import type { VariableUsage } from 'envaudit-contracts';
 import { Project, type SourceFile } from 'ts-morph';
 
 export function createTsMorphProject(): Project {

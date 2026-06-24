@@ -1,4 +1,4 @@
-import type { AnalysisInput } from '@envaudit/contracts';
+import type { AnalysisInput } from 'envaudit-contracts';
 import { ISSUE_CODES } from '../constants.js';
 import type { IssueAnalyzer } from '../interfaces/issue-analyzer.js';
 import { getRuntimeDefinitions } from '../utils/runtime-definitions.js';

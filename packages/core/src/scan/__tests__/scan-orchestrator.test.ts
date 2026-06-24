@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import type { ScannerPlugin } from '@envaudit/contracts';
+import type { ScannerPlugin } from 'envaudit-contracts';
 import { DefaultEnvAuditConfigLoader } from '../../config/envaudit-config-loader.js';
 import { createEnvDiscoveryService } from '../../env/create-env-discovery-service.js';
 import { createIssueAnalysisService } from '../../analysis/create-issue-analysis-service.js';

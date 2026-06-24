@@ -110,7 +110,9 @@ async function validatePackagePack(relativePackagePath, options = {}) {
 }
 
 async function runInstallSmokeTest(artifactPaths) {
-  const cliTarball = artifactPaths.find((path) => path.includes('envaudit-cli-'));
+  const cliTarball = artifactPaths.find(
+    (path) => /\/envaudit-\d+\.\d+\.\d+\.tgz$/.test(path) && !/\/envaudit-[^/]+-\d/.test(path),
+  );
   if (!cliTarball) {
     throw new Error('CLI tarball was not produced in .release-artifacts/.');
   }
@@ -121,7 +123,7 @@ async function runInstallSmokeTest(artifactPaths) {
   try {
     execSync('npm init -y', { cwd: smokeDir, stdio: 'pipe' });
 
-    // Install all publishable tarballs so @envaudit/* workspace deps resolve locally.
+    // Install all publishable tarballs so workspace deps resolve locally.
     const installArgs = artifactPaths.map((path) => JSON.stringify(path)).join(' ');
     execSync(`npm install ${installArgs}`, { cwd: smokeDir, stdio: 'pipe' });
 

@@ -4,7 +4,7 @@ import type {
   EnvironmentFileSummary,
   VariableDefinition,
   WorkspaceProject,
-} from '@envaudit/contracts';
+} from 'envaudit-contracts';
 import type { FileSystemReader } from '../workspace/interfaces/file-system-reader.js';
 import type { EnvDiscoveryProjectOptions, EnvDiscoveryService } from './interfaces/env-discovery-service.js';
 import type { EnvDiscoveryResult } from './interfaces/env-discovery-result.js';

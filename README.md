@@ -5,7 +5,7 @@ Environment Intelligence CLI for discovering environment variable definitions, s
 ## Quick Start
 
 ```bash
-npm install -g @envaudit/cli
+npm install -g envaudit
 cd my-app
 envaudit scan
 ```
@@ -16,10 +16,10 @@ EnvAudit scans runtime env files (`.env`, etc.) and your TypeScript/JavaScript s
 
 ```bash
 # Global CLI (recommended)
-npm install -g @envaudit/cli
+npm install -g envaudit
 
 # Or run without installing
-npx @envaudit/cli scan .
+npx envaudit scan .
 ```
 
 Requirements:
@@ -238,17 +238,17 @@ pnpm validate:pack
 
 | Package | Published | Role |
 |---------|-----------|------|
-| `@envaudit/cli` | Yes | CLI entry (`envaudit` binary) |
-| `@envaudit/core` | Yes | Orchestration, discovery, analysis |
-| `@envaudit/plugins` | Yes | Builtin plugin registry |
-| `@envaudit/plugins-typescript` | Yes | TypeScript/JavaScript scanner (includes NestJS schema support) |
-| `@envaudit/contracts` | Yes | Shared types and policy utilities |
+| `envaudit` | Yes | CLI entry (`envaudit` binary) |
+| `envaudit-core` | Yes | Orchestration, discovery, analysis |
+| `envaudit-plugins` | Yes | Builtin plugin registry |
+| `envaudit-plugins-typescript` | Yes | TypeScript/JavaScript scanner (includes NestJS schema support) |
+| `envaudit-contracts` | Yes | Shared types and policy utilities |
 | `@envaudit/plugins-javascript` | No | Private workspace stub (future) |
-| `@envaudit/plugins-nestjs` | No | Private workspace package (bundled via TypeScript plugin) |
+| `envaudit-plugins-nestjs` | No | Private workspace package (bundled via TypeScript plugin) |
 
 ### Why are library packages public?
 
-`npm install -g @envaudit/cli` must resolve `@envaudit/core`, `@envaudit/plugins`, and their transitive dependencies from the npm registry. Publishing the dependency graph keeps installs reliable and leaves room for programmatic use of `@envaudit/core` later.
+`npm install -g envaudit` must resolve `envaudit-core`, `envaudit-plugins`, and their transitive dependencies from the npm registry. Publishing the dependency graph keeps installs reliable and leaves room for programmatic use of `envaudit-core` later.
 
 ## License
 

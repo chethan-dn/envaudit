@@ -1,6 +1,6 @@
 import { basename, resolve } from 'node:path';
 import fg from 'fast-glob';
-import type { WorkspaceProject } from '@envaudit/contracts';
+import type { WorkspaceProject } from 'envaudit-contracts';
 import type { FileSystemReader } from '../interfaces/file-system-reader.js';
 import type { WorkspaceManagerDetector } from '../interfaces/workspace-manager-detector.js';
 import { getGlobIgnorePatterns } from '../utils/glob-expand.js';

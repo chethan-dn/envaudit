@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
-import type { ScannerPlugin } from '@envaudit/contracts';
+import type { ScannerPlugin } from 'envaudit-contracts';
 import { createScanOrchestrator } from '../create-scan-orchestrator.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../../../..');
