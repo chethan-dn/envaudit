@@ -19,6 +19,16 @@
     "version": "changeset version",
     "release": "pnpm build:release && changeset publish"
   },
+  "author": [
+    "chethan-dnc <chethan.dnc@arithaconsulting.com>",
+    "chethan-dn <chethan.dnc@gmail.com>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chethan-dnc/envdoctor.git",
+    "directory": "packages/plugins"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "@eslint/js": "^9.28.0",
