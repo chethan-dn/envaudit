@@ -1,11 +1,14 @@
 {
   "name": "@envdoctor/cli",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Environment Intelligence CLI",
   "license": "MIT",
   "private": false,
   "type": "module",
-  "files": ["dist", "package.json"],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "bin": {
     "envdoctor": "./dist/index.js"
   },

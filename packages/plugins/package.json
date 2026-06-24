@@ -1,12 +1,14 @@
 {
   "name": "@envdoctor/plugins",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Builtin plugin registry for EnvDoctor",
   "license": "MIT",
   "private": false,
   "type": "module",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
