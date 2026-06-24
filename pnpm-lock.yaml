@@ -61,12 +61,6 @@ importers:
       '@envdoctor/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@envdoctor/plugins-javascript':
-        specifier: workspace:*
-        version: link:../plugins-javascript
-      '@envdoctor/plugins-nestjs':
-        specifier: workspace:*
-        version: link:../plugins-nestjs
       '@envdoctor/plugins-typescript':
         specifier: workspace:*
         version: link:../plugins-typescript
@@ -86,12 +80,18 @@ importers:
       '@envdoctor/contracts':
         specifier: workspace:*
         version: link:../contracts
+      ts-morph:
+        specifier: ^25.0.1
+        version: 25.0.1
 
   packages/plugins-typescript:
     dependencies:
       '@envdoctor/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@envdoctor/plugins-nestjs':
+        specifier: workspace:*
+        version: link:../plugins-nestjs
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3

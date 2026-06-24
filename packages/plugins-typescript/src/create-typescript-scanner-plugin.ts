@@ -4,6 +4,8 @@ import {
   FastGlobSourceFileDiscoverer,
   type SourceFileDiscoverer,
 } from './discovery/source-file-discoverer.js';
+import { ConfigServiceUsageExtractor } from '@envdoctor/plugins-nestjs';
+import { CompositeUsageExtractor } from './scanner/composite-usage-extractor.js';
 import {
   ProcessEnvUsageExtractor,
   type UsageExtractor,
@@ -70,7 +72,10 @@ export function createDefaultTypeScriptScannerDependencies(
 ): TypeScriptScannerDependencies {
   return {
     sourceFileDiscoverer: new FastGlobSourceFileDiscoverer(exclusionPolicy),
-    usageExtractor: new ProcessEnvUsageExtractor(),
+    usageExtractor: new CompositeUsageExtractor([
+      new ProcessEnvUsageExtractor(),
+      new ConfigServiceUsageExtractor(),
+    ]),
   };
 }
 
