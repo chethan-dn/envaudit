@@ -1,6 +1,6 @@
 {
   "name": "@envdoctor/plugins",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Builtin plugin registry for EnvDoctor",
   "license": "MIT",
   "private": false,
