@@ -1,5 +1,11 @@
 export { ConfigServiceUsageExtractor } from './config-service-usage-extractor.js';
 export {
+  ConfigWrapperMappingExtractor,
+  collectConfigWrapperMappings,
+  type ConfigWrapperMapping,
+} from './config-wrapper-mapping-extractor.js';
+export { ConfigWrapperUsageExtractor } from './config-wrapper-usage-extractor.js';
+export {
   ValidationSchemaDefinitionExtractor,
   isEnvSchemaVariableName,
 } from './validation-schema-definition-extractor.js';

@@ -2,6 +2,9 @@ import { resolve } from 'node:path';
 import type { ScanExclusionPolicy, ScanMetrics, ScannerPlugin, VariableDefinition, VariableUsage } from '@envdoctor/contracts';
 import {
   ConfigServiceUsageExtractor,
+  ConfigWrapperMappingExtractor,
+  ConfigWrapperUsageExtractor,
+  collectConfigWrapperMappings,
   ValidationSchemaDefinitionExtractor,
   ValidationSchemaFileDiscoverer,
 } from '@envdoctor/plugins-nestjs';
@@ -19,6 +22,7 @@ import { addSourceFiles, createTsMorphProject, sortUsages } from './scanner/ts-m
 export interface TypeScriptScannerDependencies {
   sourceFileDiscoverer: SourceFileDiscoverer;
   usageExtractor: UsageExtractor;
+  configWrapperMappingExtractor: ConfigWrapperMappingExtractor;
   validationSchemaFileDiscoverer: ValidationSchemaFileDiscoverer;
   validationSchemaDefinitionExtractor: ValidationSchemaDefinitionExtractor;
 }
@@ -53,10 +57,16 @@ export class TypeScriptScannerPlugin implements ScannerPlugin {
 
     const project = createTsMorphProject();
     const sourceFiles = addSourceFiles(project, outcome.scannedFiles);
+    const wrapperMappings = collectConfigWrapperMappings(
+      sourceFiles,
+      this.deps.configWrapperMappingExtractor,
+    );
+    const wrapperUsageExtractor = new ConfigWrapperUsageExtractor(wrapperMappings);
     const usages: VariableUsage[] = [];
 
     for (const sourceFile of sourceFiles) {
       usages.push(...this.deps.usageExtractor.extract(sourceFile, normalizedRoot));
+      usages.push(...wrapperUsageExtractor.extract(sourceFile, normalizedRoot));
     }
 
     return sortUsages(usages);
@@ -93,6 +103,7 @@ export interface CreateTypeScriptScannerPluginOptions {
   usageExtractor?: UsageExtractor;
   validationSchemaFileDiscoverer?: ValidationSchemaFileDiscoverer;
   validationSchemaDefinitionExtractor?: ValidationSchemaDefinitionExtractor;
+  configWrapperMappingExtractor?: ConfigWrapperMappingExtractor;
 }
 
 export function createDefaultTypeScriptScannerDependencies(
@@ -106,6 +117,7 @@ export function createDefaultTypeScriptScannerDependencies(
     ]),
     validationSchemaFileDiscoverer: new ValidationSchemaFileDiscoverer(),
     validationSchemaDefinitionExtractor: new ValidationSchemaDefinitionExtractor(),
+    configWrapperMappingExtractor: new ConfigWrapperMappingExtractor(),
   };
 }
 
@@ -121,5 +133,7 @@ export function createTypeScriptScannerPlugin(
       options.validationSchemaFileDiscoverer ?? defaults.validationSchemaFileDiscoverer,
     validationSchemaDefinitionExtractor:
       options.validationSchemaDefinitionExtractor ?? defaults.validationSchemaDefinitionExtractor,
+    configWrapperMappingExtractor:
+      options.configWrapperMappingExtractor ?? defaults.configWrapperMappingExtractor,
   });
 }

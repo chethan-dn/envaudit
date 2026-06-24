@@ -1,9 +1,7 @@
 import { Node, type CallExpression, type SourceFile } from 'ts-morph';
 import type { VariableUsage } from '@envdoctor/contracts';
+import { getConfigServiceCallInfo } from './config-service-call-detection.js';
 import { serializeLiteralDefaultValue } from './utils/serialize-literal-default.js';
-
-const CONFIG_METHODS = new Set(['get', 'getOrThrow']);
-const CONFIG_OBJECT_NAMES = new Set(['configService', 'config']);
 
 export class ConfigServiceUsageExtractor {
   extract(sourceFile: SourceFile, projectRootPath: string): VariableUsage[] {
@@ -14,7 +12,7 @@ export class ConfigServiceUsageExtractor {
         return;
       }
 
-      const callInfo = getConfigServiceCallInfo(node);
+      const callInfo = getConfigServiceCallInfoWithDefaults(node);
       if (callInfo) {
         usages.push(createUsage(callInfo, sourceFile, projectRootPath, node));
       }
@@ -24,62 +22,26 @@ export class ConfigServiceUsageExtractor {
   }
 }
 
-interface ConfigServiceCallInfo {
-  name: string;
-  optional: boolean;
-  defaultValue?: string;
-}
-
-function getConfigServiceCallInfo(node: CallExpression): ConfigServiceCallInfo | null {
-  const expression = node.getExpression();
-  if (!Node.isPropertyAccessExpression(expression)) {
-    return null;
+function getConfigServiceCallInfoWithDefaults(node: CallExpression) {
+  const callInfo = getConfigServiceCallInfo(node);
+  if (!callInfo || !callInfo.optional) {
+    return callInfo;
   }
 
-  if (!CONFIG_METHODS.has(expression.getName())) {
-    return null;
-  }
-
-  if (!isConfigServiceReceiver(expression.getExpression())) {
-    return null;
-  }
-
-  const firstArgument = node.getArguments()[0];
-  if (!firstArgument) {
-    return null;
-  }
-
-  if (!Node.isStringLiteral(firstArgument) && !Node.isNoSubstitutionTemplateLiteral(firstArgument)) {
-    return null;
-  }
-
-  const name = firstArgument.getLiteralText();
   const secondArgument = node.getArguments()[1];
   if (!secondArgument) {
-    return { name, optional: false };
+    return callInfo;
   }
 
   const defaultValue = serializeLiteralDefaultValue(secondArgument);
 
   return defaultValue === undefined
-    ? { name, optional: true }
-    : { name, optional: true, defaultValue };
-}
-
-function isConfigServiceReceiver(node: import('ts-morph').Node): boolean {
-  if (Node.isIdentifier(node)) {
-    return CONFIG_OBJECT_NAMES.has(node.getText());
-  }
-
-  if (Node.isPropertyAccessExpression(node)) {
-    return Node.isThisExpression(node.getExpression()) && CONFIG_OBJECT_NAMES.has(node.getName());
-  }
-
-  return false;
+    ? { ...callInfo, defaultValue: undefined }
+    : { ...callInfo, defaultValue };
 }
 
 function createUsage(
-  callInfo: ConfigServiceCallInfo,
+  callInfo: NonNullable<ReturnType<typeof getConfigServiceCallInfo>>,
   sourceFile: SourceFile,
   projectRootPath: string,
   node: CallExpression,
