@@ -1,5 +1,14 @@
 # @envdoctor/cli
 
+## 0.1.4
+
+### Patch Changes
+
+- Enhance ConfigServiceUsageExtractor and introduce ConfigWrapper support
+- Updated dependencies
+  - @envdoctor/plugins@0.1.4
+  - @envdoctor/core@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
