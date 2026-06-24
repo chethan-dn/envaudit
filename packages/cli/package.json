@@ -1,6 +1,6 @@
 {
   "name": "@envdoctor/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Environment Intelligence CLI",
   "license": "MIT",
   "private": false,
