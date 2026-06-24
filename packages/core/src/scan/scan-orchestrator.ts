@@ -82,13 +82,16 @@ export class DefaultScanOrchestrator implements ScanOrchestrator {
       workspaceRootPath: context.workspaceRootPath,
       runtimeEnvOverridePath: options?.runtimeEnvFile,
     });
-    const definitions = envDiscovery.definitions;
-    const envFileCount = new Set(definitions.map((definition) => definition.sourceFile)).size;
     const pluginOutcome = await this.deps.pluginScan.scanProject(project, plugins);
+    const definitions = [...envDiscovery.definitions, ...pluginOutcome.definitions];
+    const envFileCount = new Set(
+      envDiscovery.definitions.map((definition) => definition.sourceFile),
+    ).size;
     const issues = this.deps.issueAnalysis.analyze({
       projectRootPath: project.rootPath,
       definitions,
       usages: pluginOutcome.usages,
+      runtimeEnvFiles: envDiscovery.environmentFiles.runtime,
     });
 
     const metrics: ScanMetrics = {

@@ -1,10 +1,14 @@
 import { resolve } from 'node:path';
-import type { ScanExclusionPolicy, ScanMetrics, ScannerPlugin, VariableUsage } from '@envdoctor/contracts';
+import type { ScanExclusionPolicy, ScanMetrics, ScannerPlugin, VariableDefinition, VariableUsage } from '@envdoctor/contracts';
+import {
+  ConfigServiceUsageExtractor,
+  ValidationSchemaDefinitionExtractor,
+  ValidationSchemaFileDiscoverer,
+} from '@envdoctor/plugins-nestjs';
 import {
   FastGlobSourceFileDiscoverer,
   type SourceFileDiscoverer,
 } from './discovery/source-file-discoverer.js';
-import { ConfigServiceUsageExtractor } from '@envdoctor/plugins-nestjs';
 import { CompositeUsageExtractor } from './scanner/composite-usage-extractor.js';
 import {
   ProcessEnvUsageExtractor,
@@ -15,6 +19,8 @@ import { addSourceFiles, createTsMorphProject, sortUsages } from './scanner/ts-m
 export interface TypeScriptScannerDependencies {
   sourceFileDiscoverer: SourceFileDiscoverer;
   usageExtractor: UsageExtractor;
+  validationSchemaFileDiscoverer: ValidationSchemaFileDiscoverer;
+  validationSchemaDefinitionExtractor: ValidationSchemaDefinitionExtractor;
 }
 
 export class TypeScriptScannerPlugin implements ScannerPlugin {
@@ -56,6 +62,26 @@ export class TypeScriptScannerPlugin implements ScannerPlugin {
     return sortUsages(usages);
   }
 
+  async discoverDefinitions(rootPath: string): Promise<VariableDefinition[]> {
+    const normalizedRoot = resolve(rootPath);
+    const schemaFiles = await this.deps.validationSchemaFileDiscoverer.discover(normalizedRoot);
+
+    if (schemaFiles.length === 0) {
+      return [];
+    }
+
+    const project = createTsMorphProject();
+    const definitions: VariableDefinition[] = [];
+
+    for (const sourceFile of addSourceFiles(project, schemaFiles)) {
+      definitions.push(
+        ...this.deps.validationSchemaDefinitionExtractor.extract(sourceFile, normalizedRoot),
+      );
+    }
+
+    return definitions;
+  }
+
   getSourceScanMetrics(): ScanMetrics {
     return this.sourceScanMetrics;
   }
@@ -65,6 +91,8 @@ export interface CreateTypeScriptScannerPluginOptions {
   exclusionPolicy: ScanExclusionPolicy;
   sourceFileDiscoverer?: SourceFileDiscoverer;
   usageExtractor?: UsageExtractor;
+  validationSchemaFileDiscoverer?: ValidationSchemaFileDiscoverer;
+  validationSchemaDefinitionExtractor?: ValidationSchemaDefinitionExtractor;
 }
 
 export function createDefaultTypeScriptScannerDependencies(
@@ -76,6 +104,8 @@ export function createDefaultTypeScriptScannerDependencies(
       new ProcessEnvUsageExtractor(),
       new ConfigServiceUsageExtractor(),
     ]),
+    validationSchemaFileDiscoverer: new ValidationSchemaFileDiscoverer(),
+    validationSchemaDefinitionExtractor: new ValidationSchemaDefinitionExtractor(),
   };
 }
 
@@ -87,5 +117,9 @@ export function createTypeScriptScannerPlugin(
   return new TypeScriptScannerPlugin({
     sourceFileDiscoverer: options.sourceFileDiscoverer ?? defaults.sourceFileDiscoverer,
     usageExtractor: options.usageExtractor ?? defaults.usageExtractor,
+    validationSchemaFileDiscoverer:
+      options.validationSchemaFileDiscoverer ?? defaults.validationSchemaFileDiscoverer,
+    validationSchemaDefinitionExtractor:
+      options.validationSchemaDefinitionExtractor ?? defaults.validationSchemaDefinitionExtractor,
   });
 }

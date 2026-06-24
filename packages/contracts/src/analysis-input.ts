@@ -5,4 +5,5 @@ export interface AnalysisInput {
   projectRootPath: string;
   definitions: VariableDefinition[];
   usages: VariableUsage[];
+  runtimeEnvFiles?: string[];
 }

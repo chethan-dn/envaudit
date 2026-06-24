@@ -218,4 +218,78 @@ describe('MissingAnalyzer', () => {
 
     expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, usages))).toEqual([]);
   });
+
+  it('reports ENV_UNCONFIGURED when usage matches validation schema but not runtime env', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'DATABASE_URL',
+        sourceFile: '/repo/app/src/env.validation.ts',
+        projectRootPath,
+        line: 2,
+        definitionSource: 'validation-schema',
+      },
+    ];
+    const usages: VariableUsage[] = [
+      {
+        name: 'DATABASE_URL',
+        sourceFile: '/repo/app/src/service.ts',
+        projectRootPath,
+        line: 4,
+        confidence: 'high',
+        usageType: 'env',
+      },
+    ];
+
+    expect(
+      analyzer.analyze({
+        ...createAnalysisInput(projectRootPath, definitions, usages),
+        runtimeEnvFiles: ['/repo/app/.env'],
+      }),
+    ).toEqual([
+      {
+        code: 'ENV_UNCONFIGURED',
+        type: 'unconfigured',
+        variable: 'DATABASE_URL',
+        projectRootPath,
+        sourceFile: '/repo/app/src/env.validation.ts',
+        line: 2,
+        schemaFile: '/repo/app/src/env.validation.ts',
+        runtimeEnvFiles: ['/repo/app/.env'],
+        message:
+          'DATABASE_URL is declared in the application configuration schema but is not configured in runtime environment files.',
+      },
+    ]);
+  });
+
+  it('prefers ENV_OPTIONAL over ENV_UNCONFIGURED when code provides a fallback', () => {
+    const definitions: VariableDefinition[] = [
+      {
+        name: 'THROTTLE_LIMIT',
+        sourceFile: '/repo/app/src/env.validation.ts',
+        projectRootPath,
+        line: 3,
+        definitionSource: 'validation-schema',
+        value: '100',
+      },
+    ];
+    const usages: VariableUsage[] = [
+      {
+        name: 'THROTTLE_LIMIT',
+        sourceFile: '/repo/app/src/service.ts',
+        projectRootPath,
+        line: 5,
+        confidence: 'high',
+        usageType: 'env',
+        optional: true,
+        defaultValue: '100',
+      },
+    ];
+
+    expect(analyzer.analyze(createAnalysisInput(projectRootPath, definitions, usages))).toEqual([
+      expect.objectContaining({
+        code: 'ENV_OPTIONAL',
+        variable: 'THROTTLE_LIMIT',
+      }),
+    ]);
+  });
 });

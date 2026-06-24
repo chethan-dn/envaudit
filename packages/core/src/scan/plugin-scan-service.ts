@@ -1,4 +1,4 @@
-import type { ScanMetrics } from '@envdoctor/contracts';
+import type { ScanMetrics, VariableDefinition } from '@envdoctor/contracts';
 import type { ScannerPlugin } from '@envdoctor/contracts';
 import type { VariableUsage, WorkspaceProject } from '@envdoctor/contracts';
 import type {
@@ -13,6 +13,7 @@ import {
 export class DefaultPluginScanService implements PluginScanService {
   async scanProject(project: WorkspaceProject, plugins: ScannerPlugin[]): Promise<PluginScanOutcome> {
     const usages: VariableUsage[] = [];
+    const definitions: VariableDefinition[] = [];
     const failures: PluginScanFailure[] = [];
     const sourceMetrics: ScanMetrics = {
       scannedFileCount: 0,
@@ -26,6 +27,10 @@ export class DefaultPluginScanService implements PluginScanService {
         }
 
         usages.push(...(await plugin.scan(project.rootPath)));
+
+        if (plugin.discoverDefinitions) {
+          definitions.push(...(await plugin.discoverDefinitions(project.rootPath)));
+        }
 
         if (isSourceScanMetricsProvider(plugin)) {
           const metrics = plugin.getSourceScanMetrics();
@@ -41,6 +46,6 @@ export class DefaultPluginScanService implements PluginScanService {
       }
     }
 
-    return { usages, failures, sourceMetrics };
+    return { usages, definitions, failures, sourceMetrics };
   }
 }

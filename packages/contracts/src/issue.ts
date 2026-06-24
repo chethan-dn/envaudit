@@ -1,4 +1,11 @@
-export type IssueType = 'missing' | 'empty' | 'duplicate' | 'unused' | 'drift' | 'optional';
+export type IssueType =
+  | 'missing'
+  | 'empty'
+  | 'duplicate'
+  | 'unused'
+  | 'drift'
+  | 'optional'
+  | 'unconfigured';
 
 export interface Issue {
   code: string;
@@ -9,4 +16,6 @@ export interface Issue {
   line?: number;
   message?: string;
   defaultValue?: string;
+  schemaFile?: string;
+  runtimeEnvFiles?: string[];
 }

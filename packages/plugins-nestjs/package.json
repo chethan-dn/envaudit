@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@envdoctor/contracts": "workspace:*",
+    "fast-glob": "^3.3.3",
     "ts-morph": "^25.0.1"
   }
 }

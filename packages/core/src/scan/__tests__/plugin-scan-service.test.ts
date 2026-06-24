@@ -29,6 +29,7 @@ describe('DefaultPluginScanService', () => {
     const outcome = await service.scanProject(project, [plugin]);
 
     expect(outcome.usages).toHaveLength(1);
+    expect(outcome.definitions).toEqual([]);
     expect(outcome.failures).toEqual([]);
     expect(outcome.sourceMetrics).toEqual({
       scannedFileCount: 0,
@@ -47,6 +48,7 @@ describe('DefaultPluginScanService', () => {
     const outcome = await service.scanProject(project, [plugin]);
 
     expect(outcome.usages).toEqual([]);
+    expect(outcome.definitions).toEqual([]);
     expect(plugin.scan).not.toHaveBeenCalled();
   });
 
@@ -76,6 +78,7 @@ describe('DefaultPluginScanService', () => {
     const outcome = await service.scanProject(project, [failingPlugin, workingPlugin]);
 
     expect(outcome.usages).toHaveLength(1);
+    expect(outcome.definitions).toEqual([]);
     expect(outcome.failures).toEqual([
       {
         pluginId: 'failing',
@@ -83,5 +86,28 @@ describe('DefaultPluginScanService', () => {
         message: 'scan failed',
       },
     ]);
+  });
+
+  it('collects schema definitions from plugins that support discoverDefinitions', async () => {
+    const plugin: ScannerPlugin = {
+      id: 'test',
+      name: 'Test',
+      detect: vi.fn().mockResolvedValue(true),
+      scan: vi.fn().mockResolvedValue([]),
+      discoverDefinitions: vi.fn().mockResolvedValue([
+        {
+          name: 'DATABASE_URL',
+          sourceFile: '/repo/app/src/env.validation.ts',
+          projectRootPath: '/repo/app',
+          line: 2,
+          definitionSource: 'validation-schema',
+        },
+      ]),
+    };
+
+    const outcome = await service.scanProject(project, [plugin]);
+
+    expect(outcome.definitions).toHaveLength(1);
+    expect(plugin.discoverDefinitions).toHaveBeenCalledWith('/repo/app');
   });
 });

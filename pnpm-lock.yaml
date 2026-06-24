@@ -80,6 +80,9 @@ importers:
       '@envdoctor/contracts':
         specifier: workspace:*
         version: link:../contracts
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
       ts-morph:
         specifier: ^25.0.1
         version: 25.0.1

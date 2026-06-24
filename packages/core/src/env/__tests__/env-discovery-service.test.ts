@@ -40,6 +40,7 @@ describe('DefaultEnvDiscoveryService', () => {
         projectRootPath: projectRoot,
         line: 1,
         sourceKind: 'runtime',
+        definitionSource: 'env-file',
       },
     ]);
     expect(result.environmentFiles).toEqual({
@@ -78,6 +79,7 @@ describe('DefaultEnvDiscoveryService', () => {
       projectRootPath: projectRoot,
       line: 1,
       sourceKind: 'runtime',
+      definitionSource: 'env-file',
     });
   });
 
@@ -112,6 +114,7 @@ describe('DefaultEnvDiscoveryService', () => {
           projectRootPath: projectRoot,
           line: 1,
           sourceKind: 'runtime',
+        definitionSource: 'env-file',
         },
         {
           name: 'PORT',
@@ -120,6 +123,7 @@ describe('DefaultEnvDiscoveryService', () => {
           projectRootPath: projectRoot,
           line: 1,
           sourceKind: 'documentation',
+        definitionSource: 'env-file',
         },
       ]),
     );

@@ -2,7 +2,14 @@ import { relative } from 'node:path';
 import type { EnvironmentFileSummary, Issue, RepositoryScanResult, ScanResult } from '@envdoctor/core';
 import type { ScanReporter } from './interfaces/scan-reporter.js';
 
-const ISSUE_CODE_ORDER = ['ENV_DUPLICATE', 'ENV_EMPTY', 'ENV_MISSING', 'ENV_OPTIONAL', 'ENV_UNUSED'] as const;
+const ISSUE_CODE_ORDER = [
+  'ENV_DUPLICATE',
+  'ENV_EMPTY',
+  'ENV_MISSING',
+  'ENV_OPTIONAL',
+  'ENV_UNCONFIGURED',
+  'ENV_UNUSED',
+] as const;
 
 export class HumanScanReporter implements ScanReporter {
   render(result: RepositoryScanResult): string {
@@ -68,6 +75,20 @@ export class HumanScanReporter implements ScanReporter {
         }
         if (issue.code === 'ENV_OPTIONAL' && issue.defaultValue !== undefined) {
           lines.push(`      Default value: ${issue.defaultValue}`);
+        } else if (issue.code === 'ENV_UNCONFIGURED') {
+          if (issue.schemaFile) {
+            const schemaLocation = formatSchemaLocation(issue, project.rootPath);
+            if (schemaLocation) {
+              lines.push(`      ${schemaLocation}`);
+            }
+          }
+          if (issue.runtimeEnvFiles && issue.runtimeEnvFiles.length > 0) {
+            lines.push(
+              `      Runtime env files searched: ${formatRuntimeEnvFiles(issue.runtimeEnvFiles, project.rootPath)}`,
+            );
+          } else if (issue.message) {
+            lines.push(`      ${issue.message}`);
+          }
         } else if (issue.message) {
           lines.push(`      ${issue.message}`);
         }
@@ -135,6 +156,25 @@ function formatSourceLocation(issue: Issue, projectRootPath: string): string {
   }
 
   return relativePath;
+}
+
+function formatSchemaLocation(issue: Issue, projectRootPath: string): string {
+  if (!issue.schemaFile) {
+    return '';
+  }
+
+  const relativePath = toProjectRelativePath(issue.schemaFile, projectRootPath);
+  if (issue.line !== undefined) {
+    return `${relativePath}:${issue.line}`;
+  }
+
+  return relativePath;
+}
+
+function formatRuntimeEnvFiles(runtimeEnvFiles: string[], projectRootPath: string): string {
+  return runtimeEnvFiles
+    .map((filePath) => toDisplayPath(filePath, projectRootPath))
+    .join(', ');
 }
 
 function toProjectRelativePath(sourceFile: string, projectRootPath: string): string {

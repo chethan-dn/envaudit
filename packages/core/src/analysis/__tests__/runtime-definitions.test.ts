@@ -34,4 +34,16 @@ describe('runtime-definitions', () => {
     expect(isRuntimeDefinition(definition)).toBe(true);
     expect(getRuntimeDefinitions([definition])).toEqual([definition]);
   });
+
+  it('excludes validation schema definitions from runtime env definitions', () => {
+    const schemaDefinition = {
+      name: 'DATABASE_URL',
+      sourceFile: '/repo/src/env.validation.ts',
+      projectRootPath: '/repo',
+      definitionSource: 'validation-schema' as const,
+    };
+
+    expect(isRuntimeDefinition(schemaDefinition)).toBe(false);
+    expect(getRuntimeDefinitions([schemaDefinition])).toEqual([]);
+  });
 });

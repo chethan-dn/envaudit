@@ -103,7 +103,11 @@ export class DefaultEnvDiscoveryService implements EnvDiscoveryService {
         definitions.push(
           ...this.deps.envFileParser
             .parse(sourceFile, content, projectRootPath)
-            .map((definition) => ({ ...definition, sourceKind })),
+            .map((definition) => ({
+              ...definition,
+              sourceKind,
+              definitionSource: 'env-file' as const,
+            })),
         );
       } catch {
         continue;

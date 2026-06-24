@@ -42,6 +42,7 @@ describe('env discovery integration', () => {
       projectRootPath,
       line: 1,
       sourceKind: 'runtime',
+      definitionSource: 'env-file',
     });
 
     expect(result.definitions).toContainEqual({
@@ -51,6 +52,7 @@ describe('env discovery integration', () => {
       projectRootPath,
       line: 4,
       sourceKind: 'documentation',
+      definitionSource: 'env-file',
     });
   });
 
@@ -82,6 +84,7 @@ describe('env discovery integration', () => {
         projectRootPath: apiRoot,
         line: 1,
         sourceKind: 'runtime',
+      definitionSource: 'env-file',
       },
       {
         name: 'API_URL',
@@ -90,6 +93,7 @@ describe('env discovery integration', () => {
         projectRootPath: apiRoot,
         line: 2,
         sourceKind: 'runtime',
+      definitionSource: 'env-file',
       },
       {
         name: 'DATABASE_URL',
@@ -98,6 +102,7 @@ describe('env discovery integration', () => {
         projectRootPath: apiRoot,
         line: 3,
         sourceKind: 'runtime',
+      definitionSource: 'env-file',
       },
     ]);
 
@@ -109,6 +114,7 @@ describe('env discovery integration', () => {
         projectRootPath: webRoot,
         line: 1,
         sourceKind: 'runtime',
+      definitionSource: 'env-file',
       },
       {
         name: 'VITE_API_URL',
@@ -117,6 +123,7 @@ describe('env discovery integration', () => {
         projectRootPath: webRoot,
         line: 2,
         sourceKind: 'runtime',
+      definitionSource: 'env-file',
       },
       {
         name: 'VITE_APP_NAME',
@@ -125,6 +132,7 @@ describe('env discovery integration', () => {
         projectRootPath: webRoot,
         line: 3,
         sourceKind: 'runtime',
+      definitionSource: 'env-file',
       },
     ]);
   });
@@ -152,6 +160,7 @@ describe('env discovery integration', () => {
       projectRootPath: projectRootPath,
       line: 1,
       sourceKind: 'runtime',
+      definitionSource: 'env-file',
     });
   });
 
