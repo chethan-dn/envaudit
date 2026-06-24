@@ -1,4 +1,5 @@
 import { access } from 'node:fs/promises';
+import { isAbsolute, resolve } from 'node:path';
 import type { ScanOrchestrator } from '@envdoctor/core';
 import type { ScanReporter } from '../reporters/interfaces/scan-reporter.js';
 import type { ScanCommandOptions } from './scan-command-options.js';
@@ -23,7 +24,10 @@ export class ScanCommandHandler {
   async execute(options: ScanCommandOptions): Promise<number> {
     await this.assertRepositoryPath(options.path);
 
-    const result = await this.orchestrator.scan(options.path);
+    const scanOptions = options.env
+      ? { runtimeEnvFile: resolveRuntimeEnvFile(options.env) }
+      : undefined;
+    const result = await this.orchestrator.scan(options.path, scanOptions);
     const reporter = this.createReporter({ json: options.json });
     const output = reporter.render(result);
     this.stdout.write(output);
@@ -38,4 +42,8 @@ export class ScanCommandHandler {
       throw new Error(`Path not found: ${path}`);
     }
   }
+}
+
+function resolveRuntimeEnvFile(envPath: string): string {
+  return isAbsolute(envPath) ? envPath : resolve(process.cwd(), envPath);
 }

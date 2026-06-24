@@ -27,6 +27,9 @@ describe('HumanScanReporter', () => {
     expect(output).toContain('Scanned:     3');
     expect(output).toContain('Skipped:     1');
     expect(output).toContain('  ENV_MISSING (1)');
+    expect(output).toContain('Environment Files');
+    expect(output).toContain('  Runtime:');
+    expect(output).toContain('    .env');
     expect(output).toContain('    MISSING_KEY');
     expect(output).toContain('      src/index.ts:4');
     expect(output).toContain('  ENV_UNUSED (1)');

@@ -9,4 +9,4 @@ export type { WorkspaceManagerDetector } from './interfaces/workspace-manager-de
 export { NodeFileSystemReader } from './filesystem/node-file-system-reader.js';
 export { createDefaultProjectMarkerDetectors } from './project-markers/index.js';
 export { createDefaultWorkspaceDetectors } from './workspace-detectors/index.js';
-export { expandWorkspaceGlobs } from './utils/glob-expand.js';
+export { WorkspaceRootResolver } from './workspace-root-resolver.js';

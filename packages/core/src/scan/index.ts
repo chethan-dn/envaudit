@@ -6,5 +6,6 @@ export type { PluginScanFailure, PluginScanOutcome, PluginScanService } from './
 export type { SourceScanMetricsProvider } from './interfaces/source-scan-metrics-provider.js';
 export { isSourceScanMetricsProvider } from './interfaces/source-scan-metrics-provider.js';
 export type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
+export type { ScanOptions } from './interfaces/scan-options.js';
 export { buildRepositoryScanSummary } from './utils/build-repository-scan-summary.js';
 export type { Issue, RepositoryScanResult, ScanResult } from '@envdoctor/contracts';

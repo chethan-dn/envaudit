@@ -6,6 +6,7 @@ export {
   DEFAULT_TEST_FILE_EXCLUDES,
 } from './default-scan-excludes.js';
 export { DEFAULT_DOCUMENTATION_ENV_FILES } from './default-documentation-env-files.js';
+export type { EnvironmentFileSummary } from './environment-file-summary.js';
 export type { EnvDoctorConfig } from './envdoctor-config.js';
 export type { EnvFileKind } from './env-file-kind.js';
 export type { ProjectLanguage } from './project-language.js';

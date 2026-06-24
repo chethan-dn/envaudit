@@ -4,7 +4,8 @@ import type { ScannerPlugin } from '@envdoctor/contracts';
 import { DefaultEnvDoctorConfigLoader } from '../../config/envdoctor-config-loader.js';
 import { createEnvDiscoveryService } from '../../env/create-env-discovery-service.js';
 import { createIssueAnalysisService } from '../../analysis/create-issue-analysis-service.js';
-import { createProjectDiscoveryService } from '../../workspace/create-project-discovery-service.js';
+import { createProjectDiscoveryService, createDefaultProjectDiscoveryDependencies } from '../../workspace/create-project-discovery-service.js';
+import { WorkspaceRootResolver } from '../../workspace/workspace-root-resolver.js';
 import { DefaultScanOrchestrator } from '../scan-orchestrator.js';
 import { DefaultPluginScanService } from '../plugin-scan-service.js';
 
@@ -17,9 +18,14 @@ describe('DefaultScanOrchestrator', () => {
       scan: vi.fn().mockResolvedValue([]),
     };
 
+    const projectDiscoveryDeps = createDefaultProjectDiscoveryDependencies();
     const orchestrator = new DefaultScanOrchestrator({
       configLoader: new DefaultEnvDoctorConfigLoader(),
       projectDiscovery: createProjectDiscoveryService(),
+      workspaceRootResolver: new WorkspaceRootResolver({
+        fileSystem: projectDiscoveryDeps.fileSystem,
+        workspaceDetectors: projectDiscoveryDeps.workspaceDetectors,
+      }),
       envDiscovery: createEnvDiscoveryService(),
       issueAnalysis: createIssueAnalysisService(),
       pluginScan: new DefaultPluginScanService(),

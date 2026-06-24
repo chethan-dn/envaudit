@@ -91,6 +91,100 @@ describe('scan command integration', () => {
     expect(handler.execute).toHaveBeenCalledWith({
       path: fixturePath('full-stack-app'),
       json: true,
+      env: undefined,
+    });
+  });
+
+  it('scans root-env-monorepo nested project with workspace root env files', async () => {
+    const chunks: string[] = [];
+    const stdout = {
+      write(chunk: string) {
+        chunks.push(chunk);
+      },
+    } as NodeJS.WritableStream;
+
+    const handler = createHandler(stdout);
+    const projectPath = fixturePath('root-env-monorepo/apps/service');
+
+    const exitCode = await handler.execute({
+      path: projectPath,
+      json: true,
+    });
+
+    const parsed = JSON.parse(chunks.join(''));
+    const scanResult = parsed.results[0];
+
+    expect(exitCode).toBe(0);
+    expect(scanResult.environmentFiles.runtime).toContain(fixturePath('root-env-monorepo/.env'));
+    expect(scanResult.environmentFiles.documentation).toContain(
+      fixturePath('root-env-monorepo/apps/service/.env.example'),
+    );
+    expect(
+      scanResult.issues.filter((issue: { code: string; variable: string }) => issue.code === 'ENV_MISSING'),
+    ).toEqual([]);
+    expect(scanResult.definitions).toContainEqual(
+      expect.objectContaining({
+        name: 'DATABASE_URL',
+        value: 'postgres://localhost:5432/root',
+        sourceFile: fixturePath('root-env-monorepo/.env'),
+      }),
+    );
+  });
+
+  it('uses only the override runtime env file with --env', async () => {
+    const chunks: string[] = [];
+    const stdout = {
+      write(chunk: string) {
+        chunks.push(chunk);
+      },
+    } as NodeJS.WritableStream;
+
+    const handler = createHandler(stdout);
+    const projectPath = fixturePath('explicit-env-override');
+
+    const exitCode = await handler.execute({
+      path: projectPath,
+      json: true,
+      env: resolve(projectPath, '.env.prod'),
+    });
+
+    const parsed = JSON.parse(chunks.join(''));
+    const scanResult = parsed.results[0];
+
+    expect(exitCode).toBe(0);
+    expect(scanResult.environmentFiles.runtime).toEqual([resolve(projectPath, '.env.prod')]);
+    expect(scanResult.definitions).toContainEqual(
+      expect.objectContaining({
+        name: 'PORT',
+        value: '4000',
+        sourceFile: resolve(projectPath, '.env.prod'),
+      }),
+    );
+    expect(scanResult.issues.filter((issue: { code: string }) => issue.code === 'ENV_MISSING')).toEqual([]);
+  });
+
+  it('registers commander action with env override option', async () => {
+    const handler = {
+      execute: vi.fn().mockResolvedValue(0),
+    } as unknown as ScanCommandHandler;
+
+    const program = new Command();
+    registerScanCommand(program, handler);
+
+    await program.parseAsync([
+      'node',
+      'envdoctor',
+      'scan',
+      fixturePath('explicit-env-override'),
+      '--env',
+      '.env.prod',
+      '--json',
+    ]);
+
+    expect(handler.execute).toHaveBeenCalledWith({
+      path: fixturePath('explicit-env-override'),
+      json: true,
+      env: '.env.prod',
     });
   });
 });

@@ -68,6 +68,10 @@ export const sampleRepositoryScanResult: RepositoryScanResult = {
         },
       ],
       metrics: defaultMetrics,
+      environmentFiles: {
+        runtime: ['/repo/apps/api/.env'],
+        documentation: [],
+      },
     },
   ],
 };

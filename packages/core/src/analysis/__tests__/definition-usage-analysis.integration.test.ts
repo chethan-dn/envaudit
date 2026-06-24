@@ -16,7 +16,7 @@ describe('definition / usage analysis integration', () => {
 
   it('does not emit ENV_EMPTY for documentation env files in env-heavy fixture', async () => {
     const projectRootPath = fixturePath('env-heavy');
-    const definitions = await envDiscovery.discoverForProject({
+    const { definitions } = await envDiscovery.discoverForProject({
       name: 'env-heavy',
       rootPath: projectRootPath,
     });
@@ -33,7 +33,7 @@ describe('definition / usage analysis integration', () => {
 
   it('detects unused definitions in env-heavy when no usages are provided', async () => {
     const projectRootPath = fixturePath('env-heavy');
-    const definitions = await envDiscovery.discoverForProject({
+    const { definitions } = await envDiscovery.discoverForProject({
       name: 'env-heavy',
       rootPath: projectRootPath,
     });
@@ -118,11 +118,11 @@ describe('definition / usage analysis integration', () => {
     const apiRoot = fixturePath('pnpm-monorepo/apps/api');
     const webRoot = fixturePath('pnpm-monorepo/apps/web');
 
-    const apiDefinitions = await envDiscovery.discoverForProject({
+    const { definitions: apiDefinitions } = await envDiscovery.discoverForProject({
       name: 'api',
       rootPath: apiRoot,
     });
-    const webDefinitions = await envDiscovery.discoverForProject({
+    const { definitions: webDefinitions } = await envDiscovery.discoverForProject({
       name: 'web',
       rootPath: webRoot,
     });

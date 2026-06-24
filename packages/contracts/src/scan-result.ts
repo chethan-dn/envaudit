@@ -1,3 +1,4 @@
+import type { EnvironmentFileSummary } from './environment-file-summary.js';
 import type { Issue } from './issue.js';
 import type { ScanMetrics } from './scan-metrics.js';
 import type { VariableDefinition } from './variable-definition.js';
@@ -10,4 +11,5 @@ export interface ScanResult {
   usages: VariableUsage[];
   issues: Issue[];
   metrics: ScanMetrics;
+  environmentFiles?: EnvironmentFileSummary;
 }

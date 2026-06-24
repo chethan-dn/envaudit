@@ -1,6 +1,10 @@
 import { createEnvDiscoveryService } from '../env/create-env-discovery-service.js';
 import { createIssueAnalysisService } from '../analysis/create-issue-analysis-service.js';
-import { createProjectDiscoveryService } from '../workspace/create-project-discovery-service.js';
+import {
+  createDefaultProjectDiscoveryDependencies,
+  createProjectDiscoveryService,
+} from '../workspace/create-project-discovery-service.js';
+import { WorkspaceRootResolver } from '../workspace/workspace-root-resolver.js';
 import { DefaultEnvDoctorConfigLoader } from '../config/envdoctor-config-loader.js';
 import { DefaultPluginScanService } from './plugin-scan-service.js';
 import {
@@ -13,9 +17,15 @@ import type { ScanOrchestrator } from './interfaces/scan-orchestrator.js';
 export function createDefaultScanOrchestratorDependencies(
   createPlugins: PluginFactory,
 ): ScanOrchestratorDependencies {
+  const projectDiscoveryDeps = createDefaultProjectDiscoveryDependencies();
+
   return {
     configLoader: new DefaultEnvDoctorConfigLoader(),
     projectDiscovery: createProjectDiscoveryService(),
+    workspaceRootResolver: new WorkspaceRootResolver({
+      fileSystem: projectDiscoveryDeps.fileSystem,
+      workspaceDetectors: projectDiscoveryDeps.workspaceDetectors,
+    }),
     envDiscovery: createEnvDiscoveryService(),
     issueAnalysis: createIssueAnalysisService(),
     pluginScan: new DefaultPluginScanService(),
@@ -32,6 +42,7 @@ export function createScanOrchestrator(
   return new DefaultScanOrchestrator({
     configLoader: deps?.configLoader ?? defaults.configLoader,
     projectDiscovery: deps?.projectDiscovery ?? defaults.projectDiscovery,
+    workspaceRootResolver: deps?.workspaceRootResolver ?? defaults.workspaceRootResolver,
     envDiscovery: deps?.envDiscovery ?? defaults.envDiscovery,
     issueAnalysis: deps?.issueAnalysis ?? defaults.issueAnalysis,
     pluginScan: deps?.pluginScan ?? defaults.pluginScan,

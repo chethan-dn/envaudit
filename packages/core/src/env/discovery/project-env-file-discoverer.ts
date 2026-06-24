@@ -28,11 +28,9 @@ export class ProjectEnvFileDiscoverer implements EnvFileDiscoverer {
       throw new ProjectDirectoryNotFoundError(projectRootPath);
     }
 
-    const envFiles = entries
+    return entries
       .filter((entry) => isEnvFile(entry))
       .map((entry) => resolve(projectRootPath, entry))
       .sort(compareEnvFiles);
-
-    return envFiles;
   }
 }

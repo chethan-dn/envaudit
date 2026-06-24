@@ -11,12 +11,14 @@ export function registerScanCommand(
     .command('scan')
     .description('Scan a repository for environment variable issues')
     .argument('[path]', 'repository path')
+    .option('--env <path>', 'use a specific runtime env file')
     .option('--json', 'output machine-readable JSON')
-    .action(async (path: string | undefined, options: { json?: boolean }) => {
+    .action(async (path: string | undefined, options: { json?: boolean; env?: string }) => {
       try {
         const exitCode = await handler.execute({
           path: path ?? process.cwd(),
           json: Boolean(options.json),
+          env: options.env,
         });
         process.exitCode = exitCode;
       } catch (error) {

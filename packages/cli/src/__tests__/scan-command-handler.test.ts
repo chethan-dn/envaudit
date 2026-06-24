@@ -39,7 +39,7 @@ describe('ScanCommandHandler', () => {
     });
 
     expect(exitCode).toBe(1);
-    expect(orchestrator.scan).toHaveBeenCalledWith(process.cwd());
+    expect(orchestrator.scan).toHaveBeenCalledWith(process.cwd(), undefined);
     expect(reporter.render).toHaveBeenCalledWith(sampleRepositoryScanResult);
     expect(chunks.join('')).toBe('rendered output\n');
   });
